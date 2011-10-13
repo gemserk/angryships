@@ -26,6 +26,7 @@ import com.gemserk.componentsengine.input.InputDevicesMonitorImpl;
 import com.gemserk.componentsengine.input.LibgdxInputMappingBuilder;
 import com.gemserk.componentsengine.utils.Parameters;
 import com.gemserk.componentsengine.utils.ParametersWrapper;
+import com.gemserk.games.angryships.gamestates.PlayGameState;
 import com.gemserk.games.angryships.gamestates.SplashGameState;
 import com.gemserk.games.angryships.resources.GameResources;
 import com.gemserk.resources.CustomResourceManager;
@@ -52,7 +53,8 @@ public class Game extends com.gemserk.commons.gdx.Game {
 		Game.showBox2dDebug = showBox2dDebug;
 	}
 
-	private Screen splashScreen;
+	public Screen splashScreen;
+	public Screen playScreen;
 
 	private CustomResourceManager<String> resourceManager;
 	private BitmapFont fpsFont;
@@ -65,11 +67,7 @@ public class Game extends com.gemserk.commons.gdx.Game {
 	 * Used to store global information about the game and to send data between GameStates and Screens.
 	 */
 	private Parameters gameData;
-
-	public Screen getSplashScreen() {
-		return splashScreen;
-	}
-
+	
 	public Parameters getGameData() {
 		return gameData;
 	}
@@ -115,8 +113,10 @@ public class Game extends com.gemserk.commons.gdx.Game {
 		spriteBatch = new SpriteBatch();
 
 		GameState splashGameState = injector.getInstance(SplashGameState.class);
+		GameState playGameState = injector.getInstance(PlayGameState.class);
 
 		splashScreen = new ScreenImpl(splashGameState);
+		playScreen = new ScreenImpl(playGameState);
 
 		EventListenerReflectionRegistrator registrator = new EventListenerReflectionRegistrator(eventManager);
 

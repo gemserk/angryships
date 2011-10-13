@@ -14,6 +14,7 @@ import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 import com.gemserk.commons.gdx.graphics.SpriteUtils;
 import com.gemserk.games.angryships.Game;
+import com.gemserk.games.angryships.resources.GameResources;
 import com.gemserk.resources.CustomResourceManager;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.progress.TaskQueue;
@@ -47,10 +48,10 @@ public class SplashGameState extends com.gemserk.commons.gdx.gamestates.LoadingG
 		font = new BitmapFont();
 		font.setColor(1f, 1f, 0f, 1f);
 
-		gemserkLogo = resourceManager.getResourceValue("GemserkLogo");
-		gemserkLogoBlur = resourceManager.getResourceValue("GemserkLogoBlur");
-		lwjglLogo = resourceManager.getResourceValue("LwjglLogo");
-		libgdxLogo = resourceManager.getResourceValue("LibgdxLogo");
+		gemserkLogo = resourceManager.getResourceValue(GameResources.Sprites.GemserkLogo);
+		gemserkLogoBlur = resourceManager.getResourceValue(GameResources.Sprites.GemserkLogoBlur);
+		lwjglLogo = resourceManager.getResourceValue(GameResources.Sprites.LwjglLogo);
+		libgdxLogo = resourceManager.getResourceValue(GameResources.Sprites.LibgdxLogo);
 
 		SpriteUtils.resize(gemserkLogo, width * 0.8f);
 		SpriteUtils.resize(gemserkLogoBlur, width * 0.8f);
@@ -90,7 +91,10 @@ public class SplashGameState extends com.gemserk.commons.gdx.gamestates.LoadingG
 	}
 
 	private void mainMenu() {
-
+		game.transition(game.playScreen) //
+			.disposeCurrent() //
+			.leaveTime(0.5f) //
+			.start();
 	}
 
 	@Override
