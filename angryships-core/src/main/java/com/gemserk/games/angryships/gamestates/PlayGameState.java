@@ -2,6 +2,7 @@ package com.gemserk.games.angryships.gamestates;
 
 import java.util.ArrayList;
 
+import com.artemis.World;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -17,31 +18,42 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.animation4j.gdx.Animation;
 import com.gemserk.commons.adwhirl.AdWhirlViewHandler;
+import com.gemserk.commons.artemis.WorldWrapper;
+import com.gemserk.commons.artemis.render.RenderLayers;
+import com.gemserk.commons.artemis.systems.CameraUpdateSystem;
+import com.gemserk.commons.artemis.systems.MovementSystem;
+import com.gemserk.commons.artemis.systems.PreviousStateSpatialSystem;
+import com.gemserk.commons.artemis.systems.RenderLayerSpriteBatchImpl;
+import com.gemserk.commons.artemis.systems.RenderableSystem;
+import com.gemserk.commons.artemis.systems.ScriptSystem;
+import com.gemserk.commons.artemis.systems.SpriteUpdateSystem;
+import com.gemserk.commons.artemis.templates.EntityFactory;
+import com.gemserk.commons.artemis.templates.EntityFactoryImpl;
+import com.gemserk.commons.artemis.templates.EntityTemplate;
 import com.gemserk.commons.gdx.GameStateImpl;
 import com.gemserk.commons.gdx.GlobalTime;
 import com.gemserk.commons.gdx.camera.Camera;
 import com.gemserk.commons.gdx.camera.CameraRestrictedImpl;
 import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
 import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
+import com.gemserk.commons.gdx.games.SpatialImpl;
 import com.gemserk.commons.gdx.graphics.ColorUtils;
 import com.gemserk.commons.gdx.graphics.SpriteUtils;
 import com.gemserk.commons.gdx.resources.LibgdxResourceBuilder;
+import com.gemserk.commons.gdx.time.TimeStepProviderGameStateImpl;
+import com.gemserk.commons.reflection.Injector;
+import com.gemserk.commons.reflection.InjectorImpl;
 import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.InputDevicesMonitorImpl;
 import com.gemserk.componentsengine.input.LibgdxInputMappingBuilder;
+import com.gemserk.componentsengine.utils.ParametersWrapper;
+import com.gemserk.games.angryships.render.Layers;
+import com.gemserk.games.angryships.templates.BombEntityTemplate;
 import com.gemserk.prototypes.pixmap.PixmapHelper;
 import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.ResourceManagerImpl;
 
 public class PlayGameState extends GameStateImpl {
-
-	static class Controller {
-
-		boolean fire;
-		boolean left;
-		boolean right;
-
-	}
 
 	static class Bomb {
 
@@ -293,6 +305,7 @@ public class PlayGameState extends GameStateImpl {
 
 	Rectangle worldBounds;
 	private Sprite secondBackgroundSprite;
+	WorldWrapper worldWrapper;
 
 	@Override
 	public void init() {
@@ -323,7 +336,7 @@ public class PlayGameState extends GameStateImpl {
 
 				texture("ButtonTurnLeftTexture", "data/gui/button-turn-left.png", true);
 				sprite("ButtonTurnLeftSprite", "ButtonTurnLeftTexture");
-				
+
 				texture("ButtonTurnRightTexture", "data/gui/button-turn-right.png", true);
 				sprite("ButtonTurnRightSprite", "ButtonTurnRightTexture");
 
@@ -349,15 +362,6 @@ public class PlayGameState extends GameStateImpl {
 
 		worldBounds = new Rectangle(-1024f * worldScaleFactor * 0.5f, -512 * worldScaleFactor * 0.5f, 1024f * worldScaleFactor, 512f * worldScaleFactor);
 
-		// SpriteUtils.resize(backgroundSprite, worldBounds.getWidth());
-		// SpriteUtils.centerOn(backgroundSprite, worldBounds.getX() + worldBounds.getWidth() * 0.5f, 0);
-
-		// sprite.setRotation(angle);
-
-		// sprite.setOrigin(spatial.getWidth() * center.x, spatial.getHeight() * center.y);
-		// sprite.setSize(spatial.getWidth(), spatial.getHeight());
-		// sprite.setPosition(newX - sprite.getOriginX(), newY - sprite.getOriginY());
-
 		backgroundSprite.setOrigin(worldBounds.getWidth() * 0.5f, worldBounds.getHeight() * 0.5f);
 		backgroundSprite.setSize(worldBounds.getWidth(), worldBounds.getHeight());
 		backgroundSprite.setPosition(0f - backgroundSprite.getOriginX(), 0f - backgroundSprite.getOriginY());
@@ -365,13 +369,6 @@ public class PlayGameState extends GameStateImpl {
 		secondBackgroundSprite.setOrigin(worldBounds.getWidth() * 0.5f, worldBounds.getHeight() * 0.5f);
 		secondBackgroundSprite.setSize(worldBounds.getWidth(), worldBounds.getHeight());
 		secondBackgroundSprite.setPosition(0f - secondBackgroundSprite.getOriginX(), 0f - secondBackgroundSprite.getOriginY());
-
-		// SpriteUtils.resize(backgroundSprite, 64f);
-
-		// SpriteUtils.resize(sprite, pixmap.getWidth() * 1f);
-		// SpriteUtils.centerOn(sprite, Gdx.graphics.getWidth() * 0f, Gdx.graphics.getHeight() * 0f);
-
-		// sprite.setOrigin(sprite.getWidth() * 0f, sprite.getHeight() * 0f);
 
 		backgroundCamera = new Libgdx2dCameraTransformImpl(Gdx.graphics.getWidth() * 0.5f, Gdx.graphics.getHeight() * 0.5f);
 		secondBackgroundCamera = new Libgdx2dCameraTransformImpl(Gdx.graphics.getWidth() * 0.5f, Gdx.graphics.getHeight() * 0.5f);
@@ -385,11 +382,7 @@ public class PlayGameState extends GameStateImpl {
 		backgroundFollowCamera = new CameraRestrictedImpl(0f, 0f, 1f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), worldBounds);
 		secondBackgroundFollowCamera = new CameraRestrictedImpl(0f, 0f, 1f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), worldBounds);
 
-		// orthographicCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		// orthographicCamera.update();
-
 		pixmapTerrain = new PixmapHelper(pixmap);
-		// pixmapTerrain.sprite.setSize(pixmapTerrain.sprite.getWidth() * 0.5f, pixmapTerrain.sprite.getHeight() * 0.5f);
 
 		Gdx.graphics.getGL10().glClearColor(0.5f, 0.5f, 0.5f, 0f);
 
@@ -413,6 +406,54 @@ public class PlayGameState extends GameStateImpl {
 		rightButton = new RightButton(controller);
 		fireButton = new FireButton(controller);
 
+		worldWrapper = new WorldWrapper(new World());
+
+		RenderLayers renderLayers = new RenderLayers();
+		renderLayers.add(Layers.World, new RenderLayerSpriteBatchImpl(-500, 500, worldCamera));
+
+		EntityFactory entityFactory = new EntityFactoryImpl(worldWrapper.getWorld());
+
+		Injector injector = new InjectorImpl();
+
+		injector.bind("timeStepProvider", new TimeStepProviderGameStateImpl(this));
+		injector.bind("renderLayers", renderLayers);
+		injector.bind("entityFactory", entityFactory);
+		injector.bind("resourceManager", resourceManager);
+
+		worldWrapper.addUpdateSystem(injector.getInstance(PreviousStateSpatialSystem.class));
+		worldWrapper.addUpdateSystem(injector.getInstance(MovementSystem.class));
+		worldWrapper.addUpdateSystem(injector.getInstance(ScriptSystem.class));
+
+		worldWrapper.addRenderSystem(injector.getInstance(CameraUpdateSystem.class));
+		worldWrapper.addRenderSystem(injector.getInstance(SpriteUpdateSystem.class));
+		worldWrapper.addRenderSystem(injector.getInstance(RenderableSystem.class));
+
+		worldWrapper.init();
+
+		//
+		// worldWrapper.addUpdateSystem(new PhysicsSystem(physicsWorld));
+		// worldWrapper.addUpdateSystem(new ScriptSystem());
+		// worldWrapper.addUpdateSystem(new TagSystem());
+		// worldWrapper.addUpdateSystem(new ContainerSystem());
+		// worldWrapper.addUpdateSystem(new OwnerSystem());
+		//
+		// // testing event listener auto registration using reflection
+		// worldWrapper.addUpdateSystem(new ReflectionRegistratorEventSystem(eventManager));
+		// worldWrapper.addUpdateSystem(injector.getInstance(SoundSpawnerSystem.class));
+		//
+		// worldWrapper.addRenderSystem(new CameraUpdateSystem(timeStepProvider));
+		// worldWrapper.addRenderSystem(new SpriteUpdateSystem(timeStepProvider));
+		// worldWrapper.addRenderSystem(new TextLocationUpdateSystem());
+		// worldWrapper.addRenderSystem(new RenderableSystem(renderLayers));
+		// worldWrapper.addRenderSystem(new ParticleEmitterSystem());
+
+		EntityTemplate bombEntityTemplate = injector.getInstance(BombEntityTemplate.class);
+
+		entityFactory.instantiate(bombEntityTemplate, new ParametersWrapper() //
+				.put("spatial", new SpatialImpl(-200f, Gdx.graphics.getHeight() * 0.5f, 32f, 32f, 0)) //
+				.put("controller", controller) //
+				);
+
 	}
 
 	@Override
@@ -420,6 +461,8 @@ public class PlayGameState extends GameStateImpl {
 		super.update();
 
 		inputDevicesMonitor.update();
+
+		worldWrapper.update(getDeltaInMs());
 
 		int x = Gdx.input.getX();
 		int y = (Gdx.graphics.getHeight() - Gdx.input.getY());
@@ -568,6 +611,8 @@ public class PlayGameState extends GameStateImpl {
 		fireButton.draw(spriteBatch);
 		// }
 		spriteBatch.end();
+
+		worldWrapper.render();
 	}
 
 	@Override

@@ -15,6 +15,8 @@ public class GameResources extends LibgdxResourceBuilder {
 		public static final String LwjglLogo = "LwjglLogo";
 		public static final String LibgdxLogo = "LibgdxLogo";
 		
+		public static final String BombSprite = "BombSprite";
+		
 	}
 
 	public static void load(ResourceManager<String> resourceManager) {
@@ -33,6 +35,27 @@ public class GameResources extends LibgdxResourceBuilder {
 		sprite(Sprites.GemserkLogoBlur, "GemserkLogoTextureBlur");
 		sprite(Sprites.LwjglLogo, "LwjglLogoTexture", 0, 0, 512, 185);
 		sprite(Sprites.LibgdxLogo, "LibgdxLogoTexture", 0, 25, 512, 256 - 50);
+		
+		texture("BackgroundTexture", "data/levels/superangrysheep-background.png", true);
+		sprite("BackgroundSprite", "BackgroundTexture");
+
+		texture("SecondBackgroundTexture", "data/levels/superangrysheep-background2.png", true);
+		sprite("SecondBackgroundSprite", "SecondBackgroundTexture");
+
+		texture("BombExplosionSpriteSheet", "data/animations/bomb-explosion-animation.png");
+		animation("BombExplosionAnimation", "BombExplosionSpriteSheet", 0, 0, 128, 128, 15, false, 35);
+
+		texture("BombTexture", "data/images/bomb.png", true);
+		sprite(Sprites.BombSprite, "BombTexture");
+
+		texture("ButtonFireTexture", "data/gui/button-fire.png", true);
+		sprite("ButtonFireSprite", "ButtonFireTexture");
+
+		texture("ButtonTurnLeftTexture", "data/gui/button-turn-left.png", true);
+		sprite("ButtonTurnLeftSprite", "ButtonTurnLeftTexture");
+		
+		texture("ButtonTurnRightTexture", "data/gui/button-turn-right.png", true);
+		sprite("ButtonTurnRightSprite", "ButtonTurnRightTexture");
 		
 	}
 }
