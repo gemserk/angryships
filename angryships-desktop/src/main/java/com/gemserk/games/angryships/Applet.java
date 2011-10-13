@@ -6,8 +6,8 @@ import java.awt.Canvas;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.utils.GdxNativesLoader;
+import com.gemserk.commons.adwhirl.AdWhirlViewHandler;
 import com.gemserk.commons.utils.gdx.LwjglLibgdxLibraryUtils;
-import com.gemserk.games.angryships.Game;
 
 public class Applet extends java.applet.Applet {
 
@@ -50,6 +50,8 @@ public class Applet extends java.applet.Applet {
 							super.create();
 						};
 					};
+					
+					game.setAdWhirlViewHandler(new AdWhirlViewHandler());
 
 					application = new LwjglApplication(game, false, this) {
 						public com.badlogic.gdx.Application.ApplicationType getType() {

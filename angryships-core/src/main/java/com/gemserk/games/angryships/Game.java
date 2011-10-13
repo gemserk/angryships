@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.gdx.converters.LibgdxConverters;
+import com.gemserk.commons.adwhirl.AdWhirlViewHandler;
 import com.gemserk.commons.artemis.events.EventManager;
 import com.gemserk.commons.artemis.events.EventManagerImpl;
 import com.gemserk.commons.artemis.events.reflection.EventListenerReflectionRegistrator;
@@ -53,9 +54,6 @@ public class Game extends com.gemserk.commons.gdx.Game {
 		Game.showBox2dDebug = showBox2dDebug;
 	}
 
-	public Screen splashScreen;
-	public Screen playScreen;
-
 	private CustomResourceManager<String> resourceManager;
 	private BitmapFont fpsFont;
 	private SpriteBatch spriteBatch;
@@ -67,6 +65,10 @@ public class Game extends com.gemserk.commons.gdx.Game {
 	 * Used to store global information about the game and to send data between GameStates and Screens.
 	 */
 	private Parameters gameData;
+	private AdWhirlViewHandler adWhirlViewHandler;
+	
+	public Screen splashScreen;
+	public Screen playScreen;
 	
 	public Parameters getGameData() {
 		return gameData;
@@ -77,6 +79,10 @@ public class Game extends com.gemserk.commons.gdx.Game {
 	 */
 	public EventManager getEventManager() {
 		return eventManager;
+	}
+	
+	public void setAdWhirlViewHandler(AdWhirlViewHandler adWhirlViewHandler) {
+		this.adWhirlViewHandler = adWhirlViewHandler;
 	}
 
 	@Override
@@ -103,6 +109,7 @@ public class Game extends com.gemserk.commons.gdx.Game {
 		injector.bind("game", this);
 		injector.bind("eventManager", new EventManagerImpl());
 		injector.bind("resourceManager", new CustomResourceManager<String>());
+		injector.bind("adWhirlViewHandler", adWhirlViewHandler);
 		
 		injector.injectMembers(this);
 
@@ -171,6 +178,12 @@ public class Game extends com.gemserk.commons.gdx.Game {
 
 	public TransitionBuilder transition(Screen screen) {
 		return new TransitionBuilder(this, screen);
+	}
+	
+	@Override
+	public void pause() {
+		super.pause();
+		adWhirlViewHandler.hide();		
 	}
 
 	@Override

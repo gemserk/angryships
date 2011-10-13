@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.gemserk.commons.adwhirl.AdWhirlViewHandler;
 
 public class DesktopApplication {
 
@@ -53,6 +54,8 @@ public class DesktopApplication {
 		config.vSyncEnabled = true;
 
 		Game game = new Game();
+		
+		game.setAdWhirlViewHandler(new AdWhirlViewHandler());
 
 		boolean runningInDebug = System.getProperty("runningInDebug") != null;
 

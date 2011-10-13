@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.animation4j.gdx.Animation;
+import com.gemserk.commons.adwhirl.AdWhirlViewHandler;
 import com.gemserk.commons.gdx.GameStateImpl;
 import com.gemserk.commons.gdx.GlobalTime;
 import com.gemserk.commons.gdx.camera.Camera;
@@ -288,6 +289,7 @@ public class PlayGameState extends GameStateImpl {
 	Camera secondBackgroundFollowCamera;
 
 	ResourceManager<String> resourceManager;
+	AdWhirlViewHandler adWhirlViewHandler;
 
 	Rectangle worldBounds;
 	private Sprite secondBackgroundSprite;
@@ -346,8 +348,6 @@ public class PlayGameState extends GameStateImpl {
 		float worldScaleFactor = 1.5f;
 
 		worldBounds = new Rectangle(-1024f * worldScaleFactor * 0.5f, -512 * worldScaleFactor * 0.5f, 1024f * worldScaleFactor, 512f * worldScaleFactor);
-
-		System.out.println(worldBounds);
 
 		// SpriteUtils.resize(backgroundSprite, worldBounds.getWidth());
 		// SpriteUtils.centerOn(backgroundSprite, worldBounds.getX() + worldBounds.getWidth() * 0.5f, 0);
@@ -573,6 +573,8 @@ public class PlayGameState extends GameStateImpl {
 	@Override
 	public void resume() {
 		pixmapTerrain.reloadTexture();
+		adWhirlViewHandler.show();
+		Gdx.input.setCatchBackKey(false);
 	}
 
 	@Override

@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.gemserk.animation4j.transitions.Transitions;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
+import com.gemserk.commons.adwhirl.AdWhirlViewHandler;
 import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 import com.gemserk.commons.gdx.graphics.SpriteUtils;
 import com.gemserk.games.angryships.Game;
@@ -24,6 +25,7 @@ public class SplashGameState extends com.gemserk.commons.gdx.gamestates.LoadingG
 
 	Game game;
 	CustomResourceManager<String> resourceManager;
+	AdWhirlViewHandler adWhirlViewHandler;
 
 	SpriteBatch spriteBatch;
 	BitmapFont font;
@@ -123,14 +125,13 @@ public class SplashGameState extends com.gemserk.commons.gdx.gamestates.LoadingG
 
 	@Override
 	public void update() {
-		
 		Synchronizers.synchronize(getDelta());
-		
 	}
 
 	@Override
 	public void resume() {
 		Gdx.input.setCatchBackKey(false);
+		adWhirlViewHandler.hide();
 	}
 
 	@Override

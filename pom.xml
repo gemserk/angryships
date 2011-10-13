@@ -54,6 +54,8 @@
 		<datastore.version>0.0.6-SNAPSHOT</datastore.version>
 		<gdx.version>0.9.3-SNAPSHOT</gdx.version>
 		<jgoogleanalytics.version>1.2.1-GEMSERK-RC1</jgoogleanalytics.version>
+		<admob.version>4.1.0</admob.version>
+		<adwhirl.version>3.0.0</adwhirl.version>
 	</properties>
 
 	<build>
