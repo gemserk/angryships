@@ -452,6 +452,7 @@ public class PlayGameState extends GameStateImpl {
 		entityFactory.instantiate(bombEntityTemplate, new ParametersWrapper() //
 				.put("spatial", new SpatialImpl(-200f, Gdx.graphics.getHeight() * 0.5f, 32f, 32f, 0)) //
 				.put("controller", controller) //
+				.put("pixmapHelper", pixmapTerrain) //
 				);
 
 	}
