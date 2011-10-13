@@ -2,12 +2,9 @@ package com.gemserk.games.angryships;
 
 import java.io.IOException;
 import java.util.Properties;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,19 +14,21 @@ import com.gemserk.animation4j.gdx.converters.LibgdxConverters;
 import com.gemserk.commons.artemis.events.EventManager;
 import com.gemserk.commons.artemis.events.EventManagerImpl;
 import com.gemserk.commons.artemis.events.reflection.EventListenerReflectionRegistrator;
+import com.gemserk.commons.gdx.GameState;
 import com.gemserk.commons.gdx.GlobalTime;
 import com.gemserk.commons.gdx.Screen;
 import com.gemserk.commons.gdx.ScreenImpl;
 import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 import com.gemserk.commons.gdx.screens.transitions.TransitionBuilder;
+import com.gemserk.commons.reflection.Injector;
+import com.gemserk.commons.reflection.InjectorImpl;
 import com.gemserk.componentsengine.input.InputDevicesMonitorImpl;
 import com.gemserk.componentsengine.input.LibgdxInputMappingBuilder;
 import com.gemserk.componentsengine.utils.Parameters;
 import com.gemserk.componentsengine.utils.ParametersWrapper;
-import com.gemserk.games.angryships.gamestates.MainMenuGameState;
 import com.gemserk.games.angryships.gamestates.SplashGameState;
-import com.gemserk.games.angryships.preferences.GamePreferences;
 import com.gemserk.games.angryships.resources.GameResources;
+import com.gemserk.resources.CustomResourceManager;
 import com.gemserk.util.ScreenshotSaver;
 
 public class Game extends com.gemserk.commons.gdx.Game {
@@ -54,7 +53,6 @@ public class Game extends com.gemserk.commons.gdx.Game {
 	}
 
 	private Screen splashScreen;
-	private Screen mainMenuScreen;
 
 	private CustomResourceManager<String> resourceManager;
 	private BitmapFont fpsFont;
@@ -72,16 +70,8 @@ public class Game extends com.gemserk.commons.gdx.Game {
 		return splashScreen;
 	}
 
-	public Screen getMainMenuScreen() {
-		return mainMenuScreen;
-	}
-
 	public Parameters getGameData() {
 		return gameData;
-	}
-
-	public CustomResourceManager<String> getResourceManager() {
-		return resourceManager;
 	}
 
 	/**
@@ -93,9 +83,9 @@ public class Game extends com.gemserk.commons.gdx.Game {
 
 	@Override
 	public void create() {
+
 		Converters.register(Vector2.class, LibgdxConverters.vector2());
 		Converters.register(Color.class, LibgdxConverters.color());
-		Converters.register(Float.class, Converters.floatValue());
 
 		gameData = new ParametersWrapper();
 
@@ -107,13 +97,16 @@ public class Game extends com.gemserk.commons.gdx.Game {
 			throw new RuntimeException(e);
 		}
 
-		ExecutorService executorService = Executors.newCachedThreadPool();
-		Preferences preferences = Gdx.app.getPreferences("gemserk-vampirerunner");
+		// ExecutorService executorService = Executors.newCachedThreadPool();
+		// Preferences preferences = Gdx.app.getPreferences("gemserk-" + GameInformation.applicationId);
 
-		GamePreferences gamePreferences = new GamePreferences();
+		Injector injector = new InjectorImpl();
 
-		eventManager = new EventManagerImpl();
-		resourceManager = new CustomResourceManager<String>();
+		injector.bind("game", this);
+		injector.bind("eventManager", new EventManagerImpl());
+		injector.bind("resourceManager", new CustomResourceManager<String>());
+		
+		injector.injectMembers(this);
 
 		GameResources.load(resourceManager);
 
@@ -121,15 +114,9 @@ public class Game extends com.gemserk.commons.gdx.Game {
 		fpsFont = new BitmapFont();
 		spriteBatch = new SpriteBatch();
 
-		MainMenuGameState mainMenuGameState = new MainMenuGameState(this);
-		mainMenuGameState.setResourceManager(resourceManager);
-		mainMenuGameState.setGamePreferences(gamePreferences);
-
-		SplashGameState splashGameState = new SplashGameState(this);
-		splashGameState.setResourceManager(resourceManager);
+		GameState splashGameState = injector.getInstance(SplashGameState.class);
 
 		splashScreen = new ScreenImpl(splashGameState);
-		mainMenuScreen = new ScreenImpl(mainMenuGameState);
 
 		EventListenerReflectionRegistrator registrator = new EventListenerReflectionRegistrator(eventManager);
 
@@ -141,13 +128,11 @@ public class Game extends com.gemserk.commons.gdx.Game {
 		new LibgdxInputMappingBuilder<String>(inputDevicesMonitor, Gdx.input) {
 			{
 				monitorKey("grabScreenshot", Keys.NUM_9);
-				monitorKey("toggleBox2dDebug", Keys.NUM_8);
 				monitorKey("toggleFps", Keys.NUM_7);
-				monitorKey("restartScreen", Keys.NUM_1);
 			}
 		};
 
-		Gdx.graphics.getGL10().glClearColor(0, 0, 0, 1);
+		Gdx.graphics.getGL10().glClearColor(0f, 0f, 0f, 1f);
 	}
 
 	@Override
@@ -166,13 +151,13 @@ public class Game extends com.gemserk.commons.gdx.Game {
 
 		if (inputDevicesMonitor.getButton("grabScreenshot").isReleased()) {
 			try {
-				ScreenshotSaver.saveScreenshot("superflyingthing");
+				ScreenshotSaver.saveScreenshot(GameInformation.applicationId);
 			} catch (IOException e) {
-				Gdx.app.log("SuperFlyingThing", "Can't save screenshot");
+				Gdx.app.log(GameInformation.applicationId, "Can't save screenshot");
 			}
 		}
 
-		if (inputDevicesMonitor.getButton("restartScreen").isReleased()) 
+		if (inputDevicesMonitor.getButton("restartScreen").isReleased())
 			getScreen().restart();
 
 		if (inputDevicesMonitor.getButton("toggleFps").isReleased())

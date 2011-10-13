@@ -13,37 +13,27 @@ import com.gemserk.animation4j.transitions.Transitions;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 import com.gemserk.commons.gdx.graphics.SpriteUtils;
-import com.gemserk.games.angryships.CustomResourceManager;
 import com.gemserk.games.angryships.Game;
+import com.gemserk.resources.CustomResourceManager;
 import com.gemserk.resources.Resource;
-import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.progress.TaskQueue;
 import com.gemserk.resources.progress.tasks.SimulateLoadingTimeRunnable;
 
 public class SplashGameState extends com.gemserk.commons.gdx.gamestates.LoadingGameState {
 
-	private final Game game;
+	Game game;
+	CustomResourceManager<String> resourceManager;
 
-	private SpriteBatch spriteBatch;
-	private BitmapFont font;
+	SpriteBatch spriteBatch;
+	BitmapFont font;
 
-	private ResourceManager<String> resourceManager;
+	Sprite gemserkLogo;
+	Sprite lwjglLogo;
+	Sprite libgdxLogo;
+	Sprite gemserkLogoBlur;
 
-	private Sprite gemserkLogo;
-	private Sprite lwjglLogo;
-	private Sprite libgdxLogo;
-	private Sprite gemserkLogoBlur;
-
-	private Color blurColor = new Color();
+	Color blurColor = new Color();
 	
-	public void setResourceManager(ResourceManager<String> resourceManager) {
-		this.resourceManager = resourceManager;
-	}
-
-	public SplashGameState(Game game) {
-		this.game = game;
-	}
-
 	@Override
 	public void init() {
 		super.init();
@@ -78,7 +68,6 @@ public class SplashGameState extends com.gemserk.commons.gdx.gamestates.LoadingG
 
 		taskQueue.add(new SimulateLoadingTimeRunnable(0));
 
-		final CustomResourceManager<String> resourceManager = game.getResourceManager();
 		ArrayList<String> registeredResources = resourceManager.getRegisteredResources();
 		for (int i = 0; i < registeredResources.size(); i++) {
 			final String resourceId = registeredResources.get(i);
@@ -86,10 +75,10 @@ public class SplashGameState extends com.gemserk.commons.gdx.gamestates.LoadingG
 				@Override
 				public void run() {
 					Gdx.app.log("VampireRunner", "Loading resource: " + resourceId);
-					Resource resource = resourceManager.get(resourceId);
+					Resource<?> resource = resourceManager.get(resourceId);
 					resource.load();
 				}
-			}, "Loading assets");
+			}, "Loading " + resourceId);
 		}
 
 		taskQueue.add(new Runnable() {
@@ -101,11 +90,7 @@ public class SplashGameState extends com.gemserk.commons.gdx.gamestates.LoadingG
 	}
 
 	private void mainMenu() {
-//		game.transition(game.getHighscoresScreen()) //
-		game.transition(game.getMainMenuScreen()) //
-				.leaveTime(1500) //
-				.disposeCurrent() //
-				.start();
+
 	}
 
 	@Override
@@ -134,7 +119,9 @@ public class SplashGameState extends com.gemserk.commons.gdx.gamestates.LoadingG
 
 	@Override
 	public void update() {
+		
 		Synchronizers.synchronize(getDelta());
+		
 	}
 
 	@Override
@@ -145,7 +132,6 @@ public class SplashGameState extends com.gemserk.commons.gdx.gamestates.LoadingG
 	@Override
 	public void dispose() {
 		spriteBatch.dispose();
-		spriteBatch = null;
 	}
 
 }
