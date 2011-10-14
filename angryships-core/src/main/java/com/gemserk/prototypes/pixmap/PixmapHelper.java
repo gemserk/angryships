@@ -1,12 +1,16 @@
 package com.gemserk.prototypes.pixmap;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Blending;
+import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.PixmapTextureData;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.gemserk.commons.gdx.graphics.ColorUtils;
@@ -19,17 +23,30 @@ public class PixmapHelper implements Disposable {
 
 	public final Color color = new Color();
 
+	// only allow 10 modifications
+	private Rectangle[] modifications = new Rectangle[5];
+	private int lastModification = 0;
+	private Pixmap renderPixmap;
+
 	public PixmapHelper(Pixmap pixmap, Sprite sprite, Texture texture) {
 		this.pixmap = pixmap;
 		this.sprite = sprite;
 		this.texture = texture;
+
+		for (int i = 0; i < modifications.length; i++)
+			modifications[i] = new Rectangle();
+		this.renderPixmap = new Pixmap(32, 32, Format.RGBA8888);
 	}
-	
+
 	public PixmapHelper(Pixmap pixmap) {
 		this.pixmap = pixmap;
 		this.texture = new Texture(new PixmapTextureData(pixmap, pixmap.getFormat(), false, false));
 		this.texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		this.sprite = new Sprite(texture);
+
+		for (int i = 0; i < modifications.length; i++)
+			modifications[i] = new Rectangle();
+		this.renderPixmap = new Pixmap(32, 32, Format.RGBA8888);
 	}
 
 	/**
@@ -79,23 +96,56 @@ public class PixmapHelper implements Disposable {
 		pixmap.setColor(color);
 	}
 
-	public void drawPixel(float x, float y, float r, float g, float b, float a, float radius) {
-		pixmap.setColor(r, g, b, a);
-		pixmap.fillCircle(Math.round(x), Math.round(y), Math.round(radius));
-		texture.draw(pixmap, 0, 0);
-	}
+	// public void drawPixel(float x, float y, float r, float g, float b, float a, float radius) {
+	// pixmap.setColor(r, g, b, a);
+	// pixmap.fillCircle(Math.round(x), Math.round(y), Math.round(radius));
+	// texture.draw(pixmap, 0, 0);
+	// }
 
 	public void eraseCircle(float x, float y, float radius) {
+		if (lastModification == modifications.length)
+			return;
+
 		Blending blending = Pixmap.getBlending();
 		pixmap.setColor(0f, 0f, 0f, 0f);
 		Pixmap.setBlending(Blending.None);
 
 		float scaleX = pixmap.getWidth() / sprite.getWidth();
-		System.out.println(scaleX);
 
-		pixmap.fillCircle(Math.round(x), Math.round(y), Math.round(radius * scaleX));
-		texture.draw(pixmap, 0, 0);
+		int newRadius = Math.round(radius * scaleX);
+		int newX = Math.round(x);
+		int newY = Math.round(y);
+
+		pixmap.fillCircle(newX, newY, Math.round(radius * scaleX));
 		Pixmap.setBlending(blending);
+
+		// modifications[lastModification++].set(newX - newRadius, newY - newRadius, newRadius * 2, newRadius * 2);
+		modifications[lastModification++].set(newX, newY, 0, 0);
+	}
+
+	public void updateTexture() {
+
+		if (lastModification == 0)
+			return;
+
+		Gdx.gl.glBindTexture(GL10.GL_TEXTURE_2D, texture.getTextureObjectHandle());
+
+		for (int i = 0; i < lastModification; i++) {
+
+			Rectangle rectangle = modifications[i];
+
+			Pixmap.setBlending(Blending.None);
+			renderPixmap.drawPixmap(pixmap, 0, 0, (int) rectangle.x - 16, (int) rectangle.y - 16, 32, 32);
+
+			// Gdx.gl.glTexSubImage2D(GL10.GL_TEXTURE_2D, 0, (int) rectangle.x, (int) rectangle.y, (int) rectangle.width, (int) rectangle.height, //
+			// renderPixmap.getGLFormat(), renderPixmap.getGLType(), renderPixmap.getPixels());
+
+			Gdx.gl.glTexSubImage2D(GL10.GL_TEXTURE_2D, 0, (int) rectangle.x - 16, (int) rectangle.y - 16, renderPixmap.getWidth(), renderPixmap.getHeight(), //
+					renderPixmap.getGLFormat(), renderPixmap.getGLType(), renderPixmap.getPixels());
+
+		}
+
+		lastModification = 0;
 	}
 
 	public void reloadTexture() {
@@ -106,6 +156,7 @@ public class PixmapHelper implements Disposable {
 	public void dispose() {
 		this.pixmap.dispose();
 		this.texture.dispose();
+		this.renderPixmap.dispose();
 	}
 
 }

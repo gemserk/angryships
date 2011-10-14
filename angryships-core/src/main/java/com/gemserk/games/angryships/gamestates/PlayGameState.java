@@ -48,7 +48,7 @@ import com.gemserk.componentsengine.input.InputDevicesMonitorImpl;
 import com.gemserk.componentsengine.input.LibgdxInputMappingBuilder;
 import com.gemserk.componentsengine.utils.ParametersWrapper;
 import com.gemserk.games.angryships.render.Layers;
-import com.gemserk.games.angryships.templates.BombEntityTemplate;
+import com.gemserk.games.angryships.templates.KamikazeBombEntityTemplate;
 import com.gemserk.prototypes.pixmap.PixmapHelper;
 import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.ResourceManagerImpl;
@@ -306,6 +306,9 @@ public class PlayGameState extends GameStateImpl {
 	Rectangle worldBounds;
 	private Sprite secondBackgroundSprite;
 	WorldWrapper worldWrapper;
+	
+	Injector injector;
+	EntityFactory entityFactory;
 
 	@Override
 	public void init() {
@@ -345,7 +348,7 @@ public class PlayGameState extends GameStateImpl {
 
 		bombExplosionSound = Gdx.audio.newSound(Gdx.files.internal("data/audio/bomb-explosion.ogg"));
 
-		Pixmap pixmap = new Pixmap(Gdx.files.internal("data/levels/superangrysheep-level.png"));
+		Pixmap pixmap = new Pixmap(Gdx.files.internal("data/levels/level01-0.png"));
 
 		Texture texture = new Texture(pixmap);
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -411,9 +414,9 @@ public class PlayGameState extends GameStateImpl {
 		RenderLayers renderLayers = new RenderLayers();
 		renderLayers.add(Layers.World, new RenderLayerSpriteBatchImpl(-500, 500, worldCamera));
 
-		EntityFactory entityFactory = new EntityFactoryImpl(worldWrapper.getWorld());
+		entityFactory = new EntityFactoryImpl(worldWrapper.getWorld());
 
-		Injector injector = new InjectorImpl();
+		injector = new InjectorImpl();
 
 		injector.bind("timeStepProvider", new TimeStepProviderGameStateImpl(this));
 		injector.bind("renderLayers", renderLayers);
@@ -447,7 +450,7 @@ public class PlayGameState extends GameStateImpl {
 		// worldWrapper.addRenderSystem(new RenderableSystem(renderLayers));
 		// worldWrapper.addRenderSystem(new ParticleEmitterSystem());
 
-		EntityTemplate bombEntityTemplate = injector.getInstance(BombEntityTemplate.class);
+		EntityTemplate bombEntityTemplate = injector.getInstance(KamikazeBombEntityTemplate.class);
 
 		entityFactory.instantiate(bombEntityTemplate, new ParametersWrapper() //
 				.put("spatial", new SpatialImpl(-200f, Gdx.graphics.getHeight() * 0.5f, 32f, 32f, 0)) //
@@ -494,26 +497,35 @@ public class PlayGameState extends GameStateImpl {
 		}
 
 		if (controller.fire) {
-			PlayGameState.Bomb bomb = new Bomb();
+			
+			EntityTemplate bombEntityTemplate = injector.getInstance(KamikazeBombEntityTemplate.class);
 
-			// bomb.soundHandle = bombSound.play();
-
-			bomb.position.set(-200f, Gdx.graphics.getHeight() * 0.5f);
-			bomb.velocity.set(200f, 0f);
-			bomb.angle = 0;
-			bomb.pixmapHelper = pixmapTerrain;
-			bomb.controller = controller;
-			bomb.explosionRadius = 30f;
-
-			Sprite bombSprite = resourceManager.getResourceValue("BombSprite");
-
-			// Sprite bombSprite = new Sprite(bombTexture);
-
-			bombSprite.setSize(32f, 32f);
-
-			bomb.setSprite(bombSprite);
-
-			bombs.add(bomb);
+			entityFactory.instantiate(bombEntityTemplate, new ParametersWrapper() //
+					.put("spatial", new SpatialImpl(-200f, Gdx.graphics.getHeight() * 0.5f, 32f, 32f, 0)) //
+					.put("controller", controller) //
+					.put("pixmapHelper", pixmapTerrain) //
+					);
+			
+//			PlayGameState.Bomb bomb = new Bomb();
+//
+//			// bomb.soundHandle = bombSound.play();
+//
+//			bomb.position.set(-200f, Gdx.graphics.getHeight() * 0.5f);
+//			bomb.velocity.set(200f, 0f);
+//			bomb.angle = 0;
+//			bomb.pixmapHelper = pixmapTerrain;
+//			bomb.controller = controller;
+//			bomb.explosionRadius = 30f;
+//
+//			Sprite bombSprite = resourceManager.getResourceValue("BombSprite");
+//
+//			// Sprite bombSprite = new Sprite(bombTexture);
+//
+//			bombSprite.setSize(32f, 32f);
+//
+//			bomb.setSprite(bombSprite);
+//
+//			bombs.add(bomb);
 		}
 
 		float midpointx = 0f;
@@ -570,6 +582,9 @@ public class PlayGameState extends GameStateImpl {
 
 		secondBackgroundCamera.zoom(secondBackgroundFollowCamera.getZoom());
 		secondBackgroundCamera.move(secondBackgroundFollowCamera.getX(), secondBackgroundFollowCamera.getY());
+		
+		// if was modified...
+		pixmapTerrain.updateTexture();
 
 	}
 

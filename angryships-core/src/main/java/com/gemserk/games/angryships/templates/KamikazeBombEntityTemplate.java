@@ -27,7 +27,7 @@ import com.gemserk.games.angryships.scripts.MovementScript;
 import com.gemserk.prototypes.pixmap.PixmapHelper;
 import com.gemserk.resources.ResourceManager;
 
-public class BombEntityTemplate extends EntityTemplateImpl {
+public class KamikazeBombEntityTemplate extends EntityTemplateImpl {
 	
 	public static class PixmapCollidableScript extends ScriptJavaImpl {
 		
@@ -49,8 +49,8 @@ public class BombEntityTemplate extends EntityTemplateImpl {
 			
 			ColorUtils.rgba8888ToColor(color, pixmapHelper.getPixel(position.x, position.y));
 
-			if (color.a == 0) 
-				return;
+//			if (color.a == 0) 
+//				return;
 			
 			// send event "bomb explosion".... however this script could be more generic than only for bombs...
 			
@@ -58,8 +58,8 @@ public class BombEntityTemplate extends EntityTemplateImpl {
 			// like ExplosionComponent, or something like that, and contain more information like
 			// which animation should be played for example.
 			
-			pixmapHelper.eraseCircle(position.x, position.y, 32f);
-			e.delete();
+			pixmapHelper.eraseCircle(position.x, position.y, 5f);
+			// e.delete();
 		}
 		
 	}
