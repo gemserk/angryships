@@ -13,9 +13,13 @@ import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.artemis.scripts.Script;
 import com.gemserk.commons.artemis.scripts.ScriptJavaImpl;
+import com.gemserk.commons.artemis.templates.EntityFactory;
+import com.gemserk.commons.artemis.templates.EntityTemplate;
 import com.gemserk.commons.artemis.templates.EntityTemplateImpl;
 import com.gemserk.commons.gdx.games.Spatial;
+import com.gemserk.commons.gdx.games.SpatialImpl;
 import com.gemserk.commons.reflection.Injector;
+import com.gemserk.componentsengine.utils.ParametersWrapper;
 import com.gemserk.games.angryships.components.ControllerComponent;
 import com.gemserk.games.angryships.components.GameComponents;
 import com.gemserk.games.angryships.components.PixmapCollidableComponent;
@@ -32,6 +36,8 @@ public class BombEntityTemplate extends EntityTemplateImpl {
 	public static class PixmapCollidableScript extends ScriptJavaImpl {
 
 		private static final Vector2 position = new Vector2();
+		EntityFactory entityFactory;
+		Injector injector;
 
 		@Override
 		public void update(World world, Entity e) {
@@ -62,6 +68,10 @@ public class BombEntityTemplate extends EntityTemplateImpl {
 			}
 
 			e.delete();
+			
+			EntityTemplate bombAnimationTemplate = injector.getInstance(BombExplosionAnimationEntityTemplate.class);
+			entityFactory.instantiate(bombAnimationTemplate, new ParametersWrapper().put("spatial", new SpatialImpl(spatial)));
+			
 		}
 
 	}

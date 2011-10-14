@@ -278,7 +278,7 @@ public class PlayGameState extends GameStateImpl {
 	private PixmapHelper pixmapTerrain;
 
 	private final Vector2 position = new Vector2();
-	private InputDevicesMonitorImpl inputDevicesMonitor;
+	private InputDevicesMonitorImpl<String> inputDevicesMonitor;
 
 	boolean rotate = false;
 
@@ -436,23 +436,6 @@ public class PlayGameState extends GameStateImpl {
 
 		worldWrapper.init();
 
-		//
-		// worldWrapper.addUpdateSystem(new PhysicsSystem(physicsWorld));
-		// worldWrapper.addUpdateSystem(new ScriptSystem());
-		// worldWrapper.addUpdateSystem(new TagSystem());
-		// worldWrapper.addUpdateSystem(new ContainerSystem());
-		// worldWrapper.addUpdateSystem(new OwnerSystem());
-		//
-		// // testing event listener auto registration using reflection
-		// worldWrapper.addUpdateSystem(new ReflectionRegistratorEventSystem(eventManager));
-		// worldWrapper.addUpdateSystem(injector.getInstance(SoundSpawnerSystem.class));
-		//
-		// worldWrapper.addRenderSystem(new CameraUpdateSystem(timeStepProvider));
-		// worldWrapper.addRenderSystem(new SpriteUpdateSystem(timeStepProvider));
-		// worldWrapper.addRenderSystem(new TextLocationUpdateSystem());
-		// worldWrapper.addRenderSystem(new RenderableSystem(renderLayers));
-		// worldWrapper.addRenderSystem(new ParticleEmitterSystem());
-
 	}
 
 	@Override
@@ -492,7 +475,6 @@ public class PlayGameState extends GameStateImpl {
 		}
 
 		if (controller.fire) {
-
 			EntityTemplate bombEntityTemplate = injector.getInstance(BombEntityTemplate.class);
 
 			entityFactory.instantiate(bombEntityTemplate, new ParametersWrapper() //
