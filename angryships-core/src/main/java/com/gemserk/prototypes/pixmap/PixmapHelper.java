@@ -44,7 +44,7 @@ public class PixmapHelper implements Disposable {
 
 		for (int i = 0; i < modifications.length; i++)
 			modifications[i] = new PixmapChange();
-		this.renderPixmap = new Pixmap(32, 32, Format.RGBA8888);
+		this.renderPixmap = new Pixmap(64, 64, Format.RGBA8888);
 	}
 
 	public PixmapHelper(Pixmap pixmap) {
@@ -55,7 +55,7 @@ public class PixmapHelper implements Disposable {
 
 		for (int i = 0; i < modifications.length; i++)
 			modifications[i] = new PixmapChange();
-		this.renderPixmap = new Pixmap(32, 32, Format.RGBA8888);
+		this.renderPixmap = new Pixmap(64, 64, Format.RGBA8888);
 	}
 
 	/**

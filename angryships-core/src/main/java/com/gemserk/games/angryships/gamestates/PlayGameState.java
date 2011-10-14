@@ -1,7 +1,5 @@
 package com.gemserk.games.angryships.gamestates;
 
-import java.util.ArrayList;
-
 import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.utils.ImmutableBag;
@@ -52,9 +50,11 @@ import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.InputDevicesMonitorImpl;
 import com.gemserk.componentsengine.input.LibgdxInputMappingBuilder;
 import com.gemserk.componentsengine.utils.ParametersWrapper;
+import com.gemserk.games.angryships.components.PixmapWorld;
 import com.gemserk.games.angryships.entities.Groups;
 import com.gemserk.games.angryships.render.Layers;
-import com.gemserk.games.angryships.templates.KamikazeBombEntityTemplate;
+import com.gemserk.games.angryships.systems.PixmapCollidableSystem;
+import com.gemserk.games.angryships.templates.BombEntityTemplate;
 import com.gemserk.prototypes.pixmap.PixmapHelper;
 import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.ResourceManagerImpl;
@@ -282,12 +282,6 @@ public class PlayGameState extends GameStateImpl {
 
 	boolean rotate = false;
 
-	ArrayList<PlayGameState.Bomb> bombs = new ArrayList<PlayGameState.Bomb>();
-	ArrayList<PlayGameState.Bomb> bombsToDelete = new ArrayList<PlayGameState.Bomb>();
-
-	ArrayList<BombExplosion> bombExplosions = new ArrayList<BombExplosion>();
-	ArrayList<BombExplosion> bombExplosionsToDelete = new ArrayList<BombExplosion>();
-
 	private Sound bombExplosionSound;
 
 	Controller controller;
@@ -408,9 +402,6 @@ public class PlayGameState extends GameStateImpl {
 			}
 		};
 
-		bombs = new ArrayList<PlayGameState.Bomb>();
-		bombExplosions = new ArrayList<BombExplosion>();
-
 		leftButton = new LeftButton(controller);
 		rightButton = new RightButton(controller);
 		fireButton = new FireButton(controller);
@@ -422,15 +413,21 @@ public class PlayGameState extends GameStateImpl {
 
 		entityFactory = new EntityFactoryImpl(worldWrapper.getWorld());
 
+		PixmapWorld pixmapWorld = new PixmapWorld();
+		
+		pixmapWorld.addPixmap(pixmapTerrain);
+
 		injector = new InjectorImpl();
 
 		injector.bind("timeStepProvider", new TimeStepProviderGameStateImpl(this));
 		injector.bind("renderLayers", renderLayers);
 		injector.bind("entityFactory", entityFactory);
 		injector.bind("resourceManager", resourceManager);
+		injector.bind("pixmapWorld", pixmapWorld);
 
 		worldWrapper.addUpdateSystem(injector.getInstance(PreviousStateSpatialSystem.class));
 		worldWrapper.addUpdateSystem(injector.getInstance(MovementSystem.class));
+		worldWrapper.addUpdateSystem(injector.getInstance(PixmapCollidableSystem.class));
 		worldWrapper.addUpdateSystem(injector.getInstance(ScriptSystem.class));
 
 		worldWrapper.addRenderSystem(injector.getInstance(CameraUpdateSystem.class));
@@ -455,14 +452,6 @@ public class PlayGameState extends GameStateImpl {
 		// worldWrapper.addRenderSystem(new TextLocationUpdateSystem());
 		// worldWrapper.addRenderSystem(new RenderableSystem(renderLayers));
 		// worldWrapper.addRenderSystem(new ParticleEmitterSystem());
-
-//		EntityTemplate bombEntityTemplate = injector.getInstance(KamikazeBombEntityTemplate.class);
-//
-//		entityFactory.instantiate(bombEntityTemplate, new ParametersWrapper() //
-//				.put("spatial", new SpatialImpl(-200f, Gdx.graphics.getHeight() * 0.5f, 32f, 32f, 0)) //
-//				.put("controller", controller) //
-//				.put("pixmapHelper", pixmapTerrain) //
-//				);
 
 	}
 
@@ -504,7 +493,7 @@ public class PlayGameState extends GameStateImpl {
 
 		if (controller.fire) {
 
-			EntityTemplate bombEntityTemplate = injector.getInstance(KamikazeBombEntityTemplate.class);
+			EntityTemplate bombEntityTemplate = injector.getInstance(BombEntityTemplate.class);
 
 			entityFactory.instantiate(bombEntityTemplate, new ParametersWrapper() //
 					.put("spatial", new SpatialImpl(-200f, Gdx.graphics.getHeight() * 0.5f, 32f, 32f, 0)) //
@@ -583,7 +572,7 @@ public class PlayGameState extends GameStateImpl {
 			worldCamera.move(midpointx, midpointy);
 			backgroundFollowCamera.setPosition(midpointx / 12f, midpointy / 12f);
 			secondBackgroundFollowCamera.setPosition(midpointx / 4f, midpointy / 4f);
-		} 
+		}
 
 		backgroundCamera.zoom(backgroundFollowCamera.getZoom());
 		backgroundCamera.move(backgroundFollowCamera.getX(), backgroundFollowCamera.getY());
@@ -600,7 +589,7 @@ public class PlayGameState extends GameStateImpl {
 	public void render() {
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		////
+		// //
 
 		backgroundCamera.apply(spriteBatch);
 		spriteBatch.begin();
@@ -616,12 +605,14 @@ public class PlayGameState extends GameStateImpl {
 		spriteBatch.begin();
 		// backgroundSprite.draw(spriteBatch);
 		pixmapTerrain.sprite.draw(spriteBatch);
-		for (int i = 0; i < bombs.size(); i++) {
-			bombs.get(i).draw(spriteBatch);
-		}
-		for (int i = 0; i < bombExplosions.size(); i++) {
-			bombExplosions.get(i).draw(spriteBatch);
-		}
+
+		// for (int i = 0; i < bombs.size(); i++) {
+		// bombs.get(i).draw(spriteBatch);
+		// }
+		// for (int i = 0; i < bombExplosions.size(); i++) {
+		// bombExplosions.get(i).draw(spriteBatch);
+		// }
+
 		spriteBatch.end();
 
 		guiCamera.apply(spriteBatch);
