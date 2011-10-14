@@ -58,7 +58,7 @@ public class KamikazeBombEntityTemplate extends EntityTemplateImpl {
 			// like ExplosionComponent, or something like that, and contain more information like
 			// which animation should be played for example.
 			
-			pixmapHelper.eraseCircle(position.x, position.y, 5f);
+			pixmapHelper.eraseCircle(position.x, position.y, 16f);
 			// e.delete();
 		}
 		

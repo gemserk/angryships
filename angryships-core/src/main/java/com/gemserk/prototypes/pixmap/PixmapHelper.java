@@ -130,17 +130,35 @@ public class PixmapHelper implements Disposable {
 
 		Gdx.gl.glBindTexture(GL10.GL_TEXTURE_2D, texture.getTextureObjectHandle());
 
+		int width = pixmap.getWidth();
+		int height = pixmap.getHeight();
+		
+		int dstWidth = renderPixmap.getWidth();
+		int dstHeight = renderPixmap.getHeight();
+
 		for (int i = 0; i < lastModification; i++) {
 
 			Rectangle rectangle = modifications[i];
 
 			Pixmap.setBlending(Blending.None);
-			renderPixmap.drawPixmap(pixmap, 0, 0, (int) rectangle.x - 16, (int) rectangle.y - 16, 32, 32);
+			
+			int x = Math.round(rectangle.x) - dstWidth / 2;
+			int y = Math.round(rectangle.y) - dstHeight / 2;
 
-			// Gdx.gl.glTexSubImage2D(GL10.GL_TEXTURE_2D, 0, (int) rectangle.x, (int) rectangle.y, (int) rectangle.width, (int) rectangle.height, //
-			// renderPixmap.getGLFormat(), renderPixmap.getGLType(), renderPixmap.getPixels());
+			if (x + dstWidth > width)
+				x = width - dstWidth;
+			else if (x < 0)
+				x = 0;
 
-			Gdx.gl.glTexSubImage2D(GL10.GL_TEXTURE_2D, 0, (int) rectangle.x - 16, (int) rectangle.y - 16, renderPixmap.getWidth(), renderPixmap.getHeight(), //
+			if (y + dstHeight > height)
+				y = height - dstHeight;
+			else if (y < 0) {
+				y = 0;
+			}
+			
+			renderPixmap.drawPixmap(pixmap, 0, 0, x, y, dstWidth, dstHeight);
+
+			Gdx.gl.glTexSubImage2D(GL10.GL_TEXTURE_2D, 0, x, y, dstWidth, dstHeight, //
 					renderPixmap.getGLFormat(), renderPixmap.getGLType(), renderPixmap.getPixels());
 
 		}
