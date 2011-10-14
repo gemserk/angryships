@@ -10,12 +10,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.PixmapTextureData;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.gemserk.commons.gdx.graphics.ColorUtils;
 
 public class PixmapHelper implements Disposable {
+	
+	private class PixmapChange {
+		
+		int x, y;
+		
+		void set(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+	}
 
 	public Pixmap pixmap;
 	public Sprite sprite;
@@ -24,7 +33,7 @@ public class PixmapHelper implements Disposable {
 	public final Color color = new Color();
 
 	// only allow 10 modifications
-	private Rectangle[] modifications = new Rectangle[5];
+	private PixmapChange[] modifications = new PixmapChange[10];
 	private int lastModification = 0;
 	private Pixmap renderPixmap;
 
@@ -34,7 +43,7 @@ public class PixmapHelper implements Disposable {
 		this.texture = texture;
 
 		for (int i = 0; i < modifications.length; i++)
-			modifications[i] = new Rectangle();
+			modifications[i] = new PixmapChange();
 		this.renderPixmap = new Pixmap(32, 32, Format.RGBA8888);
 	}
 
@@ -45,7 +54,7 @@ public class PixmapHelper implements Disposable {
 		this.sprite = new Sprite(texture);
 
 		for (int i = 0; i < modifications.length; i++)
-			modifications[i] = new Rectangle();
+			modifications[i] = new PixmapChange();
 		this.renderPixmap = new Pixmap(32, 32, Format.RGBA8888);
 	}
 
@@ -96,14 +105,14 @@ public class PixmapHelper implements Disposable {
 		pixmap.setColor(color);
 	}
 
-	// public void drawPixel(float x, float y, float r, float g, float b, float a, float radius) {
-	// pixmap.setColor(r, g, b, a);
-	// pixmap.fillCircle(Math.round(x), Math.round(y), Math.round(radius));
-	// texture.draw(pixmap, 0, 0);
-	// }
-
 	public void eraseCircle(float x, float y, float radius) {
 		if (lastModification == modifications.length)
+			return;
+		
+		if (x + radius < 0 || y + radius < 0) 
+			return;
+		
+		if (x - radius > pixmap.getWidth() || y - radius > pixmap.getHeight())
 			return;
 
 		Blending blending = Pixmap.getBlending();
@@ -116,11 +125,10 @@ public class PixmapHelper implements Disposable {
 		int newX = Math.round(x);
 		int newY = Math.round(y);
 
-		pixmap.fillCircle(newX, newY, Math.round(radius * scaleX));
+		pixmap.fillCircle(newX, newY, newRadius);
 		Pixmap.setBlending(blending);
 
-		// modifications[lastModification++].set(newX - newRadius, newY - newRadius, newRadius * 2, newRadius * 2);
-		modifications[lastModification++].set(newX, newY, 0, 0);
+		modifications[lastModification++].set(newX, newY);
 	}
 
 	public void updateTexture() {
@@ -138,12 +146,12 @@ public class PixmapHelper implements Disposable {
 
 		for (int i = 0; i < lastModification; i++) {
 
-			Rectangle rectangle = modifications[i];
+			PixmapChange pixmapChange = modifications[i];
 
 			Pixmap.setBlending(Blending.None);
 			
-			int x = Math.round(rectangle.x) - dstWidth / 2;
-			int y = Math.round(rectangle.y) - dstHeight / 2;
+			int x = Math.round(pixmapChange.x) - dstWidth / 2;
+			int y = Math.round(pixmapChange.y) - dstHeight / 2;
 
 			if (x + dstWidth > width)
 				x = width - dstWidth;

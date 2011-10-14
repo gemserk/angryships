@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.MovementComponent;
-import com.gemserk.commons.artemis.components.PreviousStateSpatialComponent;
 import com.gemserk.commons.artemis.components.RenderableComponent;
 import com.gemserk.commons.artemis.components.ScriptComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
@@ -21,6 +20,7 @@ import com.gemserk.commons.reflection.Injector;
 import com.gemserk.games.angryships.components.ControllerComponent;
 import com.gemserk.games.angryships.components.GameComponents;
 import com.gemserk.games.angryships.components.PixmapCollidableComponent;
+import com.gemserk.games.angryships.entities.Groups;
 import com.gemserk.games.angryships.gamestates.Controller;
 import com.gemserk.games.angryships.resources.GameResources;
 import com.gemserk.games.angryships.scripts.MovementScript;
@@ -76,11 +76,13 @@ public class KamikazeBombEntityTemplate extends EntityTemplateImpl {
 		
 		Sprite sprite = resourceManager.getResourceValue(GameResources.Sprites.BombSprite);
 		
+		entity.setGroup(Groups.Bombs);
+		
 		entity.addComponent(new RenderableComponent(0));
 		entity.addComponent(new SpriteComponent(sprite, 0.5f, 0.5f, Color.WHITE));
 		
 		entity.addComponent(new SpatialComponent(spatial));
-		entity.addComponent(new PreviousStateSpatialComponent());
+//		entity.addComponent(new PreviousStateSpatialComponent());
 		
 		entity.addComponent(new MovementComponent(150f, 0f, 0f));
 

@@ -2,7 +2,9 @@ package com.gemserk.games.angryships.gamestates;
 
 import java.util.ArrayList;
 
+import com.artemis.Entity;
 import com.artemis.World;
+import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -19,6 +21,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.gemserk.animation4j.gdx.Animation;
 import com.gemserk.commons.adwhirl.AdWhirlViewHandler;
 import com.gemserk.commons.artemis.WorldWrapper;
+import com.gemserk.commons.artemis.components.Components;
+import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.render.RenderLayers;
 import com.gemserk.commons.artemis.systems.CameraUpdateSystem;
 import com.gemserk.commons.artemis.systems.MovementSystem;
@@ -36,6 +40,7 @@ import com.gemserk.commons.gdx.camera.Camera;
 import com.gemserk.commons.gdx.camera.CameraRestrictedImpl;
 import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
 import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
+import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.commons.gdx.games.SpatialImpl;
 import com.gemserk.commons.gdx.graphics.ColorUtils;
 import com.gemserk.commons.gdx.graphics.SpriteUtils;
@@ -47,6 +52,7 @@ import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.InputDevicesMonitorImpl;
 import com.gemserk.componentsengine.input.LibgdxInputMappingBuilder;
 import com.gemserk.componentsengine.utils.ParametersWrapper;
+import com.gemserk.games.angryships.entities.Groups;
 import com.gemserk.games.angryships.render.Layers;
 import com.gemserk.games.angryships.templates.KamikazeBombEntityTemplate;
 import com.gemserk.prototypes.pixmap.PixmapHelper;
@@ -306,7 +312,7 @@ public class PlayGameState extends GameStateImpl {
 	Rectangle worldBounds;
 	private Sprite secondBackgroundSprite;
 	WorldWrapper worldWrapper;
-	
+
 	Injector injector;
 	EntityFactory entityFactory;
 
@@ -450,13 +456,13 @@ public class PlayGameState extends GameStateImpl {
 		// worldWrapper.addRenderSystem(new RenderableSystem(renderLayers));
 		// worldWrapper.addRenderSystem(new ParticleEmitterSystem());
 
-		EntityTemplate bombEntityTemplate = injector.getInstance(KamikazeBombEntityTemplate.class);
-
-		entityFactory.instantiate(bombEntityTemplate, new ParametersWrapper() //
-				.put("spatial", new SpatialImpl(-200f, Gdx.graphics.getHeight() * 0.5f, 32f, 32f, 0)) //
-				.put("controller", controller) //
-				.put("pixmapHelper", pixmapTerrain) //
-				);
+//		EntityTemplate bombEntityTemplate = injector.getInstance(KamikazeBombEntityTemplate.class);
+//
+//		entityFactory.instantiate(bombEntityTemplate, new ParametersWrapper() //
+//				.put("spatial", new SpatialImpl(-200f, Gdx.graphics.getHeight() * 0.5f, 32f, 32f, 0)) //
+//				.put("controller", controller) //
+//				.put("pixmapHelper", pixmapTerrain) //
+//				);
 
 	}
 
@@ -497,7 +503,7 @@ public class PlayGameState extends GameStateImpl {
 		}
 
 		if (controller.fire) {
-			
+
 			EntityTemplate bombEntityTemplate = injector.getInstance(KamikazeBombEntityTemplate.class);
 
 			entityFactory.instantiate(bombEntityTemplate, new ParametersWrapper() //
@@ -505,84 +511,86 @@ public class PlayGameState extends GameStateImpl {
 					.put("controller", controller) //
 					.put("pixmapHelper", pixmapTerrain) //
 					);
-			
-//			PlayGameState.Bomb bomb = new Bomb();
-//
-//			// bomb.soundHandle = bombSound.play();
-//
-//			bomb.position.set(-200f, Gdx.graphics.getHeight() * 0.5f);
-//			bomb.velocity.set(200f, 0f);
-//			bomb.angle = 0;
-//			bomb.pixmapHelper = pixmapTerrain;
-//			bomb.controller = controller;
-//			bomb.explosionRadius = 30f;
-//
-//			Sprite bombSprite = resourceManager.getResourceValue("BombSprite");
-//
-//			// Sprite bombSprite = new Sprite(bombTexture);
-//
-//			bombSprite.setSize(32f, 32f);
-//
-//			bomb.setSprite(bombSprite);
-//
-//			bombs.add(bomb);
+
+			// PlayGameState.Bomb bomb = new Bomb();
+			//
+			// // bomb.soundHandle = bombSound.play();
+			//
+			// bomb.position.set(-200f, Gdx.graphics.getHeight() * 0.5f);
+			// bomb.velocity.set(200f, 0f);
+			// bomb.angle = 0;
+			// bomb.pixmapHelper = pixmapTerrain;
+			// bomb.controller = controller;
+			// bomb.explosionRadius = 30f;
+			//
+			// Sprite bombSprite = resourceManager.getResourceValue("BombSprite");
+			//
+			// // Sprite bombSprite = new Sprite(bombTexture);
+			//
+			// bombSprite.setSize(32f, 32f);
+			//
+			// bomb.setSprite(bombSprite);
+			//
+			// bombs.add(bomb);
 		}
+
+		// for (int i = 0; i < bombs.size(); i++) {
+		// PlayGameState.Bomb bomb = bombs.get(i);
+		// bomb.update();
+		// if (bomb.deleted) {
+		// // bombSound.stop(bomb.soundHandle);
+		// bombsToDelete.add(bomb);
+		// bombExplosionSound.play();
+		// System.out.println("removing bomb");
+		//
+		// Animation animation = resourceManager.getResourceValue("BombExplosionAnimation");
+		//
+		// BombExplosion bombExplosion = new BombExplosion(animation);
+		// bombExplosion.position.set(bomb.position);
+		//
+		// bombExplosions.add(bombExplosion);
+		//
+		// }
+		// midpointx += bomb.position.x;
+		// midpointy += bomb.position.y;
+		// }
+
+		// for (int i = 0; i < bombExplosions.size(); i++) {
+		// BombExplosion bombExplosion = bombExplosions.get(i);
+		// bombExplosion.update();
+		// if (bombExplosion.animation.isFinished())
+		// bombExplosionsToDelete.add(bombExplosion);
+		// }
 
 		float midpointx = 0f;
 		float midpointy = 0f;
 
-		for (int i = 0; i < bombs.size(); i++) {
-			PlayGameState.Bomb bomb = bombs.get(i);
-			bomb.update();
-			if (bomb.deleted) {
-				// bombSound.stop(bomb.soundHandle);
-				bombsToDelete.add(bomb);
-				bombExplosionSound.play();
-				System.out.println("removing bomb");
+		ImmutableBag<Entity> bombEntities = worldWrapper.getWorld().getGroupManager().getEntities(Groups.Bombs);
 
-				Animation animation = resourceManager.getResourceValue("BombExplosionAnimation");
+		for (int i = 0; i < bombEntities.size(); i++) {
+			Entity bomb = bombEntities.get(i);
 
-				BombExplosion bombExplosion = new BombExplosion(animation);
-				bombExplosion.position.set(bomb.position);
+			SpatialComponent spatialComponent = Components.spatialComponent(bomb);
+			Spatial spatial = spatialComponent.getSpatial();
 
-				bombExplosions.add(bombExplosion);
-
-			}
-			midpointx += bomb.position.x;
-			midpointy += bomb.position.y;
+			midpointx += spatial.getX();
+			midpointy += spatial.getY();
 		}
 
-		for (int i = 0; i < bombExplosions.size(); i++) {
-			BombExplosion bombExplosion = bombExplosions.get(i);
-			bombExplosion.update();
-			if (bombExplosion.animation.isFinished())
-				bombExplosionsToDelete.add(bombExplosion);
-		}
-
-		if (bombs.size() >= 1) {
-			midpointx /= bombs.size();
-			midpointy /= bombs.size();
+		if (bombEntities.size() >= 1) {
+			midpointx /= bombEntities.size();
+			midpointy /= bombEntities.size();
 			worldCamera.move(midpointx, midpointy);
-
 			backgroundFollowCamera.setPosition(midpointx / 12f, midpointy / 12f);
 			secondBackgroundFollowCamera.setPosition(midpointx / 4f, midpointy / 4f);
-		} else {
-			// midpointx = Gdx.graphics.getWidth() * 0.5f;
-			// midpointy = Gdx.graphics.getHeight() * 0.5f;
-		}
-
-		bombs.removeAll(bombsToDelete);
-		bombsToDelete.clear();
-
-		bombExplosions.removeAll(bombExplosionsToDelete);
-		bombExplosionsToDelete.clear();
+		} 
 
 		backgroundCamera.zoom(backgroundFollowCamera.getZoom());
 		backgroundCamera.move(backgroundFollowCamera.getX(), backgroundFollowCamera.getY());
 
 		secondBackgroundCamera.zoom(secondBackgroundFollowCamera.getZoom());
 		secondBackgroundCamera.move(secondBackgroundFollowCamera.getX(), secondBackgroundFollowCamera.getY());
-		
+
 		// if was modified...
 		pixmapTerrain.updateTexture();
 
@@ -592,10 +600,7 @@ public class PlayGameState extends GameStateImpl {
 	public void render() {
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		// orthographicCamera.apply(gl);
-		//
-		// spriteBatch.setProjectionMatrix(orthographicCamera.projection);
-		// spriteBatch.setTransformMatrix(orthographicCamera.view);
+		////
 
 		backgroundCamera.apply(spriteBatch);
 		spriteBatch.begin();
