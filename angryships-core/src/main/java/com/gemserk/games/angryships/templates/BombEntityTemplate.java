@@ -2,6 +2,7 @@ package com.gemserk.games.angryships.templates;
 
 import com.artemis.Entity;
 import com.artemis.World;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -29,6 +30,7 @@ import com.gemserk.games.angryships.gamestates.Controller;
 import com.gemserk.games.angryships.resources.GameResources;
 import com.gemserk.games.angryships.scripts.MovementScript;
 import com.gemserk.prototypes.pixmap.PixmapHelper;
+import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 
 public class BombEntityTemplate extends EntityTemplateImpl {
@@ -38,6 +40,7 @@ public class BombEntityTemplate extends EntityTemplateImpl {
 		private static final Vector2 position = new Vector2();
 		EntityFactory entityFactory;
 		Injector injector;
+		ResourceManager<String> resourceManager;
 
 		@Override
 		public void update(World world, Entity e) {
@@ -71,6 +74,10 @@ public class BombEntityTemplate extends EntityTemplateImpl {
 			
 			EntityTemplate bombAnimationTemplate = injector.getInstance(BombExplosionAnimationEntityTemplate.class);
 			entityFactory.instantiate(bombAnimationTemplate, new ParametersWrapper().put("spatial", new SpatialImpl(spatial)));
+			
+			Resource<Sound> sound = resourceManager.get(GameResources.Sounds.BombExplosion);
+			
+			sound.get().play();
 			
 		}
 

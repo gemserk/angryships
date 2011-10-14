@@ -7,16 +7,22 @@ import com.gemserk.resources.ResourceManager;
  * Declares all resources needed for the game.
  */
 public class GameResources extends LibgdxResourceBuilder {
-	
+
 	public static class Sprites {
-		
+
 		public static final String GemserkLogo = "GemserkLogo";
 		public static final String GemserkLogoBlur = "GemserkLogoBlur";
 		public static final String LwjglLogo = "LwjglLogo";
 		public static final String LibgdxLogo = "LibgdxLogo";
-		
+
 		public static final String BombSprite = "BombSprite";
-		
+
+	}
+
+	public static class Sounds {
+
+		public static final String BombExplosion = "BombExplosionSound";
+
 	}
 
 	public static void load(ResourceManager<String> resourceManager) {
@@ -35,7 +41,7 @@ public class GameResources extends LibgdxResourceBuilder {
 		sprite(Sprites.GemserkLogoBlur, "GemserkLogoTextureBlur");
 		sprite(Sprites.LwjglLogo, "LwjglLogoTexture", 0, 0, 512, 185);
 		sprite(Sprites.LibgdxLogo, "LibgdxLogoTexture", 0, 25, 512, 256 - 50);
-		
+
 		texture("BackgroundTexture", "data/levels/superangrysheep-background.png", true);
 		sprite("BackgroundSprite", "BackgroundTexture");
 
@@ -53,9 +59,10 @@ public class GameResources extends LibgdxResourceBuilder {
 
 		texture("ButtonTurnLeftTexture", "data/gui/button-turn-left.png", true);
 		sprite("ButtonTurnLeftSprite", "ButtonTurnLeftTexture");
-		
+
 		texture("ButtonTurnRightTexture", "data/gui/button-turn-right.png", true);
 		sprite("ButtonTurnRightSprite", "ButtonTurnRightTexture");
-		
+
+		sound(Sounds.BombExplosion, "data/audio/bomb-explosion.ogg");
 	}
 }

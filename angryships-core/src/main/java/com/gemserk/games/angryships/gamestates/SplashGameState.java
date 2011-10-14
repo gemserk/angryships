@@ -15,6 +15,7 @@ import com.gemserk.commons.adwhirl.AdWhirlViewHandler;
 import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 import com.gemserk.commons.gdx.graphics.SpriteUtils;
 import com.gemserk.games.angryships.Game;
+import com.gemserk.games.angryships.GameInformation;
 import com.gemserk.games.angryships.resources.GameResources;
 import com.gemserk.resources.CustomResourceManager;
 import com.gemserk.resources.Resource;
@@ -77,7 +78,7 @@ public class SplashGameState extends com.gemserk.commons.gdx.gamestates.LoadingG
 			taskQueue.add(new Runnable() {
 				@Override
 				public void run() {
-					Gdx.app.log("VampireRunner", "Loading resource: " + resourceId);
+					Gdx.app.log(GameInformation.applicationId, "Loading resource: " + resourceId);
 					Resource<?> resource = resourceManager.get(resourceId);
 					resource.load();
 				}

@@ -6,7 +6,6 @@ import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -42,7 +41,6 @@ import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.commons.gdx.games.SpatialImpl;
 import com.gemserk.commons.gdx.graphics.ColorUtils;
 import com.gemserk.commons.gdx.graphics.SpriteUtils;
-import com.gemserk.commons.gdx.resources.LibgdxResourceBuilder;
 import com.gemserk.commons.gdx.time.TimeStepProviderGameStateImpl;
 import com.gemserk.commons.reflection.Injector;
 import com.gemserk.commons.reflection.InjectorImpl;
@@ -57,7 +55,6 @@ import com.gemserk.games.angryships.systems.PixmapCollidableSystem;
 import com.gemserk.games.angryships.templates.BombEntityTemplate;
 import com.gemserk.prototypes.pixmap.PixmapHelper;
 import com.gemserk.resources.ResourceManager;
-import com.gemserk.resources.ResourceManagerImpl;
 
 public class PlayGameState extends GameStateImpl {
 
@@ -282,8 +279,6 @@ public class PlayGameState extends GameStateImpl {
 
 	boolean rotate = false;
 
-	private Sound bombExplosionSound;
-
 	Controller controller;
 
 	LeftButton leftButton;
@@ -315,38 +310,6 @@ public class PlayGameState extends GameStateImpl {
 		gl = Gdx.graphics.getGL10();
 
 		spriteBatch = new SpriteBatch();
-
-		// orthographicCamera = new OrthographicCamera();
-
-		resourceManager = new ResourceManagerImpl<String>();
-
-		new LibgdxResourceBuilder(resourceManager) {
-			{
-				texture("BackgroundTexture", "data/levels/superangrysheep-background.png", true);
-				sprite("BackgroundSprite", "BackgroundTexture");
-
-				texture("SecondBackgroundTexture", "data/levels/superangrysheep-background2.png", true);
-				sprite("SecondBackgroundSprite", "SecondBackgroundTexture");
-
-				texture("BombExplosionSpriteSheet", "data/animations/bomb-explosion-animation.png");
-				animation("BombExplosionAnimation", "BombExplosionSpriteSheet", 0, 0, 128, 128, 15, false, 35);
-
-				texture("BombTexture", "data/images/bomb.png", true);
-				sprite("BombSprite", "BombTexture");
-
-				texture("ButtonFireTexture", "data/gui/button-fire.png", true);
-				sprite("ButtonFireSprite", "ButtonFireTexture");
-
-				texture("ButtonTurnLeftTexture", "data/gui/button-turn-left.png", true);
-				sprite("ButtonTurnLeftSprite", "ButtonTurnLeftTexture");
-
-				texture("ButtonTurnRightTexture", "data/gui/button-turn-right.png", true);
-				sprite("ButtonTurnRightSprite", "ButtonTurnRightTexture");
-
-			}
-		};
-
-		bombExplosionSound = Gdx.audio.newSound(Gdx.files.internal("data/audio/bomb-explosion.ogg"));
 
 		Pixmap pixmap = new Pixmap(Gdx.files.internal("data/levels/level01-0.png"));
 
@@ -585,16 +548,7 @@ public class PlayGameState extends GameStateImpl {
 
 		worldCamera.apply(spriteBatch);
 		spriteBatch.begin();
-		// backgroundSprite.draw(spriteBatch);
 		pixmapTerrain.sprite.draw(spriteBatch);
-
-		// for (int i = 0; i < bombs.size(); i++) {
-		// bombs.get(i).draw(spriteBatch);
-		// }
-		// for (int i = 0; i < bombExplosions.size(); i++) {
-		// bombExplosions.get(i).draw(spriteBatch);
-		// }
-
 		spriteBatch.end();
 
 		guiCamera.apply(spriteBatch);
@@ -620,7 +574,6 @@ public class PlayGameState extends GameStateImpl {
 	public void dispose() {
 		spriteBatch.dispose();
 		pixmapTerrain.dispose();
-		bombExplosionSound.dispose();
 		resourceManager.unloadAll();
 	}
 
