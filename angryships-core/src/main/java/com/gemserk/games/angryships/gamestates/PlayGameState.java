@@ -8,9 +8,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -53,6 +50,7 @@ import com.gemserk.games.angryships.entities.Groups;
 import com.gemserk.games.angryships.render.Layers;
 import com.gemserk.games.angryships.systems.PixmapCollidableSystem;
 import com.gemserk.games.angryships.templates.BombEntityTemplate;
+import com.gemserk.games.angryships.templates.TerrainEntityTemplate;
 import com.gemserk.prototypes.pixmap.PixmapHelper;
 import com.gemserk.resources.ResourceManager;
 
@@ -272,7 +270,7 @@ public class PlayGameState extends GameStateImpl {
 
 	private Color color = new Color();
 
-	private PixmapHelper pixmapTerrain;
+	// private PixmapHelper pixmapTerrain;
 
 	private final Vector2 position = new Vector2();
 	private InputDevicesMonitorImpl<String> inputDevicesMonitor;
@@ -304,6 +302,7 @@ public class PlayGameState extends GameStateImpl {
 
 	Injector injector;
 	EntityFactory entityFactory;
+	private PixmapWorld pixmapWorld;
 
 	@Override
 	public void init() {
@@ -311,14 +310,14 @@ public class PlayGameState extends GameStateImpl {
 
 		spriteBatch = new SpriteBatch();
 
-		Pixmap pixmap = new Pixmap(Gdx.files.internal("data/levels/level01-0.png"));
-
-		Texture texture = new Texture(pixmap);
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-		Sprite sprite = new Sprite(texture);
-
-		sprite.setPosition(0, 0);
+		// Pixmap pixmap = new Pixmap(Gdx.files.internal("data/levels/level01-0.png"));
+		//
+		// Texture texture = new Texture(pixmap);
+		// texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		//
+		// Sprite sprite = new Sprite(texture);
+		//
+		// sprite.setPosition(0, 0);
 
 		// backgroundTexture = new Texture(Gdx.files.internal("superangrysheep/superangrysheep-background.png"));
 		backgroundSprite = resourceManager.getResourceValue("BackgroundSprite");
@@ -348,7 +347,7 @@ public class PlayGameState extends GameStateImpl {
 		backgroundFollowCamera = new CameraRestrictedImpl(0f, 0f, 1f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), worldBounds);
 		secondBackgroundFollowCamera = new CameraRestrictedImpl(0f, 0f, 1f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), worldBounds);
 
-		pixmapTerrain = new PixmapHelper(pixmap);
+		// pixmapTerrain = new PixmapHelper(pixmap);
 
 		Gdx.graphics.getGL10().glClearColor(0.5f, 0.5f, 0.5f, 0f);
 
@@ -376,9 +375,9 @@ public class PlayGameState extends GameStateImpl {
 
 		entityFactory = new EntityFactoryImpl(worldWrapper.getWorld());
 
-		PixmapWorld pixmapWorld = new PixmapWorld();
-		
-		pixmapWorld.addPixmap(pixmapTerrain);
+		pixmapWorld = new PixmapWorld();
+
+		// pixmapWorld.addPixmap(pixmapTerrain);
 
 		injector = new InjectorImpl();
 
@@ -399,6 +398,17 @@ public class PlayGameState extends GameStateImpl {
 
 		worldWrapper.init();
 
+		EntityTemplate terrainEntityTemplate = injector.getInstance(TerrainEntityTemplate.class);
+
+		entityFactory.instantiate(terrainEntityTemplate, new ParametersWrapper() //
+				.put("spatial", new SpatialImpl(256f, 256f, 32f, 32f, 0)) //
+				.put("terrainId", "Level01_0") //
+				);
+		
+		entityFactory.instantiate(terrainEntityTemplate, new ParametersWrapper() //
+				.put("spatial", new SpatialImpl(256f + 512f, 256f, 32f, 32f, 0)) //
+				.put("terrainId", "Level01_1") //
+				);
 	}
 
 	@Override
@@ -408,24 +418,6 @@ public class PlayGameState extends GameStateImpl {
 		inputDevicesMonitor.update();
 
 		worldWrapper.update(getDeltaInMs());
-
-		int x = Gdx.input.getX();
-		int y = (Gdx.graphics.getHeight() - Gdx.input.getY());
-
-		pixmapTerrain.project(position, x, y);
-
-		int pixel = pixmapTerrain.getPixel(position.x, position.y);
-
-		ColorUtils.rgba8888ToColor(color, pixel);
-
-		// System.out.println(MessageFormat.format("({0},{1}) => ({2},{3},{4},{5}} and {6}", position.x, position.y, color.r, color.g, color.b, color.a, Integer.toHexString(pixel)));
-
-		// System.out.println("" + x + "," + y + ": " + color + ", " + Integer.toHexString(pixel));
-
-		if (rotate)
-			pixmapTerrain.sprite.rotate(0.1f);
-
-		// update controller
 
 		if (Gdx.app.getType() == ApplicationType.Android) {
 			leftButton.update();
@@ -443,58 +435,8 @@ public class PlayGameState extends GameStateImpl {
 			entityFactory.instantiate(bombEntityTemplate, new ParametersWrapper() //
 					.put("spatial", new SpatialImpl(-200f, Gdx.graphics.getHeight() * 0.5f, 32f, 32f, 0)) //
 					.put("controller", controller) //
-					.put("pixmapHelper", pixmapTerrain) //
 					);
-
-			// PlayGameState.Bomb bomb = new Bomb();
-			//
-			// // bomb.soundHandle = bombSound.play();
-			//
-			// bomb.position.set(-200f, Gdx.graphics.getHeight() * 0.5f);
-			// bomb.velocity.set(200f, 0f);
-			// bomb.angle = 0;
-			// bomb.pixmapHelper = pixmapTerrain;
-			// bomb.controller = controller;
-			// bomb.explosionRadius = 30f;
-			//
-			// Sprite bombSprite = resourceManager.getResourceValue("BombSprite");
-			//
-			// // Sprite bombSprite = new Sprite(bombTexture);
-			//
-			// bombSprite.setSize(32f, 32f);
-			//
-			// bomb.setSprite(bombSprite);
-			//
-			// bombs.add(bomb);
 		}
-
-		// for (int i = 0; i < bombs.size(); i++) {
-		// PlayGameState.Bomb bomb = bombs.get(i);
-		// bomb.update();
-		// if (bomb.deleted) {
-		// // bombSound.stop(bomb.soundHandle);
-		// bombsToDelete.add(bomb);
-		// bombExplosionSound.play();
-		// System.out.println("removing bomb");
-		//
-		// Animation animation = resourceManager.getResourceValue("BombExplosionAnimation");
-		//
-		// BombExplosion bombExplosion = new BombExplosion(animation);
-		// bombExplosion.position.set(bomb.position);
-		//
-		// bombExplosions.add(bombExplosion);
-		//
-		// }
-		// midpointx += bomb.position.x;
-		// midpointy += bomb.position.y;
-		// }
-
-		// for (int i = 0; i < bombExplosions.size(); i++) {
-		// BombExplosion bombExplosion = bombExplosions.get(i);
-		// bombExplosion.update();
-		// if (bombExplosion.animation.isFinished())
-		// bombExplosionsToDelete.add(bombExplosion);
-		// }
 
 		float midpointx = 0f;
 		float midpointy = 0f;
@@ -525,9 +467,6 @@ public class PlayGameState extends GameStateImpl {
 		secondBackgroundCamera.zoom(secondBackgroundFollowCamera.getZoom());
 		secondBackgroundCamera.move(secondBackgroundFollowCamera.getX(), secondBackgroundFollowCamera.getY());
 
-		// if was modified...
-		pixmapTerrain.updateTexture();
-
 	}
 
 	@Override
@@ -546,10 +485,11 @@ public class PlayGameState extends GameStateImpl {
 		secondBackgroundSprite.draw(spriteBatch);
 		spriteBatch.end();
 
-		worldCamera.apply(spriteBatch);
-		spriteBatch.begin();
-		pixmapTerrain.sprite.draw(spriteBatch);
-		spriteBatch.end();
+		// worldCamera.apply(spriteBatch);
+		// spriteBatch.begin();
+		//
+		// spriteBatch.end();
+		worldWrapper.render();
 
 		guiCamera.apply(spriteBatch);
 		spriteBatch.begin();
@@ -560,20 +500,19 @@ public class PlayGameState extends GameStateImpl {
 		// }
 		spriteBatch.end();
 
-		worldWrapper.render();
 	}
 
 	@Override
 	public void resume() {
-		pixmapTerrain.reloadTexture();
+		pixmapWorld.reload();
 		adWhirlViewHandler.show();
 		Gdx.input.setCatchBackKey(false);
 	}
 
 	@Override
 	public void dispose() {
+		pixmapWorld.dispose();
 		spriteBatch.dispose();
-		pixmapTerrain.dispose();
 		resourceManager.unloadAll();
 	}
 

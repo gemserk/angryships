@@ -26,5 +26,10 @@ public class PixmapWorld implements Disposable {
 			pixmaps.get(i).dispose();
 		pixmaps.clear();
 	}
+
+	public void reload() {
+		for (int i = 0; i < pixmaps.size; i++) 
+			pixmaps.get(i).reload();
+	}
 	
 }

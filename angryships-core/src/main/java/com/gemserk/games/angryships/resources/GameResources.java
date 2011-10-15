@@ -1,7 +1,11 @@
 package com.gemserk.games.angryships.resources;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.gemserk.commons.gdx.resources.LibgdxResourceBuilder;
+import com.gemserk.prototypes.pixmap.PixmapHelper;
 import com.gemserk.resources.ResourceManager;
+import com.gemserk.resources.dataloaders.DataLoader;
 
 /**
  * Declares all resources needed for the game.
@@ -64,5 +68,18 @@ public class GameResources extends LibgdxResourceBuilder {
 		sprite("ButtonTurnRightSprite", "ButtonTurnRightTexture");
 
 		sound(Sounds.BombExplosion, "data/audio/bomb-explosion.ogg");
+		
+		pixmapHelper("Level01_0", "data/levels/level01-0.png");
+		pixmapHelper("Level01_1", "data/levels/level01-1.png");
+		
+	}
+	
+	public void pixmapHelper(String id, final String file) {
+		resourceManager.addVolatile(id, new DataLoader<PixmapHelper>() {
+			@Override
+			public PixmapHelper load() {
+				return new PixmapHelper(new Pixmap(Gdx.files.internal(file)));
+			}
+		});
 	}
 }

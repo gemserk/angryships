@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.MovementComponent;
 import com.gemserk.commons.artemis.components.RenderableComponent;
@@ -25,6 +26,7 @@ import com.gemserk.games.angryships.components.ControllerComponent;
 import com.gemserk.games.angryships.components.GameComponents;
 import com.gemserk.games.angryships.components.PixmapCollidableComponent;
 import com.gemserk.games.angryships.components.PixmapCollision;
+import com.gemserk.games.angryships.components.PixmapWorld;
 import com.gemserk.games.angryships.entities.Groups;
 import com.gemserk.games.angryships.gamestates.Controller;
 import com.gemserk.games.angryships.resources.GameResources;
@@ -41,6 +43,7 @@ public class BombEntityTemplate extends EntityTemplateImpl {
 		EntityFactory entityFactory;
 		Injector injector;
 		ResourceManager<String> resourceManager;
+		PixmapWorld pixmapWorld;
 
 		@Override
 		public void update(World world, Entity e) {
@@ -56,8 +59,11 @@ public class BombEntityTemplate extends EntityTemplateImpl {
 
 			// explosion event -> position, power
 
-			for (int i = 0; i < pixmapCollision.getContactCount(); i++) {
-				PixmapHelper pixmapHelper = pixmapCollision.getContact(i);
+			Array<PixmapHelper> pixmaps = pixmapWorld.getPixmaps();
+			
+			for (int i = 0; i < pixmaps.size; i++) {
+//				PixmapHelper pixmapHelper = pixmapCollision.getContact(i);
+				PixmapHelper pixmapHelper = pixmaps.get(i);
 
 				pixmapHelper.project(position, spatial.getX(), spatial.getY());
 
@@ -92,8 +98,6 @@ public class BombEntityTemplate extends EntityTemplateImpl {
 		Spatial spatial = parameters.get("spatial");
 		Controller controller = parameters.get("controller");
 		
-		// PixmapHelper pixmapHelper = parameters.get("pixmapHelper");
-
 		Sprite sprite = resourceManager.getResourceValue(GameResources.Sprites.BombSprite);
 
 		entity.setGroup(Groups.Bombs);

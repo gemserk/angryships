@@ -131,7 +131,10 @@ public class PixmapHelper implements Disposable {
 		modifications[lastModification++].set(newX, newY);
 	}
 
-	public void updateTexture() {
+	/**
+	 * Updates the opengl texture with all the pixmap modifications.
+	 */
+	public void update() {
 
 		if (lastModification == 0)
 			return;
@@ -174,7 +177,10 @@ public class PixmapHelper implements Disposable {
 		lastModification = 0;
 	}
 
-	public void reloadTexture() {
+	/**
+	 * Reload all the pixmap data to the opengl texture, to be used after the game was resumed.
+	 */
+	public void reload() {
 		texture.load(new PixmapTextureData(pixmap, pixmap.getFormat(), false, false));
 	}
 

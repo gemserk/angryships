@@ -53,5 +53,15 @@ public class PixmapCollidableSystem extends EntityProcessingSystem {
 		}
 
 	}
+	
+	@Override
+	protected void end() {
+		super.end();
+	
+		Array<PixmapHelper> pixmaps = pixmapWorld.getPixmaps();
+		for (int i = 0; i < pixmaps.size; i++) 
+			pixmaps.get(i).update();
+		
+	}
 
 }
