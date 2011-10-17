@@ -19,6 +19,7 @@ import com.gemserk.commons.gdx.GameState;
 import com.gemserk.commons.gdx.GlobalTime;
 import com.gemserk.commons.gdx.Screen;
 import com.gemserk.commons.gdx.ScreenImpl;
+import com.gemserk.commons.gdx.audio.SoundPlayer;
 import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 import com.gemserk.commons.gdx.screens.transitions.TransitionBuilder;
 import com.gemserk.commons.reflection.Injector;
@@ -110,6 +111,7 @@ public class Game extends com.gemserk.commons.gdx.Game {
 		injector.bind("eventManager", new EventManagerImpl());
 		injector.bind("resourceManager", new CustomResourceManager<String>());
 		injector.bind("adWhirlViewHandler", adWhirlViewHandler);
+		injector.bind("soundPlayer", new SoundPlayer());
 		
 		injector.injectMembers(this);
 

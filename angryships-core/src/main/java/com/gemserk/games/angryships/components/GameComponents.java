@@ -6,6 +6,8 @@ public class GameComponents {
 
 	public static final Class<ControllerComponent> controllerComponentClass = ControllerComponent.class;
 	public static final Class<PixmapCollidableComponent> pixmapCollidableComponentClass = PixmapCollidableComponent.class;
+	
+	public static final Class<ExplosionComponent> explosionComponentClass = ExplosionComponent.class;
 
 	public static ControllerComponent getControllerComponent(Entity e) {
 		return e.getComponent(controllerComponentClass);
@@ -15,5 +17,8 @@ public class GameComponents {
 		return e.getComponent(pixmapCollidableComponentClass);
 	}
 
+	public static ExplosionComponent getExplosionComponent(Entity e) {
+		return e.getComponent(explosionComponentClass);
+	}
 	
 }

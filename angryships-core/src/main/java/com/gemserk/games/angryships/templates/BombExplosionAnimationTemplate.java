@@ -18,7 +18,7 @@ import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.commons.reflection.Injector;
 import com.gemserk.resources.ResourceManager;
 
-public class BombExplosionAnimationEntityTemplate extends EntityTemplateImpl {
+public class BombExplosionAnimationTemplate extends EntityTemplateImpl {
 	
 	public static class UpdateAnimationScript extends ScriptJavaImpl {
 

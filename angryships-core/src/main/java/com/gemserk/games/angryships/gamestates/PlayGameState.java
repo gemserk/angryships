@@ -17,19 +17,25 @@ import com.gemserk.commons.adwhirl.AdWhirlViewHandler;
 import com.gemserk.commons.artemis.WorldWrapper;
 import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.SpatialComponent;
+import com.gemserk.commons.artemis.events.EventManager;
+import com.gemserk.commons.artemis.events.EventManagerImpl;
 import com.gemserk.commons.artemis.render.RenderLayers;
 import com.gemserk.commons.artemis.systems.CameraUpdateSystem;
+import com.gemserk.commons.artemis.systems.EventManagerWorldSystem;
 import com.gemserk.commons.artemis.systems.MovementSystem;
 import com.gemserk.commons.artemis.systems.PreviousStateSpatialSystem;
+import com.gemserk.commons.artemis.systems.ReflectionRegistratorEventSystem;
 import com.gemserk.commons.artemis.systems.RenderLayerSpriteBatchImpl;
 import com.gemserk.commons.artemis.systems.RenderableSystem;
 import com.gemserk.commons.artemis.systems.ScriptSystem;
+import com.gemserk.commons.artemis.systems.SoundSpawnerSystem;
 import com.gemserk.commons.artemis.systems.SpriteUpdateSystem;
 import com.gemserk.commons.artemis.templates.EntityFactory;
 import com.gemserk.commons.artemis.templates.EntityFactoryImpl;
 import com.gemserk.commons.artemis.templates.EntityTemplate;
 import com.gemserk.commons.gdx.GameStateImpl;
 import com.gemserk.commons.gdx.GlobalTime;
+import com.gemserk.commons.gdx.audio.SoundPlayer;
 import com.gemserk.commons.gdx.camera.Camera;
 import com.gemserk.commons.gdx.camera.CameraRestrictedImpl;
 import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
@@ -49,7 +55,8 @@ import com.gemserk.games.angryships.components.PixmapWorld;
 import com.gemserk.games.angryships.entities.Groups;
 import com.gemserk.games.angryships.render.Layers;
 import com.gemserk.games.angryships.systems.PixmapCollidableSystem;
-import com.gemserk.games.angryships.templates.BombEntityTemplate;
+import com.gemserk.games.angryships.templates.BombTemplate;
+import com.gemserk.games.angryships.templates.ExplosionSpawnerTemplate;
 import com.gemserk.games.angryships.templates.TerrainEntityTemplate;
 import com.gemserk.prototypes.pixmap.PixmapHelper;
 import com.gemserk.resources.ResourceManager;
@@ -295,6 +302,7 @@ public class PlayGameState extends GameStateImpl {
 
 	ResourceManager<String> resourceManager;
 	AdWhirlViewHandler adWhirlViewHandler;
+	SoundPlayer soundPlayer;
 
 	Rectangle worldBounds;
 	private Sprite secondBackgroundSprite;
@@ -374,6 +382,7 @@ public class PlayGameState extends GameStateImpl {
 		renderLayers.add(Layers.World, new RenderLayerSpriteBatchImpl(-500, 500, worldCamera));
 
 		entityFactory = new EntityFactoryImpl(worldWrapper.getWorld());
+		EventManager eventManager = new EventManagerImpl();
 
 		pixmapWorld = new PixmapWorld();
 
@@ -386,11 +395,17 @@ public class PlayGameState extends GameStateImpl {
 		injector.bind("entityFactory", entityFactory);
 		injector.bind("resourceManager", resourceManager);
 		injector.bind("pixmapWorld", pixmapWorld);
+		injector.bind("eventManager", eventManager);
+		injector.bind("soundPlayer", soundPlayer);
 
 		worldWrapper.addUpdateSystem(injector.getInstance(PreviousStateSpatialSystem.class));
 		worldWrapper.addUpdateSystem(injector.getInstance(MovementSystem.class));
 		worldWrapper.addUpdateSystem(injector.getInstance(PixmapCollidableSystem.class));
 		worldWrapper.addUpdateSystem(injector.getInstance(ScriptSystem.class));
+		worldWrapper.addUpdateSystem(injector.getInstance(SoundSpawnerSystem.class));
+
+		worldWrapper.addUpdateSystem(injector.getInstance(EventManagerWorldSystem.class));
+		worldWrapper.addUpdateSystem(new ReflectionRegistratorEventSystem(eventManager));
 
 		worldWrapper.addRenderSystem(injector.getInstance(CameraUpdateSystem.class));
 		worldWrapper.addRenderSystem(injector.getInstance(SpriteUpdateSystem.class));
@@ -399,15 +414,19 @@ public class PlayGameState extends GameStateImpl {
 		worldWrapper.init();
 
 		EntityTemplate terrainEntityTemplate = injector.getInstance(TerrainEntityTemplate.class);
+		EntityTemplate explosionSpawnerTemplate = injector.getInstance(ExplosionSpawnerTemplate.class);
 
 		entityFactory.instantiate(terrainEntityTemplate, new ParametersWrapper() //
 				.put("spatial", new SpatialImpl(256f, 256f, 32f, 32f, 0)) //
 				.put("terrainId", "Level01_0") //
 				);
-		
+
 		entityFactory.instantiate(terrainEntityTemplate, new ParametersWrapper() //
 				.put("spatial", new SpatialImpl(256f + 512f, 256f, 32f, 32f, 0)) //
 				.put("terrainId", "Level01_1") //
+				);
+
+		entityFactory.instantiate(explosionSpawnerTemplate, new ParametersWrapper() //
 				);
 	}
 
@@ -430,7 +449,7 @@ public class PlayGameState extends GameStateImpl {
 		}
 
 		if (controller.fire) {
-			EntityTemplate bombEntityTemplate = injector.getInstance(BombEntityTemplate.class);
+			EntityTemplate bombEntityTemplate = injector.getInstance(BombTemplate.class);
 
 			entityFactory.instantiate(bombEntityTemplate, new ParametersWrapper() //
 					.put("spatial", new SpatialImpl(-200f, Gdx.graphics.getHeight() * 0.5f, 32f, 32f, 0)) //

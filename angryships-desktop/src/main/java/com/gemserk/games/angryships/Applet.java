@@ -29,6 +29,13 @@ public class Applet extends java.applet.Applet {
 		remove(canvas);
 		super.destroy();
 	}
+	
+	@Override
+	public void resize(int width, int height) {
+		super.resize(width, height);
+		canvas.setSize(width, height);
+		// libgdx calls automatically the resize method of the application listener whenever the canvas size was modified....
+	}
 
 	public void init() {
 
