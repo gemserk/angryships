@@ -90,7 +90,7 @@ public class BombTemplate extends EntityTemplateImpl {
 		entity.addComponent(new SpatialComponent(new SpatialPhysicsImpl(body, spatial)));
 		// entity.addComponent(new PreviousStateSpatialComponent());
 
-		entity.addComponent(new MovementComponent(150f, 0f, 0f));
+		entity.addComponent(new MovementComponent(200f, 0f, 0f));
 
 		entity.addComponent(new ControllerComponent(controller));
 
