@@ -34,13 +34,13 @@ public class TargetTemplate extends EntityTemplateImpl {
 	public void apply(Entity entity) {
 		Spatial spatial = parameters.get("spatial");
 
-		Animation idleAnimation = resourceManager.getResourceValue(GameResources.Animations.BarrelIdleAnimation);
+		Animation idleAnimation = resourceManager.getResourceValue(GameResources.Animations.ItemIdleAnimation);
 
 		entity.setGroup(Groups.Targets);
 		
 		Body body = bodyBuilder //
 			.fixture(bodyBuilder.fixtureDefBuilder() //
-					.circleShape(16f) //
+					.circleShape(spatial.getWidth() * 0.25f) //
 					.categoryBits(Collisions.Target) //
 					.maskBits((short)(Collisions.Bomb | Collisions.Explosion)) //
 					.sensor() //

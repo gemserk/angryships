@@ -289,7 +289,7 @@ public class PlayGameState extends GameStateImpl {
 				);
 
 		entityFactory.instantiate(targetTemplate, new ParametersWrapper() //
-				.put("spatial", new SpatialImpl(256f, 250f, 128f, 128f, 0)) //
+				.put("spatial", new SpatialImpl(256f + 512f, 125f, 64f, 64f, 0)) //
 				);
 	}
 

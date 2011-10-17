@@ -27,7 +27,7 @@ public class GameResources extends LibgdxResourceBuilder {
 
 		public static final String BombExplosionAnimation = "BombExplosionAnimation";
 		
-		public static final String BarrelIdleAnimation = "BarrelIdleAnimation";
+		public static final String ItemIdleAnimation = "ItemIdleAnimation";
 
 	}
 
@@ -60,10 +60,11 @@ public class GameResources extends LibgdxResourceBuilder {
 		texture("SecondBackgroundTexture", "data/levels/superangrysheep-background2.png", true);
 		sprite("SecondBackgroundSprite", "SecondBackgroundTexture");
 
-		texture("BombExplosionSpriteSheet", "data/animations/bomb-explosion-animation.png");
+		texture("BombExplosionSpriteSheet", "data/animations/bomb-explosion-animation.png", true);
 		animation(Animations.BombExplosionAnimation, "BombExplosionSpriteSheet", 0, 0, 128, 128, 15, false, 35);
 		
-		animation(Animations.BarrelIdleAnimation, "BombExplosionSpriteSheet", 0, 0, 128, 128, 15, true, 100);
+		texture("ItemIdleSpriteSheet", "data/animations/item-idle-animation.png", true);
+		animation(Animations.ItemIdleAnimation, "ItemIdleSpriteSheet", 0, 0, 128, 128, 9, true, 200, 125);
 		
 		texture("BombTexture", "data/images/bomb.png", true);
 		sprite(Sprites.BombSprite, "BombTexture");
