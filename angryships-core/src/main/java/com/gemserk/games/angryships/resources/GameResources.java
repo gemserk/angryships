@@ -23,6 +23,14 @@ public class GameResources extends LibgdxResourceBuilder {
 
 	}
 
+	public static class Animations {
+
+		public static final String BombExplosionAnimation = "BombExplosionAnimation";
+		
+		public static final String BarrelIdleAnimation = "BarrelIdleAnimation";
+
+	}
+
 	public static class Sounds {
 
 		public static final String BombExplosion = "BombExplosionSound";
@@ -53,8 +61,10 @@ public class GameResources extends LibgdxResourceBuilder {
 		sprite("SecondBackgroundSprite", "SecondBackgroundTexture");
 
 		texture("BombExplosionSpriteSheet", "data/animations/bomb-explosion-animation.png");
-		animation("BombExplosionAnimation", "BombExplosionSpriteSheet", 0, 0, 128, 128, 15, false, 35);
-
+		animation(Animations.BombExplosionAnimation, "BombExplosionSpriteSheet", 0, 0, 128, 128, 15, false, 35);
+		
+		animation(Animations.BarrelIdleAnimation, "BombExplosionSpriteSheet", 0, 0, 128, 128, 15, true, 100);
+		
 		texture("BombTexture", "data/images/bomb.png", true);
 		sprite(Sprites.BombSprite, "BombTexture");
 

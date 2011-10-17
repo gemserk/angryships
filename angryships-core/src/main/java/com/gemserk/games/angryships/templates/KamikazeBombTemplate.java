@@ -26,7 +26,7 @@ import com.gemserk.games.angryships.scripts.MovementScript;
 import com.gemserk.prototypes.pixmap.PixmapHelper;
 import com.gemserk.resources.ResourceManager;
 
-public class KamikazeBombEntityTemplate extends EntityTemplateImpl {
+public class KamikazeBombTemplate extends EntityTemplateImpl {
 
 	public static class PixmapCollidableScript extends ScriptJavaImpl {
 
@@ -34,16 +34,11 @@ public class KamikazeBombEntityTemplate extends EntityTemplateImpl {
 
 		PixmapWorld pixmapWorld;
 
-		// change it to be an entity processing system
-
 		@Override
 		public void update(World world, Entity e) {
 
 			SpatialComponent spatialComponent = Components.spatialComponent(e);
 			Spatial spatial = spatialComponent.getSpatial();
-
-			// PixmapCollidableComponent pixmapCollidableComponent = GameComponents.getPixmapCollidableComponent(e);
-			// PixmapCollision pixmapCollision = pixmapCollidableComponent.pixmapCollision;
 
 			Array<PixmapHelper> pixmaps = pixmapWorld.getPixmaps();
 
@@ -63,10 +58,8 @@ public class KamikazeBombEntityTemplate extends EntityTemplateImpl {
 
 	@Override
 	public void apply(Entity entity) {
-
 		Spatial spatial = parameters.get("spatial");
 		Controller controller = parameters.get("controller");
-		// PixmapHelper pixmapHelper = parameters.get("pixmapHelper");
 
 		Sprite sprite = resourceManager.getResourceValue(GameResources.Sprites.BombSprite);
 
@@ -76,19 +69,14 @@ public class KamikazeBombEntityTemplate extends EntityTemplateImpl {
 		entity.addComponent(new SpriteComponent(sprite, 0.5f, 0.5f, Color.WHITE));
 
 		entity.addComponent(new SpatialComponent(spatial));
-		// entity.addComponent(new PreviousStateSpatialComponent());
 
 		entity.addComponent(new MovementComponent(150f, 0f, 0f));
-
 		entity.addComponent(new ControllerComponent(controller));
-
-		// entity.addComponent(new PixmapCollidableComponent());
 
 		Script movementScript = injector.getInstance(MovementScript.class);
 		Script pixmapCollidableScript = injector.getInstance(PixmapCollidableScript.class);
 
 		entity.addComponent(new ScriptComponent(movementScript, pixmapCollidableScript));
-
 	}
 
 }

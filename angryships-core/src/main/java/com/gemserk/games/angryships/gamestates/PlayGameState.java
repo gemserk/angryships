@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.gemserk.commons.adwhirl.AdWhirlViewHandler;
 import com.gemserk.commons.artemis.WorldWrapper;
 import com.gemserk.commons.artemis.components.Components;
@@ -19,6 +21,7 @@ import com.gemserk.commons.artemis.render.RenderLayers;
 import com.gemserk.commons.artemis.systems.CameraUpdateSystem;
 import com.gemserk.commons.artemis.systems.EventManagerWorldSystem;
 import com.gemserk.commons.artemis.systems.MovementSystem;
+import com.gemserk.commons.artemis.systems.PhysicsSystem;
 import com.gemserk.commons.artemis.systems.PreviousStateSpatialSystem;
 import com.gemserk.commons.artemis.systems.ReflectionRegistratorEventSystem;
 import com.gemserk.commons.artemis.systems.RenderLayerSpriteBatchImpl;
@@ -31,6 +34,7 @@ import com.gemserk.commons.artemis.templates.EntityFactoryImpl;
 import com.gemserk.commons.artemis.templates.EntityTemplate;
 import com.gemserk.commons.gdx.GameStateImpl;
 import com.gemserk.commons.gdx.audio.SoundPlayer;
+import com.gemserk.commons.gdx.box2d.BodyBuilder;
 import com.gemserk.commons.gdx.camera.Camera;
 import com.gemserk.commons.gdx.camera.CameraRestrictedImpl;
 import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
@@ -53,6 +57,7 @@ import com.gemserk.games.angryships.systems.PixmapCollidableSystem;
 import com.gemserk.games.angryships.templates.BombTemplate;
 import com.gemserk.games.angryships.templates.ExplosionSpawnerTemplate;
 import com.gemserk.games.angryships.templates.KeyboardControllerTemplate;
+import com.gemserk.games.angryships.templates.TargetTemplate;
 import com.gemserk.games.angryships.templates.TerrainEntityTemplate;
 import com.gemserk.resources.ResourceManager;
 
@@ -167,6 +172,7 @@ public class PlayGameState extends GameStateImpl {
 	Injector injector;
 	EntityFactory entityFactory;
 	private PixmapWorld pixmapWorld;
+	private com.badlogic.gdx.physics.box2d.World physicsWorld;
 
 	@Override
 	public void init() {
@@ -227,9 +233,12 @@ public class PlayGameState extends GameStateImpl {
 		entityFactory = new EntityFactoryImpl(worldWrapper.getWorld());
 		EventManager eventManager = new EventManagerImpl();
 
+		physicsWorld = new com.badlogic.gdx.physics.box2d.World(new Vector2(), false);
+
 		pixmapWorld = new PixmapWorld();
 
 		// pixmapWorld.addPixmap(pixmapTerrain);
+		BodyBuilder bodyBuilder = new BodyBuilder(physicsWorld);
 
 		injector = new InjectorImpl();
 
@@ -240,8 +249,10 @@ public class PlayGameState extends GameStateImpl {
 		injector.bind("pixmapWorld", pixmapWorld);
 		injector.bind("eventManager", eventManager);
 		injector.bind("soundPlayer", soundPlayer);
+		injector.bind("bodyBuilder", bodyBuilder);
 
 		worldWrapper.addUpdateSystem(injector.getInstance(PreviousStateSpatialSystem.class));
+		worldWrapper.addUpdateSystem(new PhysicsSystem(physicsWorld));
 		worldWrapper.addUpdateSystem(injector.getInstance(MovementSystem.class));
 		worldWrapper.addUpdateSystem(injector.getInstance(PixmapCollidableSystem.class));
 		worldWrapper.addUpdateSystem(injector.getInstance(ScriptSystem.class));
@@ -259,6 +270,7 @@ public class PlayGameState extends GameStateImpl {
 		EntityTemplate terrainEntityTemplate = injector.getInstance(TerrainEntityTemplate.class);
 		EntityTemplate explosionSpawnerTemplate = injector.getInstance(ExplosionSpawnerTemplate.class);
 		EntityTemplate keyboardControllerTemplate = injector.getInstance(KeyboardControllerTemplate.class);
+		EntityTemplate targetTemplate = injector.getInstance(TargetTemplate.class);
 
 		entityFactory.instantiate(terrainEntityTemplate, new ParametersWrapper() //
 				.put("spatial", new SpatialImpl(256f, 256f, 32f, 32f, 0)) //
@@ -271,10 +283,14 @@ public class PlayGameState extends GameStateImpl {
 				);
 
 		entityFactory.instantiate(explosionSpawnerTemplate, new ParametersWrapper());
-		
+
 		entityFactory.instantiate(keyboardControllerTemplate, new ParametersWrapper() //
-			.put("controller", controller) //
-		);
+				.put("controller", controller) //
+				);
+
+		entityFactory.instantiate(targetTemplate, new ParametersWrapper() //
+				.put("spatial", new SpatialImpl(256f, 250f, 128f, 128f, 0)) //
+				);
 	}
 
 	@Override
@@ -293,7 +309,6 @@ public class PlayGameState extends GameStateImpl {
 
 		if (controller.fire) {
 			EntityTemplate bombEntityTemplate = injector.getInstance(BombTemplate.class);
-
 			entityFactory.instantiate(bombEntityTemplate, new ParametersWrapper() //
 					.put("spatial", new SpatialImpl(-200f, Gdx.graphics.getHeight() * 0.5f, 32f, 32f, 0)) //
 					.put("controller", controller) //
@@ -330,6 +345,8 @@ public class PlayGameState extends GameStateImpl {
 		secondBackgroundCamera.move(secondBackgroundFollowCamera.getX(), secondBackgroundFollowCamera.getY());
 
 	}
+	
+	Box2DDebugRenderer box2dDebugRenderer = new Box2DDebugRenderer();
 
 	@Override
 	public void render() {
@@ -361,6 +378,8 @@ public class PlayGameState extends GameStateImpl {
 		fireButton.draw(spriteBatch);
 		// }
 		spriteBatch.end();
+		
+		box2dDebugRenderer.render(physicsWorld, worldCamera.getCombinedMatrix());
 
 	}
 
