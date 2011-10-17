@@ -36,7 +36,7 @@ import com.gemserk.util.ScreenshotSaver;
 
 public class Game extends com.gemserk.commons.gdx.Game {
 
-	private static boolean showFps = true;
+	private static boolean showFps = false;
 	private static boolean showBox2dDebug = false;
 
 	public static void setShowFps(boolean showFps) {

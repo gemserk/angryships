@@ -158,6 +158,7 @@ public class PlayGameState extends GameStateImpl {
 	Libgdx2dCamera worldCamera;
 	Libgdx2dCamera guiCamera;
 
+	Camera worldFollowCamera;
 	Camera backgroundFollowCamera;
 	Camera secondBackgroundFollowCamera;
 
@@ -204,6 +205,9 @@ public class PlayGameState extends GameStateImpl {
 		worldCamera.move(Gdx.graphics.getWidth() * 0.25f, Gdx.graphics.getHeight() * 0.5f);
 		worldCamera.zoom(1f);
 
+		Rectangle worldCameraBounds = new Rectangle(-1024f * 2f * 0.5f, -512 * 2f * 0.5f, 1024f * 4f, 512f * 4f);
+
+		worldFollowCamera = new CameraRestrictedImpl(0f, 0f, 1f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), worldCameraBounds);
 		backgroundFollowCamera = new CameraRestrictedImpl(0f, 0f, 1f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), worldBounds);
 		secondBackgroundFollowCamera = new CameraRestrictedImpl(0f, 0f, 1f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), worldBounds);
 
@@ -284,9 +288,10 @@ public class PlayGameState extends GameStateImpl {
 
 		entityFactory.instantiate(explosionSpawnerTemplate, new ParametersWrapper());
 
-		entityFactory.instantiate(keyboardControllerTemplate, new ParametersWrapper() //
-				.put("controller", controller) //
-				);
+		if (Gdx.app.getType() == ApplicationType.Desktop || Gdx.app.getType() == ApplicationType.Applet)
+			entityFactory.instantiate(keyboardControllerTemplate, new ParametersWrapper() //
+					.put("controller", controller) //
+					);
 
 		entityFactory.instantiate(targetTemplate, new ParametersWrapper() //
 				.put("spatial", new SpatialImpl(256f + 512f, 125f, 64f, 64f, 0)) //
@@ -333,10 +338,13 @@ public class PlayGameState extends GameStateImpl {
 		if (bombEntities.size() >= 1) {
 			midpointx /= bombEntities.size();
 			midpointy /= bombEntities.size();
-			worldCamera.move(midpointx, midpointy);
+			worldFollowCamera.setPosition(midpointx, midpointy);
 			backgroundFollowCamera.setPosition(midpointx / 12f, midpointy / 12f);
 			secondBackgroundFollowCamera.setPosition(midpointx / 4f, midpointy / 4f);
 		}
+
+		worldCamera.zoom(worldFollowCamera.getZoom());
+		worldCamera.move(worldFollowCamera.getX(), worldFollowCamera.getY());
 
 		backgroundCamera.zoom(backgroundFollowCamera.getZoom());
 		backgroundCamera.move(backgroundFollowCamera.getX(), backgroundFollowCamera.getY());
@@ -345,7 +353,7 @@ public class PlayGameState extends GameStateImpl {
 		secondBackgroundCamera.move(secondBackgroundFollowCamera.getX(), secondBackgroundFollowCamera.getY());
 
 	}
-	
+
 	Box2DDebugRenderer box2dDebugRenderer = new Box2DDebugRenderer();
 
 	@Override
@@ -372,14 +380,14 @@ public class PlayGameState extends GameStateImpl {
 
 		guiCamera.apply(spriteBatch);
 		spriteBatch.begin();
-		// if (Gdx.app.getType() == ApplicationType.Android) {
+		 if (Gdx.app.getType() == ApplicationType.Android) {
 		leftButton.draw(spriteBatch);
 		rightButton.draw(spriteBatch);
 		fireButton.draw(spriteBatch);
-		// }
+		 }
 		spriteBatch.end();
-		
-		box2dDebugRenderer.render(physicsWorld, worldCamera.getCombinedMatrix());
+
+//		box2dDebugRenderer.render(physicsWorld, worldCamera.getCombinedMatrix());
 
 	}
 

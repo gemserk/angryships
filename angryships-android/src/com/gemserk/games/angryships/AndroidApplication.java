@@ -1,26 +1,16 @@
 package com.gemserk.games.angryships;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import com.adwhirl.AdWhirlLayout.AdWhirlInterface;
-import com.adwhirl.AdWhirlManager;
-import com.adwhirl.AdWhirlTargeting;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.dmurph.tracking.VisitorData;
-import com.gemserk.analytics.googleanalytics.android.AnalyticsStoredConfig;
-import com.gemserk.commons.adwhirl.AdWhirlAndroidHandler;
-import com.gemserk.commons.adwhirl.CustomAdViewHandler;
-import com.gemserk.commons.adwhirl.PausableAdWhirlLayout;
+import com.gemserk.commons.adwhirl.AdWhirlViewHandler;
 
 public class AndroidApplication extends com.badlogic.gdx.backends.android.AndroidApplication implements AdWhirlInterface {
-
-	private AnalyticsStoredConfig storedConfig;
-	private VisitorData visitorData;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -42,38 +32,39 @@ public class AndroidApplication extends com.badlogic.gdx.backends.android.Androi
 		Game game = new Game();
 
 		View gameView = initializeForView(game, config);
-		
-		AdWhirlManager.setConfigExpireTimeout(1000 * 15);
-		AdWhirlTargeting.setAge(23);
-		AdWhirlTargeting.setGender(AdWhirlTargeting.Gender.MALE);
-		AdWhirlTargeting.setKeywords("online games gaming");
-		AdWhirlTargeting.setPostalCode("94123");
-		AdWhirlTargeting.setTestMode(false);
 
-		PausableAdWhirlLayout adView = new PausableAdWhirlLayout(this, "5d99c9fc499b41e5be30b22e3b52d799");
-		
-		Handler handler = new AdWhirlAndroidHandler(adView);
-		CustomAdViewHandler adWhirlViewHandler = new CustomAdViewHandler(handler);
-		
+		// AdWhirlManager.setConfigExpireTimeout(1000 * 15);
+		// AdWhirlTargeting.setAge(23);
+		// AdWhirlTargeting.setGender(AdWhirlTargeting.Gender.MALE);
+		// AdWhirlTargeting.setKeywords("online games gaming");
+		// AdWhirlTargeting.setPostalCode("94123");
+		// AdWhirlTargeting.setTestMode(false);
+		//
+		// PausableAdWhirlLayout adView = new PausableAdWhirlLayout(this, "5d99c9fc499b41e5be30b22e3b52d799");
+
+		// Handler handler = new AdWhirlAndroidHandler(adView);
+		// AdWhirlViewHandler adWhirlViewHandler = new CustomAdViewHandler(handler);
+		AdWhirlViewHandler adWhirlViewHandler = new AdWhirlViewHandler();
+
 		game.setAdWhirlViewHandler(adWhirlViewHandler);
-		
-		int diWidth = 320;
-		int diHeight = 52;
-		
-		float density = getResources().getDisplayMetrics().density;
 
-		adView.setAdWhirlInterface(this);
-		adView.setMaxWidth((int) (diWidth * density));
-		adView.setMaxHeight((int) (diHeight * density));
-		
-		log(GameInformation.applicationId, "Device max Ads area: (" + (int) (diWidth * density) + ", " + (int) (diHeight * density) + ")");
+		// int diWidth = 320;
+		// int diHeight = 52;
+		//
+		// float density = getResources().getDisplayMetrics().density;
 
-		RelativeLayout.LayoutParams adParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-		adParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-		adParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+		// adView.setAdWhirlInterface(this);
+		// adView.setMaxWidth((int) (diWidth * density));
+		// adView.setMaxHeight((int) (diHeight * density));
+
+		// log(GameInformation.applicationId, "Device max Ads area: (" + (int) (diWidth * density) + ", " + (int) (diHeight * density) + ")");
+		//
+		// RelativeLayout.LayoutParams adParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+		// adParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+		// adParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
 		layout.addView(gameView);
-		layout.addView(adView, adParams);
+		// layout.addView(adView, adParams);
 
 		setContentView(layout);
 	}
@@ -81,7 +72,7 @@ public class AndroidApplication extends com.badlogic.gdx.backends.android.Androi
 	@Override
 	public void adWhirlGeneric() {
 		// TODO Auto-generated function stub
-		
+
 	}
 
 }

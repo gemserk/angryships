@@ -63,6 +63,7 @@ public class ExplosionSpawnerTemplate extends EntityTemplateImpl {
 
 			entityFactory.instantiate(explosionComponent.explosionAnimationTemplate, parameters //
 					.put("spatial", new SpatialImpl(spatial)) //
+					.put("radius", explosionComponent.radius) //
 					);
 			
 			SpatialImpl explosionSensorSpatial = new SpatialImpl(spatial);
