@@ -5,14 +5,10 @@ import com.artemis.World;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.gemserk.animation4j.gdx.Animation;
 import com.gemserk.commons.adwhirl.AdWhirlViewHandler;
 import com.gemserk.commons.artemis.WorldWrapper;
 import com.gemserk.commons.artemis.components.Components;
@@ -34,7 +30,6 @@ import com.gemserk.commons.artemis.templates.EntityFactory;
 import com.gemserk.commons.artemis.templates.EntityFactoryImpl;
 import com.gemserk.commons.artemis.templates.EntityTemplate;
 import com.gemserk.commons.gdx.GameStateImpl;
-import com.gemserk.commons.gdx.GlobalTime;
 import com.gemserk.commons.gdx.audio.SoundPlayer;
 import com.gemserk.commons.gdx.camera.Camera;
 import com.gemserk.commons.gdx.camera.CameraRestrictedImpl;
@@ -42,7 +37,6 @@ import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
 import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
 import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.commons.gdx.games.SpatialImpl;
-import com.gemserk.commons.gdx.graphics.ColorUtils;
 import com.gemserk.commons.gdx.graphics.SpriteUtils;
 import com.gemserk.commons.gdx.time.TimeStepProviderGameStateImpl;
 import com.gemserk.commons.reflection.Injector;
@@ -53,109 +47,16 @@ import com.gemserk.componentsengine.input.LibgdxInputMappingBuilder;
 import com.gemserk.componentsengine.utils.ParametersWrapper;
 import com.gemserk.games.angryships.components.PixmapWorld;
 import com.gemserk.games.angryships.entities.Groups;
+import com.gemserk.games.angryships.input.GraphicButtonMonitor;
 import com.gemserk.games.angryships.render.Layers;
 import com.gemserk.games.angryships.systems.PixmapCollidableSystem;
 import com.gemserk.games.angryships.templates.BombTemplate;
 import com.gemserk.games.angryships.templates.ExplosionSpawnerTemplate;
+import com.gemserk.games.angryships.templates.KeyboardControllerTemplate;
 import com.gemserk.games.angryships.templates.TerrainEntityTemplate;
-import com.gemserk.prototypes.pixmap.PixmapHelper;
 import com.gemserk.resources.ResourceManager;
 
 public class PlayGameState extends GameStateImpl {
-
-	static class Bomb {
-
-		Vector2 position = new Vector2();
-		Vector2 center = new Vector2(0.5f, 0.5f);
-		Vector2 velocity = new Vector2();
-
-		float width;
-		float height;
-		float explosionRadius;
-
-		float angle;
-		Sprite sprite;
-
-		long soundHandle;
-
-		PixmapHelper pixmapHelper;
-		Color color = new Color();
-		Vector2 projectedPosition = new Vector2();
-
-		boolean deleted = false;
-
-		Controller controller;
-
-		public void setSprite(Sprite sprite) {
-			this.sprite = sprite;
-			this.width = sprite.getWidth();
-			this.height = sprite.getHeight();
-		}
-
-		void update() {
-
-			// velocity.y += -1 * 100f * GlobalTime.getDelta();
-
-			position.x += velocity.x * GlobalTime.getDelta();
-			position.y += velocity.y * GlobalTime.getDelta();
-
-			sprite.setRotation(angle);
-			sprite.setOrigin(width * center.x, height * center.y);
-			sprite.setSize(width, height);
-			sprite.setPosition(position.x - sprite.getOriginX(), position.y - sprite.getOriginY());
-
-			pixmapHelper.project(projectedPosition, position.x, position.y);
-
-			ColorUtils.rgba8888ToColor(color, pixmapHelper.getPixel(projectedPosition.x, projectedPosition.y));
-
-			if (color.a != 0) {
-				pixmapHelper.eraseCircle(projectedPosition.x, projectedPosition.y, explosionRadius);
-				deleted = true;
-				// remove this bomb...
-			}
-
-			float rotationAngle = 360f * GlobalTime.getDelta();
-
-			if (controller.left) {
-				this.angle += rotationAngle;
-				velocity.rotate(rotationAngle);
-			} else if (controller.right) {
-				this.angle -= rotationAngle;
-				velocity.rotate(-rotationAngle);
-			}
-		}
-
-		void draw(SpriteBatch spriteBatch) {
-			sprite.draw(spriteBatch);
-		}
-
-	}
-
-	static class GraphicButtonMonitor extends ButtonMonitor {
-
-		Sprite sprite;
-		Rectangle bounds;
-
-		public GraphicButtonMonitor(Sprite sprite) {
-			this.sprite = sprite;
-			bounds = new Rectangle(this.sprite.getX(), //
-					this.sprite.getY(), //
-					this.sprite.getWidth(), //
-					this.sprite.getHeight());
-		}
-
-		@Override
-		protected boolean isDown() {
-			if (!Gdx.input.isTouched())
-				return false;
-
-			float x = Gdx.input.getX();
-			float y = Gdx.graphics.getHeight() - Gdx.input.getY();
-
-			return bounds.contains(x, y);
-		}
-
-	}
 
 	class LeftButton {
 
@@ -232,54 +133,9 @@ public class PlayGameState extends GameStateImpl {
 
 	}
 
-	static class BombExplosion {
-
-		Sprite sprite;
-		Vector2 position = new Vector2();
-		float angle;
-		Animation animation;
-
-		Vector2 center = new Vector2(0.5f, 0.5f);
-
-		float width;
-		float height;
-
-		public BombExplosion(Animation animation) {
-			this.animation = animation;
-
-			sprite = animation.getCurrentFrame();
-
-			this.width = sprite.getWidth() * 1.5f;
-			this.height = sprite.getHeight() * 1.5f;
-		}
-
-		void update() {
-
-			animation.update(GlobalTime.getDelta());
-			sprite = animation.getCurrentFrame();
-
-			sprite.setRotation(angle);
-			sprite.setOrigin(width * center.x, height * center.y);
-			sprite.setSize(width, height);
-			sprite.setPosition(position.x - sprite.getOriginX(), position.y - sprite.getOriginY());
-
-		}
-
-		void draw(SpriteBatch spriteBatch) {
-			sprite.draw(spriteBatch);
-		}
-
-	}
-
 	private GL10 gl;
 	private SpriteBatch spriteBatch;
-	// private OrthographicCamera orthographicCamera;
 
-	private Color color = new Color();
-
-	// private PixmapHelper pixmapTerrain;
-
-	private final Vector2 position = new Vector2();
 	private InputDevicesMonitorImpl<String> inputDevicesMonitor;
 
 	boolean rotate = false;
@@ -318,16 +174,6 @@ public class PlayGameState extends GameStateImpl {
 
 		spriteBatch = new SpriteBatch();
 
-		// Pixmap pixmap = new Pixmap(Gdx.files.internal("data/levels/level01-0.png"));
-		//
-		// Texture texture = new Texture(pixmap);
-		// texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		//
-		// Sprite sprite = new Sprite(texture);
-		//
-		// sprite.setPosition(0, 0);
-
-		// backgroundTexture = new Texture(Gdx.files.internal("superangrysheep/superangrysheep-background.png"));
 		backgroundSprite = resourceManager.getResourceValue("BackgroundSprite");
 		secondBackgroundSprite = resourceManager.getResourceValue("SecondBackgroundSprite");
 
@@ -366,9 +212,6 @@ public class PlayGameState extends GameStateImpl {
 			{
 				if (Gdx.app.getType() == ApplicationType.Android)
 					monitorPointerDown("releaseBomb", 0);
-				else {
-					monitorKey("releaseBomb", Keys.SPACE);
-				}
 			}
 		};
 
@@ -415,6 +258,7 @@ public class PlayGameState extends GameStateImpl {
 
 		EntityTemplate terrainEntityTemplate = injector.getInstance(TerrainEntityTemplate.class);
 		EntityTemplate explosionSpawnerTemplate = injector.getInstance(ExplosionSpawnerTemplate.class);
+		EntityTemplate keyboardControllerTemplate = injector.getInstance(KeyboardControllerTemplate.class);
 
 		entityFactory.instantiate(terrainEntityTemplate, new ParametersWrapper() //
 				.put("spatial", new SpatialImpl(256f, 256f, 32f, 32f, 0)) //
@@ -426,8 +270,11 @@ public class PlayGameState extends GameStateImpl {
 				.put("terrainId", "Level01_1") //
 				);
 
-		entityFactory.instantiate(explosionSpawnerTemplate, new ParametersWrapper() //
-				);
+		entityFactory.instantiate(explosionSpawnerTemplate, new ParametersWrapper());
+		
+		entityFactory.instantiate(keyboardControllerTemplate, new ParametersWrapper() //
+			.put("controller", controller) //
+		);
 	}
 
 	@Override
@@ -442,10 +289,6 @@ public class PlayGameState extends GameStateImpl {
 			leftButton.update();
 			rightButton.update();
 			fireButton.update();
-		} else {
-			controller.fire = inputDevicesMonitor.getButton("releaseBomb").isReleased();
-			controller.left = Gdx.input.isKeyPressed(Keys.LEFT);
-			controller.right = Gdx.input.isKeyPressed(Keys.RIGHT);
 		}
 
 		if (controller.fire) {
