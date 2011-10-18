@@ -23,6 +23,10 @@ public class GameResources extends LibgdxResourceBuilder {
 		public static final String SecondBackgroundSprite = "SecondBackgroundSprite";
 
 		public static final String BombSprite = "BombSprite";
+		
+		public static final String TurnRightButtonSprite = "TurnRightButtonSprite";
+		public static final String TurnLeftButtonSprite = "TurnLeftButtonSprite";
+		public static final String FireButtonSprite = "FireButtonSprite";
 
 	}
 
@@ -73,13 +77,13 @@ public class GameResources extends LibgdxResourceBuilder {
 		sprite(Sprites.BombSprite, "BombTexture");
 
 		texture("ButtonFireTexture", "data/gui/button-fire.png", true);
-		sprite("ButtonFireSprite", "ButtonFireTexture");
+		sprite(Sprites.FireButtonSprite, "ButtonFireTexture");
 
 		texture("ButtonTurnLeftTexture", "data/gui/button-turn-left.png", true);
-		sprite("ButtonTurnLeftSprite", "ButtonTurnLeftTexture");
+		sprite(Sprites.TurnLeftButtonSprite, "ButtonTurnLeftTexture");
 
 		texture("ButtonTurnRightTexture", "data/gui/button-turn-right.png", true);
-		sprite("ButtonTurnRightSprite", "ButtonTurnRightTexture");
+		sprite(Sprites.TurnRightButtonSprite, "ButtonTurnRightTexture");
 
 		sound(Sounds.BombExplosion, "data/audio/bomb-explosion.ogg");
 		
