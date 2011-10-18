@@ -50,6 +50,7 @@ import com.gemserk.componentsengine.utils.ParametersWrapper;
 import com.gemserk.games.angryships.components.PixmapWorld;
 import com.gemserk.games.angryships.render.Layers;
 import com.gemserk.games.angryships.resources.GameResources;
+import com.gemserk.games.angryships.systems.Box2dRenderSystem;
 import com.gemserk.games.angryships.systems.PixmapCollidableSystem;
 import com.gemserk.games.angryships.templates.BombTemplate;
 import com.gemserk.games.angryships.templates.CameraFollowTemplate;
@@ -247,6 +248,7 @@ public class PlayGameState extends GameStateImpl {
 		worldWrapper.addRenderSystem(injector.getInstance(CameraUpdateSystem.class));
 		worldWrapper.addRenderSystem(injector.getInstance(SpriteUpdateSystem.class));
 		worldWrapper.addRenderSystem(injector.getInstance(RenderableSystem.class));
+		worldWrapper.addRenderSystem(new Box2dRenderSystem(worldCamera, physicsWorld));
 
 		worldWrapper.init();
 
@@ -349,8 +351,6 @@ public class PlayGameState extends GameStateImpl {
 		spriteBatch.begin();
 		screen.draw(spriteBatch);
 		spriteBatch.end();
-
-		// box2dDebugRenderer.render(physicsWorld, worldCamera.getCombinedMatrix());
 
 	}
 
