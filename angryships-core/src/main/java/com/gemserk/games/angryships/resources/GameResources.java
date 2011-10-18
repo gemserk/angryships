@@ -18,6 +18,9 @@ public class GameResources extends LibgdxResourceBuilder {
 		public static final String GemserkLogoBlur = "GemserkLogoBlur";
 		public static final String LwjglLogo = "LwjglLogo";
 		public static final String LibgdxLogo = "LibgdxLogo";
+		
+		public static final String BackgroundSprite = "BackgroundSprite";
+		public static final String SecondBackgroundSprite = "SecondBackgroundSprite";
 
 		public static final String BombSprite = "BombSprite";
 
@@ -55,10 +58,10 @@ public class GameResources extends LibgdxResourceBuilder {
 		sprite(Sprites.LibgdxLogo, "LibgdxLogoTexture", 0, 25, 512, 256 - 50);
 
 		texture("BackgroundTexture", "data/levels/superangrysheep-background.png", true);
-		sprite("BackgroundSprite", "BackgroundTexture");
+		sprite(Sprites.BackgroundSprite, "BackgroundTexture");
 
 		texture("SecondBackgroundTexture", "data/levels/superangrysheep-background2.png", true);
-		sprite("SecondBackgroundSprite", "SecondBackgroundTexture");
+		sprite(Sprites.SecondBackgroundSprite, "SecondBackgroundTexture");
 
 		texture("BombExplosionSpriteSheet", "data/animations/bomb-explosion-animation.png", true);
 		animation(Animations.BombExplosionAnimation, "BombExplosionSpriteSheet", 0, 0, 128, 128, 15, false, 35);

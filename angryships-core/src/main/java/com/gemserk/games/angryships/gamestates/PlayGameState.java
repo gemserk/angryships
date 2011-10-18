@@ -47,11 +47,13 @@ import com.gemserk.componentsengine.utils.ParametersWrapper;
 import com.gemserk.games.angryships.components.PixmapWorld;
 import com.gemserk.games.angryships.input.GraphicButtonMonitor;
 import com.gemserk.games.angryships.render.Layers;
+import com.gemserk.games.angryships.resources.GameResources;
 import com.gemserk.games.angryships.systems.PixmapCollidableSystem;
 import com.gemserk.games.angryships.templates.BombTemplate;
 import com.gemserk.games.angryships.templates.CameraFollowTemplate;
 import com.gemserk.games.angryships.templates.ExplosionSpawnerTemplate;
 import com.gemserk.games.angryships.templates.KeyboardControllerTemplate;
+import com.gemserk.games.angryships.templates.StaticSpriteTemplate;
 import com.gemserk.games.angryships.templates.TargetTemplate;
 import com.gemserk.games.angryships.templates.TerrainEntityTemplate;
 import com.gemserk.resources.ResourceManager;
@@ -145,22 +147,14 @@ public class PlayGameState extends GameStateImpl {
 	LeftButton leftButton;
 	RightButton rightButton;
 	FireButton fireButton;
-	Sprite backgroundSprite;
-
-	Libgdx2dCamera backgroundCamera;
-	Libgdx2dCamera secondBackgroundCamera;
 
 	Libgdx2dCamera guiCamera;
-
-	Camera backgroundFollowCamera;
-	Camera secondBackgroundFollowCamera;
 
 	ResourceManager<String> resourceManager;
 	AdWhirlViewHandler adWhirlViewHandler;
 	SoundPlayer soundPlayer;
 
 	Rectangle worldBounds;
-	private Sprite secondBackgroundSprite;
 	WorldWrapper worldWrapper;
 
 	Injector injector;
@@ -174,24 +168,12 @@ public class PlayGameState extends GameStateImpl {
 
 		spriteBatch = new SpriteBatch();
 
-		backgroundSprite = resourceManager.getResourceValue("BackgroundSprite");
-		secondBackgroundSprite = resourceManager.getResourceValue("SecondBackgroundSprite");
-
 		float worldScaleFactor = 1.5f;
 
 		worldBounds = new Rectangle(-1024f * worldScaleFactor * 0.5f, -512 * worldScaleFactor * 0.5f, 1024f * worldScaleFactor, 512f * worldScaleFactor);
 
-		backgroundSprite.setOrigin(worldBounds.getWidth() * 0.5f, worldBounds.getHeight() * 0.5f);
-		backgroundSprite.setSize(worldBounds.getWidth(), worldBounds.getHeight());
-		backgroundSprite.setPosition(0f - backgroundSprite.getOriginX(), 0f - backgroundSprite.getOriginY());
-
-		secondBackgroundSprite.setOrigin(worldBounds.getWidth() * 0.5f, worldBounds.getHeight() * 0.5f);
-		secondBackgroundSprite.setSize(worldBounds.getWidth(), worldBounds.getHeight());
-		secondBackgroundSprite.setPosition(0f - secondBackgroundSprite.getOriginX(), 0f - secondBackgroundSprite.getOriginY());
-
-		backgroundCamera = new Libgdx2dCameraTransformImpl(Gdx.graphics.getWidth() * 0.5f, Gdx.graphics.getHeight() * 0.5f);
-		secondBackgroundCamera = new Libgdx2dCameraTransformImpl(Gdx.graphics.getWidth() * 0.5f, Gdx.graphics.getHeight() * 0.5f);
-
+		Libgdx2dCamera backgroundCamera = new Libgdx2dCameraTransformImpl(Gdx.graphics.getWidth() * 0.5f, Gdx.graphics.getHeight() * 0.5f);
+		Libgdx2dCamera secondBackgroundCamera = new Libgdx2dCameraTransformImpl(Gdx.graphics.getWidth() * 0.5f, Gdx.graphics.getHeight() * 0.5f);
 		Libgdx2dCamera worldCamera = new Libgdx2dCameraTransformImpl(Gdx.graphics.getWidth() * 0.25f, Gdx.graphics.getHeight() * 0.5f);
 		guiCamera = new Libgdx2dCameraTransformImpl();
 
@@ -201,8 +183,8 @@ public class PlayGameState extends GameStateImpl {
 		Rectangle worldCameraBounds = new Rectangle(-1024f * 2f * 0.5f, -512 * 2f * 0.5f, 1024f * 4f, 512f * 4f);
 
 		Camera worldFollowCamera = new CameraRestrictedImpl(0f, 0f, 1f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), worldCameraBounds);
-		backgroundFollowCamera = new CameraRestrictedImpl(0f, 0f, 1f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), worldBounds);
-		secondBackgroundFollowCamera = new CameraRestrictedImpl(0f, 0f, 1f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), worldBounds);
+		Camera backgroundFollowCamera = new CameraRestrictedImpl(0f, 0f, 1f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), worldBounds);
+		Camera secondBackgroundFollowCamera = new CameraRestrictedImpl(0f, 0f, 1f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), worldBounds);
 
 		// pixmapTerrain = new PixmapHelper(pixmap);
 
@@ -225,7 +207,11 @@ public class PlayGameState extends GameStateImpl {
 		worldWrapper = new WorldWrapper(new World());
 
 		RenderLayers renderLayers = new RenderLayers();
+
+		renderLayers.add(Layers.Background, new RenderLayerSpriteBatchImpl(-10000, -1000, backgroundCamera));
+		renderLayers.add(Layers.SecondBackground, new RenderLayerSpriteBatchImpl(-1000, -500, secondBackgroundCamera));
 		renderLayers.add(Layers.World, new RenderLayerSpriteBatchImpl(-500, 500, worldCamera));
+		renderLayers.add(Layers.Hud, new RenderLayerSpriteBatchImpl(500, 10000, guiCamera));
 
 		entityFactory = new EntityFactoryImpl(worldWrapper.getWorld());
 		EventManager eventManager = new EventManagerImpl();
@@ -269,6 +255,19 @@ public class PlayGameState extends GameStateImpl {
 		EntityTemplate keyboardControllerTemplate = injector.getInstance(KeyboardControllerTemplate.class);
 		EntityTemplate targetTemplate = injector.getInstance(TargetTemplate.class);
 		EntityTemplate cameraFollowTemplate = injector.getInstance(CameraFollowTemplate.class);
+		EntityTemplate staticSpriteTemplate = injector.getInstance(StaticSpriteTemplate.class);
+
+		entityFactory.instantiate(staticSpriteTemplate, new ParametersWrapper() //
+				.put("spriteId", GameResources.Sprites.BackgroundSprite) //
+				.put("spatial", new SpatialImpl(0, 0, worldBounds.getWidth(), worldBounds.getHeight(), 0f)) //
+				.put("layer", -5000) //
+				);
+
+		entityFactory.instantiate(staticSpriteTemplate, new ParametersWrapper() //
+				.put("spriteId", GameResources.Sprites.SecondBackgroundSprite) //
+				.put("spatial", new SpatialImpl(0, 0, worldBounds.getWidth(), worldBounds.getHeight(), 0f)) //
+				.put("layer", -800) //
+				);
 
 		entityFactory.instantiate(cameraFollowTemplate, new ParametersWrapper() //
 				.put("libgdx2dCamera", worldCamera) //
@@ -340,18 +339,6 @@ public class PlayGameState extends GameStateImpl {
 	public void render() {
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		// //
-
-		backgroundCamera.apply(spriteBatch);
-		spriteBatch.begin();
-		backgroundSprite.draw(spriteBatch);
-		spriteBatch.end();
-
-		secondBackgroundCamera.apply(spriteBatch);
-		spriteBatch.begin();
-		secondBackgroundSprite.draw(spriteBatch);
-		spriteBatch.end();
-
 		worldWrapper.render();
 
 		guiCamera.apply(spriteBatch);
@@ -363,7 +350,7 @@ public class PlayGameState extends GameStateImpl {
 		}
 		spriteBatch.end();
 
-		// box2dDebugRenderer.render(physicsWorld, worldCamera.getCombinedMatrix());
+//		box2dDebugRenderer.render(physicsWorld, worldCamera.getCombinedMatrix());
 
 	}
 
