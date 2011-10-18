@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+ xmlns:dc="http://purl.org/dc/elements/1.1/"
+ xmlns:cc="http://creativecommons.org/ns#"
+ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+ xmlns:svg="http://www.w3.org/2000/svg"
+ xmlns="http://www.w3.org/2000/svg"
+ xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+ xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+ width="512"
+ height="512"
+ id="svg2"
+ version="1.1"
+ inkscape:version="0.48.1 r9760"
+ sodipodi:docname="chick.svg"
+ inkscape:export-filename="/home/acoppes/workspace/angryships/assets/images/chick.png"
+ inkscape:export-xdpi="90"
+ inkscape:export-ydpi="90">
+<defs
+ id="defs4" />
+<sodipodi:namedview
+ id="base"
+ pagecolor="#ffffff"
+ bordercolor="#666666"
+ borderopacity="1.0"
+ inkscape:pageopacity="0.0"
+ inkscape:pageshadow="2"
+ inkscape:zoom="0.595516"
+ inkscape:cx="158.921"
+ inkscape:cy="136.196"
+ inkscape:document-units="px"
+ inkscape:current-layer="layer1"
+ showgrid="false"
+ inkscape:window-width="1280"
+ inkscape:window-height="773"
+ inkscape:window-x="1440"
+ inkscape:window-y="0"
+ inkscape:window-maximized="1" />
+<metadata
+ id="metadata7">
+<rdf:RDF>
+<cc:Work
+ rdf:about="">
+<dc:format>image/svg+xml</dc:format>
+<dc:type
+ rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+<dc:title></dc:title>
+</cc:Work>
+</rdf:RDF>
+</metadata>
+<g
+ inkscape:label="Layer 1"
+ inkscape:groupmode="layer"
+ id="layer1"
+ transform="translate(0,-540.362)">
+<path
+ sodipodi:nodetypes="sssss"
+ inkscape:connector-curvature="0"
+ id="path3783"
+ d="M 320.377,1029.4 C 320.377,994.243 273.104,946.133 260.814,946.133 253.716,946.133 302.141,1012.74 294.675,1029.4 291.98,1035.41 300.429,1041.33 307.528,1041.33 314.624,1041.33 320.377,1035.99 320.377,1029.4 z"
+ style="fill:#ffb413;fill-opacity:1;fill-rule:nonzero;stroke:none"
+ inkscape:export-filename="/home/acoppes/workspace/angryships/assets/images/chick.png"
+ inkscape:export-xdpi="81.9903"
+ inkscape:export-ydpi="81.9903" />
+<path
+ style="fill:#ffb413;fill-opacity:1;fill-rule:nonzero;stroke:none"
+ d="M 179.667,1028.37 C 179.667,993.221 226.94,945.103 239.231,945.103 246.33,945.103 197.905,1011.72 205.369,1028.37 208.066,1034.38 199.615,1040.3 192.518,1040.3 185.421,1040.3 179.667,1034.96 179.667,1028.37 z"
+ id="path3785"
+ inkscape:connector-curvature="0"
+ sodipodi:nodetypes="sssss"
+ inkscape:export-filename="/home/acoppes/workspace/angryships/assets/images/chick.png"
+ inkscape:export-xdpi="81.9903"
+ inkscape:export-ydpi="81.9903" />
+<path
+ style="fill:#ff0808;fill-opacity:1;fill-rule:nonzero;stroke:none"
+ d="M 213.19,627.12 C 218.477,588.941 207.237,573.583 198.753,554.421 209.089,559.669 218.669,561.355 231.235,577.108 231.475,569.934 235.167,565.063 239.486,560.608 241.505,564.985 239.645,567.453 247.22,575.56 249.354,563.611 256.991,560.465 262.172,553.39 262.592,562.641 259.962,572.109 269.39,580.716 275.364,565.52 287.881,561.542 298.263,553.905 287.181,576.619 286.394,604.085 283.827,630.73 z"
+ id="path3793"
+ inkscape:connector-curvature="0"
+ sodipodi:nodetypes="cccccccccc"
+ inkscape:export-filename="/home/acoppes/workspace/angryships/assets/images/chick.png"
+ inkscape:export-xdpi="81.9903"
+ inkscape:export-ydpi="81.9903" />
+<path
+ sodipodi:nodetypes="cccccccccc"
+ inkscape:connector-curvature="0"
+ id="path3795"
+ d="M 221.238,628.736 C 225.223,599.466 216.75,587.691 210.353,573 218.145,577.023 225.366,578.316 234.841,590.394 235.024,584.894 237.805,581.157 241.061,577.743 242.583,581.099 241.18,582.991 246.892,589.207 248.5,580.046 254.257,577.633 258.162,572.209 258.48,579.302 256.499,586.561 263.606,593.16 268.108,581.51 277.546,578.461 285.373,572.604 277.018,590.019 276.423,611.076 274.489,631.503 z"
+ style="fill:#ffffff;fill-opacity:0.306452;fill-rule:nonzero;stroke:none"
+ inkscape:export-filename="/home/acoppes/workspace/angryships/assets/images/chick.png"
+ inkscape:export-xdpi="81.9903"
+ inkscape:export-ydpi="81.9903" />
+<path
+ style="fill:#f4f476;fill-opacity:1;fill-rule:nonzero;stroke:#f1da00;stroke-width:6.52433900000000033;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+ d="M 390.752,838.294 C 389.252,916.948 326.776,980.734 247.857,980.734 168.937,980.734 104.17,911.433 104.962,838.294 105.448,793.42 227.304,594.137 247.857,594.883 268.331,595.628 391.669,790.264 390.752,838.294 z"
+ id="path2985"
+ inkscape:connector-curvature="0"
+ sodipodi:nodetypes="sssss"
+ inkscape:export-filename="/home/acoppes/workspace/angryships/assets/images/chick.png"
+ inkscape:export-xdpi="81.9903"
+ inkscape:export-ydpi="81.9903" />
+<path
+ style="fill:#ffb413;fill-opacity:1;fill-rule:nonzero;stroke:none"
+ d="M 265.624,745.669 C 265.381,751.675 250.241,771.862 246.476,771.958 242.348,772.062 229.114,751.512 229.276,745.669 229.61,733.664 235.901,723.924 246.476,723.924 257.053,723.924 266.111,733.67 265.624,745.669 z"
+ id="path3761"
+ inkscape:connector-curvature="0"
+ sodipodi:nodetypes="sssss"
+ inkscape:export-filename="/home/acoppes/workspace/angryships/assets/images/chick.png"
+ inkscape:export-xdpi="81.9903"
+ inkscape:export-ydpi="81.9903" />
+<path
+ style="fill:#ffb413;fill-opacity:1;fill-rule:nonzero;stroke:none"
+ d="M 161.572,866.29 C 161.572,901.44 114.299,949.555 102.009,949.555 94.9109,949.555 143.336,882.942 135.872,866.29 133.176,860.277 141.624,854.356 148.723,854.356 155.82,854.356 161.572,859.699 161.572,866.29 z"
+ id="path2987"
+ inkscape:connector-curvature="0"
+ sodipodi:nodetypes="sssss"
+ inkscape:export-filename="/home/acoppes/workspace/angryships/assets/images/chick.png"
+ inkscape:export-xdpi="81.9903"
+ inkscape:export-ydpi="81.9903" />
+<path
+ style="fill:#ffffff;fill-opacity:0;fill-rule:nonzero;stroke:none"
+ d="M 189.693,951.677 C 291.142,964.936 361.067,909.239 381.296,830.609 393.021,892.305 337.308,935.769 308.112,950.577 269.544,969.192 226.871,973.357 189.693,951.677 z"
+ id="path3818"
+ inkscape:connector-curvature="0"
+ sodipodi:nodetypes="cccc" />
+<path
+ sodipodi:nodetypes="sssss"
+ inkscape:connector-curvature="0"
+ id="path3758"
+ d="M 328.947,865.371 C 328.947,900.522 376.221,948.637 388.511,948.637 395.609,948.637 347.185,882.024 354.649,865.371 357.345,859.358 348.895,853.439 341.798,853.439 334.7,853.439 328.947,858.782 328.947,865.371 z"
+ style="fill:#ffb413;fill-opacity:1;fill-rule:nonzero;stroke:none"
+ inkscape:export-filename="/home/acoppes/workspace/angryships/assets/images/chick.png"
+ inkscape:export-xdpi="81.9903"
+ inkscape:export-ydpi="81.9903" />
+<path
+ d="M 341.56,378.958 A 6.72656,7.47396 0 1 1 328.106,378.958 6.72656,7.47396 0 1 1 341.56,378.958 z"
+ sodipodi:ry="7.47396"
+ sodipodi:rx="6.72656"
+ sodipodi:cy="378.958"
+ sodipodi:cx="334.833"
+ id="path3766"
+ style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+ sodipodi:type="arc"
+ transform="matrix(2.11509,0,0,1.99041,-493.406,-66.1827)"
+ inkscape:export-filename="/home/acoppes/workspace/angryships/assets/images/chick.png"
+ inkscape:export-xdpi="81.9903"
+ inkscape:export-ydpi="81.9903" />
+<path
+ sodipodi:type="arc"
+ style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+ id="path3764"
+ sodipodi:cx="334.833"
+ sodipodi:cy="378.958"
+ sodipodi:rx="6.72656"
+ sodipodi:ry="7.47396"
+ d="M 341.56,378.958 A 6.72656,7.47396 0 1 1 328.106,378.958 6.72656,7.47396 0 1 1 341.56,378.958 z"
+ transform="matrix(0.868463,0,0,0.868463,-76.3637,360.812)"
+ inkscape:export-filename="/home/acoppes/workspace/angryships/assets/images/chick.png"
+ inkscape:export-xdpi="81.9903"
+ inkscape:export-ydpi="81.9903" />
+<path
+ transform="matrix(2.11509,0,0,1.99041,-427.053,-63.995)"
+ sodipodi:type="arc"
+ style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+ id="path3768"
+ sodipodi:cx="334.833"
+ sodipodi:cy="378.958"
+ sodipodi:rx="6.72656"
+ sodipodi:ry="7.47396"
+ d="M 341.56,378.958 A 6.72656,7.47396 0 1 1 328.106,378.958 6.72656,7.47396 0 1 1 341.56,378.958 z"
+ inkscape:export-filename="/home/acoppes/workspace/angryships/assets/images/chick.png"
+ inkscape:export-xdpi="81.9903"
+ inkscape:export-ydpi="81.9903" />
+<path
+ transform="matrix(0.868463,0,0,0.868463,-9.27997,361.541)"
+ d="M 341.56,378.958 A 6.72656,7.47396 0 1 1 328.106,378.958 6.72656,7.47396 0 1 1 341.56,378.958 z"
+ sodipodi:ry="7.47396"
+ sodipodi:rx="6.72656"
+ sodipodi:cy="378.958"
+ sodipodi:cx="334.833"
+ id="path3770"
+ style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+ sodipodi:type="arc"
+ inkscape:export-filename="/home/acoppes/workspace/angryships/assets/images/chick.png"
+ inkscape:export-xdpi="81.9903"
+ inkscape:export-ydpi="81.9903" />
+<path
+ sodipodi:open="true"
+ sodipodi:end="2.56703"
+ sodipodi:start="0"
+ d="M 341.56,378.958 A 6.72656,7.47396 0 0 1 329.187,383.02"
+ sodipodi:ry="7.47396"
+ sodipodi:rx="6.72656"
+ sodipodi:cy="378.958"
+ sodipodi:cx="334.833"
+ id="path3789"
+ style="fill:#f1da00;fill-opacity:1;fill-rule:nonzero;stroke:none"
+ sodipodi:type="arc"
+ transform="matrix(2.61077,1.13172,0.985644,-2.27377,-1031.29,1168.69)"
+ inkscape:export-filename="/home/acoppes/workspace/angryships/assets/images/chick.png"
+ inkscape:export-xdpi="81.9903"
+ inkscape:export-ydpi="81.9903" />
+<path
+ transform="matrix(-2.70472,0.883981,-0.769879,-2.35559,1478.67,1283.43)"
+ sodipodi:type="arc"
+ style="fill:#f1da00;fill-opacity:1;fill-rule:nonzero;stroke:none"
+ id="path3791"
+ sodipodi:cx="334.833"
+ sodipodi:cy="378.958"
+ sodipodi:rx="6.72656"
+ sodipodi:ry="7.47396"
+ d="M 341.56,378.958 A 6.72656,7.47396 0 0 1 329.187,383.02"
+ sodipodi:start="0"
+ sodipodi:end="2.56703"
+ sodipodi:open="true"
+ inkscape:export-filename="/home/acoppes/workspace/angryships/assets/images/chick.png"
+ inkscape:export-xdpi="81.9903"
+ inkscape:export-ydpi="81.9903" />
+<path
+ inkscape:export-ydpi="81.9903"
+ inkscape:export-xdpi="81.9903"
+ inkscape:export-filename="/home/acoppes/workspace/angryships/assets/images/chick.png"
+ sodipodi:open="true"
+ sodipodi:end="2.56703"
+ sodipodi:start="0"
+ d="M 341.56,378.958 A 6.72656,7.47396 0 0 1 329.187,383.02"
+ sodipodi:ry="7.47396"
+ sodipodi:rx="6.72656"
+ sodipodi:cy="378.958"
+ sodipodi:cx="334.833"
+ id="path3820"
+ style="fill:#f1da00;fill-opacity:1;fill-rule:nonzero;stroke:none"
+ sodipodi:type="arc"
+ transform="matrix(-2.7435,0.755065,0.657595,2.38937,951.115,-465.8)" />
+<path
+ transform="matrix(-2.7435,0.755065,0.657595,2.38937,885.626,-466.64)"
+ sodipodi:type="arc"
+ style="fill:#f1da00;fill-opacity:1;fill-rule:nonzero;stroke:none"
+ id="path3822"
+ sodipodi:cx="334.833"
+ sodipodi:cy="378.958"
+ sodipodi:rx="6.72656"
+ sodipodi:ry="7.47396"
+ d="M 341.56,378.958 A 6.72656,7.47396 0 0 1 329.187,383.02"
+ sodipodi:start="0"
+ sodipodi:end="2.56703"
+ sodipodi:open="true"
+ inkscape:export-filename="/home/acoppes/workspace/angryships/assets/images/chick.png"
+ inkscape:export-xdpi="81.9903"
+ inkscape:export-ydpi="81.9903" />
+</g>
+</svg>

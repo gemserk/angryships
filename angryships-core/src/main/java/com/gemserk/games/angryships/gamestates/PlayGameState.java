@@ -1,8 +1,6 @@
 package com.gemserk.games.angryships.gamestates;
 
-import com.artemis.Entity;
 import com.artemis.World;
-import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
@@ -13,8 +11,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.gemserk.commons.adwhirl.AdWhirlViewHandler;
 import com.gemserk.commons.artemis.WorldWrapper;
-import com.gemserk.commons.artemis.components.Components;
-import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.events.EventManager;
 import com.gemserk.commons.artemis.events.EventManagerImpl;
 import com.gemserk.commons.artemis.render.RenderLayers;
@@ -39,7 +35,6 @@ import com.gemserk.commons.gdx.camera.Camera;
 import com.gemserk.commons.gdx.camera.CameraRestrictedImpl;
 import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
 import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
-import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.commons.gdx.games.SpatialImpl;
 import com.gemserk.commons.gdx.graphics.SpriteUtils;
 import com.gemserk.commons.gdx.time.TimeStepProviderGameStateImpl;
@@ -50,11 +45,11 @@ import com.gemserk.componentsengine.input.InputDevicesMonitorImpl;
 import com.gemserk.componentsengine.input.LibgdxInputMappingBuilder;
 import com.gemserk.componentsengine.utils.ParametersWrapper;
 import com.gemserk.games.angryships.components.PixmapWorld;
-import com.gemserk.games.angryships.entities.Groups;
 import com.gemserk.games.angryships.input.GraphicButtonMonitor;
 import com.gemserk.games.angryships.render.Layers;
 import com.gemserk.games.angryships.systems.PixmapCollidableSystem;
 import com.gemserk.games.angryships.templates.BombTemplate;
+import com.gemserk.games.angryships.templates.CameraFollowTemplate;
 import com.gemserk.games.angryships.templates.ExplosionSpawnerTemplate;
 import com.gemserk.games.angryships.templates.KeyboardControllerTemplate;
 import com.gemserk.games.angryships.templates.TargetTemplate;
@@ -155,10 +150,8 @@ public class PlayGameState extends GameStateImpl {
 	Libgdx2dCamera backgroundCamera;
 	Libgdx2dCamera secondBackgroundCamera;
 
-	Libgdx2dCamera worldCamera;
 	Libgdx2dCamera guiCamera;
 
-	Camera worldFollowCamera;
 	Camera backgroundFollowCamera;
 	Camera secondBackgroundFollowCamera;
 
@@ -199,7 +192,7 @@ public class PlayGameState extends GameStateImpl {
 		backgroundCamera = new Libgdx2dCameraTransformImpl(Gdx.graphics.getWidth() * 0.5f, Gdx.graphics.getHeight() * 0.5f);
 		secondBackgroundCamera = new Libgdx2dCameraTransformImpl(Gdx.graphics.getWidth() * 0.5f, Gdx.graphics.getHeight() * 0.5f);
 
-		worldCamera = new Libgdx2dCameraTransformImpl(Gdx.graphics.getWidth() * 0.25f, Gdx.graphics.getHeight() * 0.5f);
+		Libgdx2dCamera worldCamera = new Libgdx2dCameraTransformImpl(Gdx.graphics.getWidth() * 0.25f, Gdx.graphics.getHeight() * 0.5f);
 		guiCamera = new Libgdx2dCameraTransformImpl();
 
 		worldCamera.move(Gdx.graphics.getWidth() * 0.25f, Gdx.graphics.getHeight() * 0.5f);
@@ -207,7 +200,7 @@ public class PlayGameState extends GameStateImpl {
 
 		Rectangle worldCameraBounds = new Rectangle(-1024f * 2f * 0.5f, -512 * 2f * 0.5f, 1024f * 4f, 512f * 4f);
 
-		worldFollowCamera = new CameraRestrictedImpl(0f, 0f, 1f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), worldCameraBounds);
+		Camera worldFollowCamera = new CameraRestrictedImpl(0f, 0f, 1f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), worldCameraBounds);
 		backgroundFollowCamera = new CameraRestrictedImpl(0f, 0f, 1f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), worldBounds);
 		secondBackgroundFollowCamera = new CameraRestrictedImpl(0f, 0f, 1f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), worldBounds);
 
@@ -275,6 +268,25 @@ public class PlayGameState extends GameStateImpl {
 		EntityTemplate explosionSpawnerTemplate = injector.getInstance(ExplosionSpawnerTemplate.class);
 		EntityTemplate keyboardControllerTemplate = injector.getInstance(KeyboardControllerTemplate.class);
 		EntityTemplate targetTemplate = injector.getInstance(TargetTemplate.class);
+		EntityTemplate cameraFollowTemplate = injector.getInstance(CameraFollowTemplate.class);
+
+		entityFactory.instantiate(cameraFollowTemplate, new ParametersWrapper() //
+				.put("libgdx2dCamera", worldCamera) //
+				.put("camera", worldFollowCamera) //
+				.put("distance", new Float(1f)) //
+				);
+
+		entityFactory.instantiate(cameraFollowTemplate, new ParametersWrapper() //
+				.put("libgdx2dCamera", backgroundCamera) //
+				.put("camera", backgroundFollowCamera) //
+				.put("distance", new Float(12f)) //
+				);
+
+		entityFactory.instantiate(cameraFollowTemplate, new ParametersWrapper() //
+				.put("libgdx2dCamera", secondBackgroundCamera) //
+				.put("camera", secondBackgroundFollowCamera) //
+				.put("distance", new Float(4f)) //
+				);
 
 		entityFactory.instantiate(terrainEntityTemplate, new ParametersWrapper() //
 				.put("spatial", new SpatialImpl(256f, 256f, 32f, 32f, 0)) //
@@ -320,38 +332,6 @@ public class PlayGameState extends GameStateImpl {
 					);
 		}
 
-		float midpointx = 0f;
-		float midpointy = 0f;
-
-		ImmutableBag<Entity> bombEntities = worldWrapper.getWorld().getGroupManager().getEntities(Groups.Bombs);
-
-		for (int i = 0; i < bombEntities.size(); i++) {
-			Entity bomb = bombEntities.get(i);
-
-			SpatialComponent spatialComponent = Components.spatialComponent(bomb);
-			Spatial spatial = spatialComponent.getSpatial();
-
-			midpointx += spatial.getX();
-			midpointy += spatial.getY();
-		}
-
-		if (bombEntities.size() >= 1) {
-			midpointx /= bombEntities.size();
-			midpointy /= bombEntities.size();
-			worldFollowCamera.setPosition(midpointx, midpointy);
-			backgroundFollowCamera.setPosition(midpointx / 12f, midpointy / 12f);
-			secondBackgroundFollowCamera.setPosition(midpointx / 4f, midpointy / 4f);
-		}
-
-		worldCamera.zoom(worldFollowCamera.getZoom());
-		worldCamera.move(worldFollowCamera.getX(), worldFollowCamera.getY());
-
-		backgroundCamera.zoom(backgroundFollowCamera.getZoom());
-		backgroundCamera.move(backgroundFollowCamera.getX(), backgroundFollowCamera.getY());
-
-		secondBackgroundCamera.zoom(secondBackgroundFollowCamera.getZoom());
-		secondBackgroundCamera.move(secondBackgroundFollowCamera.getX(), secondBackgroundFollowCamera.getY());
-
 	}
 
 	Box2DDebugRenderer box2dDebugRenderer = new Box2DDebugRenderer();
@@ -372,22 +352,18 @@ public class PlayGameState extends GameStateImpl {
 		secondBackgroundSprite.draw(spriteBatch);
 		spriteBatch.end();
 
-		// worldCamera.apply(spriteBatch);
-		// spriteBatch.begin();
-		//
-		// spriteBatch.end();
 		worldWrapper.render();
 
 		guiCamera.apply(spriteBatch);
 		spriteBatch.begin();
-		 if (Gdx.app.getType() == ApplicationType.Android) {
-		leftButton.draw(spriteBatch);
-		rightButton.draw(spriteBatch);
-		fireButton.draw(spriteBatch);
-		 }
+		if (Gdx.app.getType() == ApplicationType.Android) {
+			leftButton.draw(spriteBatch);
+			rightButton.draw(spriteBatch);
+			fireButton.draw(spriteBatch);
+		}
 		spriteBatch.end();
 
-//		box2dDebugRenderer.render(physicsWorld, worldCamera.getCombinedMatrix());
+		// box2dDebugRenderer.render(physicsWorld, worldCamera.getCombinedMatrix());
 
 	}
 
