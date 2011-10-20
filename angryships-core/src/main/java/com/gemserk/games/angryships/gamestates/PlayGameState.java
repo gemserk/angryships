@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.adwhirl.AdWhirlViewHandler;
 import com.gemserk.commons.artemis.WorldWrapper;
@@ -339,8 +338,6 @@ public class PlayGameState extends GameStateImpl {
 
 	}
 
-	Box2DDebugRenderer box2dDebugRenderer = new Box2DDebugRenderer();
-
 	@Override
 	public void render() {
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
@@ -351,7 +348,6 @@ public class PlayGameState extends GameStateImpl {
 		spriteBatch.begin();
 		screen.draw(spriteBatch);
 		spriteBatch.end();
-
 	}
 
 	@Override
