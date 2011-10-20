@@ -23,7 +23,7 @@ public class TerrainEntityTemplate extends EntityTemplateImpl {
 		
 		PixmapHelper terrain = resourceManager.getResourceValue(terrainId);
 		
-		spatial.setSize(terrain.pixmap.getWidth(), terrain.pixmap.getHeight());
+		// spatial.setSize(terrain.pixmap.getWidth(), terrain.pixmap.getHeight());
 		
 		pixmapWorld.addPixmap(terrain);
 		

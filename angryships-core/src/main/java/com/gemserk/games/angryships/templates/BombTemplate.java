@@ -71,9 +71,9 @@ public class BombTemplate extends EntityTemplateImpl {
 
 		Body body = bodyBuilder //
 				.fixture(bodyBuilder.fixtureDefBuilder() //
-						.circleShape(10f) //
+						.circleShape(0.5f) //
 						.categoryBits(Collisions.Bomb) //
-						.maskBits((short)(Collisions.Target | Collisions.Explosion)) //
+						.maskBits((short)(Collisions.Target | Collisions.Explosion | Collisions.AreaTrigger)) //
 						.sensor() //
 				) //
 				.position(spatial.getX(), spatial.getY()) //
@@ -90,12 +90,12 @@ public class BombTemplate extends EntityTemplateImpl {
 		entity.addComponent(new SpatialComponent(new SpatialPhysicsImpl(body, spatial)));
 		// entity.addComponent(new PreviousStateSpatialComponent());
 
-		entity.addComponent(new MovementComponent(200f, 0f, 0f));
+		entity.addComponent(new MovementComponent(4f, 0f, 0f));
 
 		entity.addComponent(new ControllerComponent(controller));
 
 		entity.addComponent(new PixmapCollidableComponent());
-		entity.addComponent(new ExplosionComponent(injector.getInstance(ExplosionAnimationTemplate.class), 32f));
+		entity.addComponent(new ExplosionComponent(injector.getInstance(ExplosionAnimationTemplate.class), 1.5f));
 
 		Script movementScript = injector.getInstance(MovementScript.class);
 		Script pixmapCollidableScript = injector.getInstance(PixmapCollidableScript.class);
