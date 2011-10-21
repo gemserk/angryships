@@ -49,11 +49,11 @@ import com.gemserk.componentsengine.utils.ParametersWrapper;
 import com.gemserk.games.angryships.components.PixmapWorld;
 import com.gemserk.games.angryships.render.Layers;
 import com.gemserk.games.angryships.resources.GameResources;
-import com.gemserk.games.angryships.systems.Box2dRenderSystem;
 import com.gemserk.games.angryships.systems.PixmapCollidableSystem;
 import com.gemserk.games.angryships.templates.AreaTriggerTemplate;
 import com.gemserk.games.angryships.templates.BombTemplate;
 import com.gemserk.games.angryships.templates.CameraFollowTemplate;
+import com.gemserk.games.angryships.templates.ClusterBombMunitionSpawnerTemplate;
 import com.gemserk.games.angryships.templates.ExplosionSpawnerTemplate;
 import com.gemserk.games.angryships.templates.HudTemplate;
 import com.gemserk.games.angryships.templates.KeyboardControllerTemplate;
@@ -87,6 +87,7 @@ public class PlayGameState extends GameStateImpl {
 	private com.badlogic.gdx.physics.box2d.World physicsWorld;
 
 	Container screen;
+	private Libgdx2dCamera worldCamera;
 
 	@Override
 	public void init() {
@@ -100,7 +101,7 @@ public class PlayGameState extends GameStateImpl {
 
 		Libgdx2dCamera backgroundCamera = new Libgdx2dCameraTransformImpl(Gdx.graphics.getWidth() * 0.5f, Gdx.graphics.getHeight() * 0.5f);
 		Libgdx2dCamera secondBackgroundCamera = new Libgdx2dCameraTransformImpl(Gdx.graphics.getWidth() * 0.5f, Gdx.graphics.getHeight() * 0.5f);
-		Libgdx2dCamera worldCamera = new Libgdx2dCameraTransformImpl(Gdx.graphics.getWidth() * 0.25f, Gdx.graphics.getHeight() * 0.5f);
+		worldCamera = new Libgdx2dCameraTransformImpl(Gdx.graphics.getWidth() * 0.25f, Gdx.graphics.getHeight() * 0.5f);
 		guiCamera = new Libgdx2dCameraTransformImpl();
 
 		Rectangle worldBounds = new Rectangle(-10, 0, 50f, 25f);
@@ -199,8 +200,7 @@ public class PlayGameState extends GameStateImpl {
 		inputDevicesMonitor = new InputDevicesMonitorImpl<String>();
 		new LibgdxInputMappingBuilder<String>(inputDevicesMonitor, Gdx.input) {
 			{
-				if (Gdx.app.getType() == ApplicationType.Android)
-					monitorPointerDown("releaseBomb", 0);
+				monitorPointerDown("releaseBomb", 0);
 			}
 		};
 
@@ -216,7 +216,7 @@ public class PlayGameState extends GameStateImpl {
 		entityFactory = new EntityFactoryImpl(worldWrapper.getWorld());
 		EventManager eventManager = new EventManagerImpl();
 
-		physicsWorld = new com.badlogic.gdx.physics.box2d.World(new Vector2(), false);
+		physicsWorld = new com.badlogic.gdx.physics.box2d.World(new Vector2(0f, -10f), false);
 
 		pixmapWorld = new PixmapWorld();
 
@@ -248,7 +248,7 @@ public class PlayGameState extends GameStateImpl {
 		worldWrapper.addRenderSystem(injector.getInstance(CameraUpdateSystem.class));
 		worldWrapper.addRenderSystem(injector.getInstance(SpriteUpdateSystem.class));
 		worldWrapper.addRenderSystem(injector.getInstance(RenderableSystem.class));
-		worldWrapper.addRenderSystem(new Box2dRenderSystem(worldCamera, physicsWorld));
+//		worldWrapper.addRenderSystem(new Box2dRenderSystem(worldCamera, physicsWorld));
 
 		worldWrapper.init();
 
@@ -323,6 +323,8 @@ public class PlayGameState extends GameStateImpl {
 		entityFactory.instantiate(targetTemplate, new ParametersWrapper() //
 				.put("spatial", new SpatialImpl(256f + 512f, 125f, 64f, 64f, 0)) //
 				);
+		
+		entityFactory.instantiate(injector.getInstance(ClusterBombMunitionSpawnerTemplate.class));
 
 		entityFactory.instantiate(injector.getInstance(HudTemplate.class));
 
@@ -350,6 +352,28 @@ public class PlayGameState extends GameStateImpl {
 					);
 
 		}
+
+//		if (inputDevicesMonitor.getButton("releaseBomb").isReleased()) {
+//
+//			EntityTemplate miniBombTemplate = injector.getInstance(ClusterBombMunitionTemplate.class);
+//			Vector2 position = new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+//
+//			worldCamera.unproject(position);
+//			System.out.println(position);
+//
+//			for (int i = 0; i < 3; i++) {
+//
+//				Entity minibomb = entityFactory.instantiate(miniBombTemplate, new ParametersWrapper() //
+//						.put("spatial", new SpatialImpl(position.x, position.y, 0.4f, 0.4f, MathUtils.random(0f, 360f))) //
+//						);
+//				
+//				PhysicsComponent physicsComponent = Components.physicsComponent(minibomb);
+//				Body body = physicsComponent.getBody();
+//				body.applyLinearImpulse(MathUtils.random(-3f, 3f), 0f, body.getPosition().x, body.getPosition().y);
+//
+//			}
+//
+//		}
 
 	}
 
