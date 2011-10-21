@@ -18,6 +18,7 @@ import com.gemserk.commons.gdx.box2d.BodyBuilder;
 import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.commons.gdx.games.SpatialPhysicsImpl;
 import com.gemserk.commons.reflection.Injector;
+import com.gemserk.games.angryships.components.ClusterBombComponent;
 import com.gemserk.games.angryships.components.ControllerComponent;
 import com.gemserk.games.angryships.components.ExplosionComponent;
 import com.gemserk.games.angryships.components.PixmapCollidableComponent;
@@ -80,7 +81,7 @@ public class BombTemplate extends EntityTemplateImpl {
 
 		entity.addComponent(new ScriptComponent(movementScript, pixmapCollidableScript, injector.getInstance(ExplodeWhenCollisionScript.class)));
 		
-		// entity.addComponent(new ClusterBombComponent(5));
+		 entity.addComponent(new ClusterBombComponent(3));
 
 	}
 

@@ -8,4 +8,7 @@ public class Collisions {
 	public static final short Explosion = 0x04;
 	public static final short AreaTrigger = 0x08;
 
+	public static final String ExplosionType = "Explosion";
+	public static final String RemoveAreaType = "RemoveArea";
+	
 }

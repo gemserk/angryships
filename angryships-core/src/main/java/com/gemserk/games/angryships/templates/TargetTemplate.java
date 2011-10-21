@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.gemserk.animation4j.gdx.Animation;
 import com.gemserk.commons.artemis.components.AnimationComponent;
+import com.gemserk.commons.artemis.components.AntiGravityComponent;
 import com.gemserk.commons.artemis.components.PhysicsComponent;
 import com.gemserk.commons.artemis.components.RenderableComponent;
 import com.gemserk.commons.artemis.components.ScriptComponent;
@@ -25,7 +26,7 @@ import com.gemserk.games.angryships.scripts.UpdateAnimationScript;
 import com.gemserk.resources.ResourceManager;
 
 public class TargetTemplate extends EntityTemplateImpl {
-	
+
 	ResourceManager<String> resourceManager;
 	Injector injector;
 	BodyBuilder bodyBuilder;
@@ -37,31 +38,35 @@ public class TargetTemplate extends EntityTemplateImpl {
 		Animation idleAnimation = resourceManager.getResourceValue(GameResources.Animations.ItemIdleAnimation);
 
 		entity.setGroup(Groups.Targets);
-		
+
 		Body body = bodyBuilder //
-			.fixture(bodyBuilder.fixtureDefBuilder() //
-					.circleShape(spatial.getWidth() * 0.25f) //
-					.categoryBits(Collisions.Target) //
-					.maskBits((short)(Collisions.Bomb | Collisions.Explosion)) //
-					.sensor() //
-					) //
-			.position(spatial.getX(), spatial.getY()) //
-			.angle(0f) //
-			.userData(entity) //
-			.type(BodyType.DynamicBody) //
-			.build();
-		
+				.fixture(bodyBuilder.fixtureDefBuilder() //
+						.circleShape(spatial.getWidth() * 0.25f) //
+						.categoryBits(Collisions.Target) //
+						.maskBits((short) (Collisions.Bomb | Collisions.Explosion)) //
+						.sensor() //
+						, Collisions.ExplosionType) //
+				.position(spatial.getX(), spatial.getY()) //
+				.angle(0f) //
+				.userData(entity) //
+				.type(BodyType.DynamicBody) //
+				.build();
+
 		entity.addComponent(new PhysicsComponent(body));
-		
+		entity.addComponent(new AntiGravityComponent());
+
 		entity.addComponent(new RenderableComponent(5));
 		entity.addComponent(new SpriteComponent(idleAnimation.getCurrentFrame(), 0.5f, 0.5f, Color.WHITE));
-		
-		entity.addComponent(new AnimationComponent(new Animation[] {idleAnimation}));
-		entity.addComponent(new ExplosionComponent(injector.getInstance(ExplosionAnimationTemplate.class), 30f));
+
+		entity.addComponent(new AnimationComponent(new Animation[] { idleAnimation }));
+		entity.addComponent(new ExplosionComponent(injector.getInstance(ExplosionAnimationTemplate.class), 2f));
 
 		entity.addComponent(new SpatialComponent(new SpatialPhysicsImpl(body, spatial)));
 
-		entity.addComponent(new ScriptComponent(injector.getInstance(UpdateAnimationScript.class), injector.getInstance(ExplodeWhenCollisionScript.class)));
+		entity.addComponent(new ScriptComponent( //
+				injector.getInstance(UpdateAnimationScript.class), //
+				injector.getInstance(ExplodeWhenCollisionScript.class) //
+		));
 	}
 
 }

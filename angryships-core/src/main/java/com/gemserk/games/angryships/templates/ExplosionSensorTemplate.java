@@ -48,7 +48,7 @@ public class ExplosionSensorTemplate extends EntityTemplateImpl {
 						.categoryBits(Collisions.Explosion) //
 						.maskBits(Collisions.All) //
 						.sensor() //
-				) //
+						, Collisions.ExplosionType) //
 				.position(spatial.getX(), spatial.getY()) //
 				.angle(0f) //
 				.userData(entity) //

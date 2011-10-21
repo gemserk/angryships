@@ -43,7 +43,7 @@ public class ClusterBombMunitionTemplate extends EntityTemplateImpl {
 				.fixture(bodyBuilder.fixtureDefBuilder() //
 						.circleShape(0.25f) //
 						.categoryBits(Collisions.Bomb) //
-						.maskBits((short) (Collisions.Target | Collisions.Explosion | Collisions.AreaTrigger)) //
+						.maskBits((short) (Collisions.Target | Collisions.AreaTrigger)) //
 						.sensor() //
 				) //
 				.position(spatial.getX(), spatial.getY()) //

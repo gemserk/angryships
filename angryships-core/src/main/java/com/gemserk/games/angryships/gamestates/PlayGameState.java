@@ -49,6 +49,8 @@ import com.gemserk.componentsengine.utils.ParametersWrapper;
 import com.gemserk.games.angryships.components.PixmapWorld;
 import com.gemserk.games.angryships.render.Layers;
 import com.gemserk.games.angryships.resources.GameResources;
+import com.gemserk.games.angryships.systems.AntiGravitySystem;
+import com.gemserk.games.angryships.systems.Box2dRenderSystem;
 import com.gemserk.games.angryships.systems.PixmapCollidableSystem;
 import com.gemserk.games.angryships.templates.AreaTriggerTemplate;
 import com.gemserk.games.angryships.templates.BombTemplate;
@@ -95,7 +97,7 @@ public class PlayGameState extends GameStateImpl {
 
 		spriteBatch = new SpriteBatch();
 
-		float worldScaleFactor = 1.5f;
+		float worldScaleFactor = 1.25f;
 
 		Rectangle backgroundCameraWorldBounds = new Rectangle(-1024f * worldScaleFactor * 0.5f, -512 * worldScaleFactor * 0.5f, 1024f * worldScaleFactor, 512f * worldScaleFactor);
 
@@ -236,6 +238,7 @@ public class PlayGameState extends GameStateImpl {
 		injector.bind("screen", screen);
 
 		worldWrapper.addUpdateSystem(injector.getInstance(PreviousStateSpatialSystem.class));
+		worldWrapper.addUpdateSystem(injector.getInstance(AntiGravitySystem.class));
 		worldWrapper.addUpdateSystem(new PhysicsSystem(physicsWorld));
 		worldWrapper.addUpdateSystem(injector.getInstance(MovementSystem.class));
 		worldWrapper.addUpdateSystem(injector.getInstance(PixmapCollidableSystem.class));
@@ -248,7 +251,7 @@ public class PlayGameState extends GameStateImpl {
 		worldWrapper.addRenderSystem(injector.getInstance(CameraUpdateSystem.class));
 		worldWrapper.addRenderSystem(injector.getInstance(SpriteUpdateSystem.class));
 		worldWrapper.addRenderSystem(injector.getInstance(RenderableSystem.class));
-//		worldWrapper.addRenderSystem(new Box2dRenderSystem(worldCamera, physicsWorld));
+		worldWrapper.addRenderSystem(new Box2dRenderSystem(worldCamera, physicsWorld));
 
 		worldWrapper.init();
 
@@ -321,7 +324,7 @@ public class PlayGameState extends GameStateImpl {
 					);
 
 		entityFactory.instantiate(targetTemplate, new ParametersWrapper() //
-				.put("spatial", new SpatialImpl(256f + 512f, 125f, 64f, 64f, 0)) //
+				.put("spatial", new SpatialImpl(23.5f , 7f, 1f, 1f, 0)) //
 				);
 		
 		entityFactory.instantiate(injector.getInstance(ClusterBombMunitionSpawnerTemplate.class));

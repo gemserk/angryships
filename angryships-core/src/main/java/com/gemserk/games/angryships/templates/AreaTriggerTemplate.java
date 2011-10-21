@@ -59,7 +59,8 @@ public class AreaTriggerTemplate extends EntityTemplateImpl {
 						.boxShape(area.width * 0.5f, area.height * 0.5f) //
 						.categoryBits(Collisions.AreaTrigger) //
 						.maskBits(Collisions.All) //
-						.sensor()) //
+						.sensor(), //
+						Collisions.RemoveAreaType) //
 				.type(BodyType.StaticBody).position(cx, cy).userData(entity) //
 				.build();
 
