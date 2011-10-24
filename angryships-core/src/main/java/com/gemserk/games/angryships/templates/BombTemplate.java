@@ -1,6 +1,7 @@
 package com.gemserk.games.angryships.templates;
 
 import com.artemis.Entity;
+import com.artemis.World;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -12,17 +13,19 @@ import com.gemserk.commons.artemis.components.RenderableComponent;
 import com.gemserk.commons.artemis.components.ScriptComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
-import com.gemserk.commons.artemis.scripts.Script;
+import com.gemserk.commons.artemis.events.EventManager;
+import com.gemserk.commons.artemis.scripts.ScriptJavaImpl;
 import com.gemserk.commons.artemis.templates.EntityTemplateImpl;
 import com.gemserk.commons.gdx.box2d.BodyBuilder;
 import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.commons.gdx.games.SpatialPhysicsImpl;
 import com.gemserk.commons.reflection.Injector;
-import com.gemserk.games.angryships.components.ClusterBombComponent;
 import com.gemserk.games.angryships.components.ControllerComponent;
 import com.gemserk.games.angryships.components.ExplosionComponent;
+import com.gemserk.games.angryships.components.GameComponents;
 import com.gemserk.games.angryships.components.PixmapCollidableComponent;
 import com.gemserk.games.angryships.entities.Collisions;
+import com.gemserk.games.angryships.entities.Events;
 import com.gemserk.games.angryships.entities.Groups;
 import com.gemserk.games.angryships.gamestates.Controller;
 import com.gemserk.games.angryships.resources.GameResources;
@@ -32,6 +35,25 @@ import com.gemserk.games.angryships.scripts.PixmapCollidableScript;
 import com.gemserk.resources.ResourceManager;
 
 public class BombTemplate extends EntityTemplateImpl {
+	
+	public static class AutoExplodeScript extends ScriptJavaImpl {
+		
+		EventManager eventManager;
+		
+		@Override
+		public void update(World world, Entity e) {
+
+			ControllerComponent controllerComponent = GameComponents.getControllerComponent(e);
+			
+			if (!controllerComponent.controller.explode)
+				return;
+			
+			e.delete();
+			eventManager.registerEvent(Events.explosion, e);
+			
+		}
+		
+	}
 
 	ResourceManager<String> resourceManager;
 	Injector injector;
@@ -51,7 +73,7 @@ public class BombTemplate extends EntityTemplateImpl {
 				.fixture(bodyBuilder.fixtureDefBuilder() //
 						.circleShape(0.5f) //
 						.categoryBits(Collisions.Bomb) //
-						.maskBits((short)(Collisions.Target | Collisions.Explosion | Collisions.AreaTrigger)) //
+						.maskBits((short) (Collisions.Target | Collisions.Explosion | Collisions.AreaTrigger)) //
 						.sensor() //
 				) //
 				.position(spatial.getX(), spatial.getY()) //
@@ -76,12 +98,14 @@ public class BombTemplate extends EntityTemplateImpl {
 		entity.addComponent(new PixmapCollidableComponent());
 		entity.addComponent(new ExplosionComponent(injector.getInstance(ExplosionAnimationTemplate.class), 1.5f));
 
-		Script movementScript = injector.getInstance(MovementScript.class);
-		Script pixmapCollidableScript = injector.getInstance(PixmapCollidableScript.class);
+		entity.addComponent(new ScriptComponent( //
+				injector.getInstance(MovementScript.class), //
+				injector.getInstance(PixmapCollidableScript.class), //
+				injector.getInstance(AutoExplodeScript.class), //
+				injector.getInstance(ExplodeWhenCollisionScript.class) //
+		));
 
-		entity.addComponent(new ScriptComponent(movementScript, pixmapCollidableScript, injector.getInstance(ExplodeWhenCollisionScript.class)));
-		
-		 entity.addComponent(new ClusterBombComponent(3));
+//		entity.addComponent(new ClusterBombComponent(3));
 
 	}
 

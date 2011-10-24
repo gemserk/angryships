@@ -5,5 +5,6 @@ public class Controller {
 	public boolean fire;
 	public boolean left;
 	public boolean right;
+	public boolean explode;
 
 }

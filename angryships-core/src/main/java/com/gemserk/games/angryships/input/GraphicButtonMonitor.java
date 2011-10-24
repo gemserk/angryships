@@ -9,6 +9,10 @@ public class GraphicButtonMonitor extends ButtonMonitor {
 
 	Sprite sprite;
 	Rectangle bounds;
+	
+	public void setBounds(Rectangle bounds) {
+		this.bounds.set(bounds);
+	}
 
 	public GraphicButtonMonitor(Sprite sprite) {
 		this.sprite = sprite;
@@ -28,5 +32,7 @@ public class GraphicButtonMonitor extends ButtonMonitor {
 
 		return bounds.contains(x, y);
 	}
+	
+	// TODO: add stuff related with over/not over to the API.
 
 }

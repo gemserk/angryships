@@ -1,6 +1,8 @@
 package com.gemserk.games.angryships.gamestates;
 
+import com.artemis.Entity;
 import com.artemis.World;
+import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
@@ -47,6 +49,8 @@ import com.gemserk.componentsengine.input.InputDevicesMonitorImpl;
 import com.gemserk.componentsengine.input.LibgdxInputMappingBuilder;
 import com.gemserk.componentsengine.utils.ParametersWrapper;
 import com.gemserk.games.angryships.components.PixmapWorld;
+import com.gemserk.games.angryships.entities.Groups;
+import com.gemserk.games.angryships.input.CustomImageButton;
 import com.gemserk.games.angryships.render.Layers;
 import com.gemserk.games.angryships.resources.GameResources;
 import com.gemserk.games.angryships.systems.AntiGravitySystem;
@@ -97,7 +101,7 @@ public class PlayGameState extends GameStateImpl {
 
 		spriteBatch = new SpriteBatch();
 
-		float worldScaleFactor = 1.25f;
+		float worldScaleFactor = 1.5f;
 
 		Rectangle backgroundCameraWorldBounds = new Rectangle(-1024f * worldScaleFactor * 0.5f, -512 * worldScaleFactor * 0.5f, 1024f * worldScaleFactor, 512f * worldScaleFactor);
 
@@ -130,7 +134,7 @@ public class PlayGameState extends GameStateImpl {
 
 		Sprite turnRightSprite = resourceManager.getResourceValue(GameResources.Sprites.TurnRightButtonSprite);
 
-		moveButtonsContainer.add(GuiControls.imageButton(turnRightSprite) //
+		moveButtonsContainer.add(GuiControls.imageButton(new CustomImageButton(turnRightSprite)) //
 				.id("TurnRightButton") //
 				.center(0.5f, 0.5f) //
 				.position(Gdx.graphics.getWidth() * (1f - 0.085f), Gdx.graphics.getHeight() * 0.15f) //
@@ -149,6 +153,21 @@ public class PlayGameState extends GameStateImpl {
 					@Override
 					public void onLeave(Control control) {
 						controller.right = false;
+					}
+				}) //
+				.build());
+
+		Sprite explodeSprite = resourceManager.getResourceValue(GameResources.Sprites.FireButtonSprite);
+
+		moveButtonsContainer.add(GuiControls.imageButton(explodeSprite) //
+				.id("ExplodeButton") //
+				.center(0.5f, 0.5f) //
+				.position(Gdx.graphics.getWidth() * (1f - 3 * 0.085f), Gdx.graphics.getHeight() * 0.15f) //
+				.color(1f, 1f, 1f, 1f) //
+				.handler(new ButtonHandler() {
+					@Override
+					public void onReleased(Control control) {
+						controller.explode = true;
 					}
 				}) //
 				.build());
@@ -324,12 +343,14 @@ public class PlayGameState extends GameStateImpl {
 					);
 
 		entityFactory.instantiate(targetTemplate, new ParametersWrapper() //
-				.put("spatial", new SpatialImpl(23.5f , 7f, 1f, 1f, 0)) //
+				.put("spatial", new SpatialImpl(23.5f, 7f, 1f, 1f, 0)) //
 				);
-		
+
 		entityFactory.instantiate(injector.getInstance(ClusterBombMunitionSpawnerTemplate.class));
 
 		entityFactory.instantiate(injector.getInstance(HudTemplate.class));
+		
+//		CustomImageButton turnRightButton = screen.findControl("TurnRightButton");
 
 	}
 
@@ -347,36 +368,40 @@ public class PlayGameState extends GameStateImpl {
 
 		worldWrapper.update(getDeltaInMs());
 
-		if (controller.fire) {
-			EntityTemplate bombEntityTemplate = injector.getInstance(BombTemplate.class);
-			entityFactory.instantiate(bombEntityTemplate, new ParametersWrapper() //
-					.put("spatial", new SpatialImpl(2f, 10f, 0.75f, 0.75f, 0)) //
-					.put("controller", controller) //
-					);
+		ImmutableBag<Entity> bombs = worldWrapper.getWorld().getGroupManager().getEntities(Groups.Bombs);
 
+		if (bombs.size() <= 0) {
+			if (controller.fire) {
+				EntityTemplate bombEntityTemplate = injector.getInstance(BombTemplate.class);
+				entityFactory.instantiate(bombEntityTemplate, new ParametersWrapper() //
+						.put("spatial", new SpatialImpl(2f, 10f, 0.75f, 0.75f, 0)) //
+						.put("controller", controller) //
+						);
+
+			}
 		}
-
-//		if (inputDevicesMonitor.getButton("releaseBomb").isReleased()) {
-//
-//			EntityTemplate miniBombTemplate = injector.getInstance(ClusterBombMunitionTemplate.class);
-//			Vector2 position = new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
-//
-//			worldCamera.unproject(position);
-//			System.out.println(position);
-//
-//			for (int i = 0; i < 3; i++) {
-//
-//				Entity minibomb = entityFactory.instantiate(miniBombTemplate, new ParametersWrapper() //
-//						.put("spatial", new SpatialImpl(position.x, position.y, 0.4f, 0.4f, MathUtils.random(0f, 360f))) //
-//						);
-//				
-//				PhysicsComponent physicsComponent = Components.physicsComponent(minibomb);
-//				Body body = physicsComponent.getBody();
-//				body.applyLinearImpulse(MathUtils.random(-3f, 3f), 0f, body.getPosition().x, body.getPosition().y);
-//
-//			}
-//
-//		}
+		
+		// if (inputDevicesMonitor.getButton("releaseBomb").isReleased()) {
+		//
+		// EntityTemplate miniBombTemplate = injector.getInstance(ClusterBombMunitionTemplate.class);
+		// Vector2 position = new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+		//
+		// worldCamera.unproject(position);
+		// System.out.println(position);
+		//
+		// for (int i = 0; i < 3; i++) {
+		//
+		// Entity minibomb = entityFactory.instantiate(miniBombTemplate, new ParametersWrapper() //
+		// .put("spatial", new SpatialImpl(position.x, position.y, 0.4f, 0.4f, MathUtils.random(0f, 360f))) //
+		// );
+		//
+		// PhysicsComponent physicsComponent = Components.physicsComponent(minibomb);
+		// Body body = physicsComponent.getBody();
+		// body.applyLinearImpulse(MathUtils.random(-3f, 3f), 0f, body.getPosition().x, body.getPosition().y);
+		//
+		// }
+		//
+		// }
 
 	}
 
