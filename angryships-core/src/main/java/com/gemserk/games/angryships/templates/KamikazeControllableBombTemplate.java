@@ -116,7 +116,7 @@ public class KamikazeControllableBombTemplate extends EntityTemplateImpl {
 
 		entity.addComponent(new MovementComponent(4f, 0f, 0f));
 
-		entity.addComponent(new ControllerComponent(controller));
+		entity.addComponent(new ControllerComponent(controller, 180f));
 
 		entity.addComponent(new PixmapCollidableComponent());
 

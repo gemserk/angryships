@@ -27,7 +27,7 @@ public class MovementScript extends ScriptJavaImpl {
 		Movement movement = movementComponent.getMovement();
 		Spatial spatial = spatialComponent.getSpatial();
 		
-		float rotationAngle = 360f * GlobalTime.getDelta();
+		float rotationAngle = controllerComponent.rotationSpeed * GlobalTime.getDelta();
 		
 		Vector2 linearVelocity = movement.getLinearVelocity();
 		
