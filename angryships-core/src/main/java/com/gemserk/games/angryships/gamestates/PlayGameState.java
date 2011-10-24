@@ -40,7 +40,6 @@ import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
 import com.gemserk.commons.gdx.games.SpatialImpl;
 import com.gemserk.commons.gdx.gui.ButtonHandler;
 import com.gemserk.commons.gdx.gui.Container;
-import com.gemserk.commons.gdx.gui.Control;
 import com.gemserk.commons.gdx.gui.GuiControls;
 import com.gemserk.commons.gdx.time.TimeStepProviderGameStateImpl;
 import com.gemserk.commons.reflection.Injector;
@@ -57,11 +56,12 @@ import com.gemserk.games.angryships.systems.AntiGravitySystem;
 import com.gemserk.games.angryships.systems.Box2dRenderSystem;
 import com.gemserk.games.angryships.systems.PixmapCollidableSystem;
 import com.gemserk.games.angryships.templates.AreaTriggerTemplate;
-import com.gemserk.games.angryships.templates.BombTemplate;
 import com.gemserk.games.angryships.templates.CameraFollowTemplate;
 import com.gemserk.games.angryships.templates.ClusterBombMunitionSpawnerTemplate;
 import com.gemserk.games.angryships.templates.ExplosionSpawnerTemplate;
+import com.gemserk.games.angryships.templates.HudButtonsControllerTemplate;
 import com.gemserk.games.angryships.templates.HudTemplate;
+import com.gemserk.games.angryships.templates.KamikazeBombTemplate;
 import com.gemserk.games.angryships.templates.KeyboardControllerTemplate;
 import com.gemserk.games.angryships.templates.StaticSpriteTemplate;
 import com.gemserk.games.angryships.templates.TargetTemplate;
@@ -140,60 +140,60 @@ public class PlayGameState extends GameStateImpl {
 				.position(Gdx.graphics.getWidth() * (1f - 0.085f), Gdx.graphics.getHeight() * 0.15f) //
 				.color(1f, 1f, 1f, 1f) //
 				.handler(new ButtonHandler() {
-					@Override
-					public void onPressed(Control control) {
-						controller.right = true;
-					}
-
-					@Override
-					public void onReleased(Control control) {
-						controller.right = false;
-					}
-
-					@Override
-					public void onLeave(Control control) {
-						controller.right = false;
-					}
+					// @Override
+					// public void onPressed(Control control) {
+					// controller.right = true;
+					// }
+					//
+					// @Override
+					// public void onReleased(Control control) {
+					// controller.right = false;
+					// }
+					//
+					// @Override
+					// public void onLeave(Control control) {
+					// controller.right = false;
+					// }
 				}) //
 				.build());
 
 		Sprite explodeSprite = resourceManager.getResourceValue(GameResources.Sprites.FireButtonSprite);
 
-		moveButtonsContainer.add(GuiControls.imageButton(explodeSprite) //
+		moveButtonsContainer.add(GuiControls.imageButton(new CustomImageButton(explodeSprite)) //
 				.id("ExplodeButton") //
 				.center(0.5f, 0.5f) //
 				.position(Gdx.graphics.getWidth() * (1f - 3 * 0.085f), Gdx.graphics.getHeight() * 0.15f) //
 				.color(1f, 1f, 1f, 1f) //
 				.handler(new ButtonHandler() {
-					@Override
-					public void onReleased(Control control) {
-						controller.explode = true;
-					}
+					// @Override
+					// public void onReleased(Control control) {
+					// controller.explode = true;
+					// }
 				}) //
 				.build());
 
 		Sprite turnLeftSprite = resourceManager.getResourceValue(GameResources.Sprites.TurnLeftButtonSprite);
 
-		moveButtonsContainer.add(GuiControls.imageButton(turnLeftSprite) //
+		moveButtonsContainer.add(GuiControls.imageButton(new CustomImageButton(turnLeftSprite)) //
 				.id("TurnLeftButton") //
 				.center(0.5f, 0.5f) //
 				.position(Gdx.graphics.getWidth() * 0.085f, Gdx.graphics.getHeight() * 0.15f) //
 				.color(1f, 1f, 1f, 1f) //
 				.handler(new ButtonHandler() {
-					@Override
-					public void onPressed(Control control) {
-						controller.left = true;
-					}
-
-					@Override
-					public void onReleased(Control control) {
-						controller.left = false;
-					}
-
-					@Override
-					public void onLeave(Control control) {
-						controller.left = false;
-					}
+					// @Override
+					// public void onPressed(Control control) {
+					// controller.left = true;
+					// }
+					//
+					// @Override
+					// public void onReleased(Control control) {
+					// controller.left = false;
+					// }
+					//
+					// @Override
+					// public void onLeave(Control control) {
+					// controller.left = false;
+					// }
 				}) //
 				.build());
 
@@ -201,17 +201,17 @@ public class PlayGameState extends GameStateImpl {
 
 		Sprite fireButtonSprite = resourceManager.getResourceValue(GameResources.Sprites.FireButtonSprite);
 
-		fireButtonsContainer.add(GuiControls.imageButton(fireButtonSprite) //
+		fireButtonsContainer.add(GuiControls.imageButton(new CustomImageButton(fireButtonSprite)) //
 				.id("FireButton") //
 				.center(0.5f, 0.5f) //
 				.position(Gdx.graphics.getWidth() * (1f - 0.085f), Gdx.graphics.getHeight() * 0.15f) //
 				// .position(Gdx.graphics.getWidth() * (1f - 0.25f), Gdx.graphics.getHeight() * 0.15f) //
 				.color(1f, 1f, 1f, 1f) //
 				.handler(new ButtonHandler() {
-					@Override
-					public void onReleased(Control control) {
-						controller.fire = true;
-					}
+					// @Override
+					// public void onReleased(Control control) {
+					// controller.fire = true;
+					// }
 				}) //
 				.build());
 
@@ -337,10 +337,27 @@ public class PlayGameState extends GameStateImpl {
 
 		entityFactory.instantiate(explosionSpawnerTemplate, new ParametersWrapper());
 
-		if (Gdx.app.getType() == ApplicationType.Desktop || Gdx.app.getType() == ApplicationType.Applet)
+		if (Gdx.app.getType() == ApplicationType.Desktop || Gdx.app.getType() == ApplicationType.Applet) {
 			entityFactory.instantiate(keyboardControllerTemplate, new ParametersWrapper() //
 					.put("controller", controller) //
 					);
+		} else {
+			entityFactory.instantiate(injector.getInstance(HudButtonsControllerTemplate.class), new ParametersWrapper() //
+					.put("controller", controller) //
+					.put("leftButtonMonitor", ((CustomImageButton) screen.findControl("TurnLeftButton")).getButtonMonitor()) //
+					.put("rightButtonMonitor", ((CustomImageButton) screen.findControl("TurnRightButton")).getButtonMonitor()) //
+					.put("fireButtonMonitor", ((CustomImageButton) screen.findControl("FireButton")).getButtonMonitor()) //
+					.put("explodeButtonMonitor", ((CustomImageButton) screen.findControl("ExplodeButton")).getButtonMonitor()) //
+					);
+		}
+
+		// entityFactory.instantiate(injector.getInstance(HudButtonsControllerTemplate.class), new ParametersWrapper() //
+		// .put("controller", controller) //
+		// .put("leftButtonMonitor", ((CustomImageButton) screen.findControl("TurnLeftButton")).getButtonMonitor()) //
+		// .put("rightButtonMonitor", ((CustomImageButton) screen.findControl("TurnRightButton")).getButtonMonitor()) //
+		// .put("fireButtonMonitor", ((CustomImageButton) screen.findControl("FireButton")).getButtonMonitor()) //
+		// .put("explodeButtonMonitor", ((CustomImageButton) screen.findControl("ExplodeButton")).getButtonMonitor()) //
+		// );
 
 		entityFactory.instantiate(targetTemplate, new ParametersWrapper() //
 				.put("spatial", new SpatialImpl(23.5f, 7f, 1f, 1f, 0)) //
@@ -349,8 +366,8 @@ public class PlayGameState extends GameStateImpl {
 		entityFactory.instantiate(injector.getInstance(ClusterBombMunitionSpawnerTemplate.class));
 
 		entityFactory.instantiate(injector.getInstance(HudTemplate.class));
-		
-//		CustomImageButton turnRightButton = screen.findControl("TurnRightButton");
+
+		// CustomImageButton turnRightButton = screen.findControl("TurnRightButton");
 
 	}
 
@@ -372,7 +389,8 @@ public class PlayGameState extends GameStateImpl {
 
 		if (bombs.size() <= 0) {
 			if (controller.fire) {
-				EntityTemplate bombEntityTemplate = injector.getInstance(BombTemplate.class);
+//				EntityTemplate bombEntityTemplate = injector.getInstance(BombTemplate.class);
+				EntityTemplate bombEntityTemplate = injector.getInstance(KamikazeBombTemplate.class);
 				entityFactory.instantiate(bombEntityTemplate, new ParametersWrapper() //
 						.put("spatial", new SpatialImpl(2f, 10f, 0.75f, 0.75f, 0)) //
 						.put("controller", controller) //
@@ -380,7 +398,7 @@ public class PlayGameState extends GameStateImpl {
 
 			}
 		}
-		
+
 		// if (inputDevicesMonitor.getButton("releaseBomb").isReleased()) {
 		//
 		// EntityTemplate miniBombTemplate = injector.getInstance(ClusterBombMunitionTemplate.class);

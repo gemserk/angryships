@@ -1,10 +1,12 @@
 package com.gemserk.games.angryships.templates;
 
 import com.artemis.Entity;
+import com.artemis.World;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.gemserk.commons.artemis.components.ScriptComponent;
 import com.gemserk.commons.artemis.components.TagComponent;
+import com.gemserk.commons.artemis.scripts.ScriptJavaImpl;
 import com.gemserk.commons.artemis.templates.EntityTemplateImpl;
 import com.gemserk.commons.reflection.Injector;
 import com.gemserk.componentsengine.input.LibgdxInputMappingBuilder;
@@ -15,6 +17,19 @@ import com.gemserk.games.angryships.gamestates.Controller;
 import com.gemserk.games.angryships.scripts.ButtonsControllerScript;
 
 public class KeyboardControllerTemplate extends EntityTemplateImpl {
+	
+	public static class UpdateButtonMonitorsScript extends ScriptJavaImpl {
+		
+		@Override
+		public void update(World world, Entity e) {
+			ButtonMonitorsComponent buttonMonitorsComponent = e.getComponent(ButtonMonitorsComponent.class);
+			buttonMonitorsComponent.leftButtonMonitor.update();
+			buttonMonitorsComponent.rightButtonMonitor.update();
+			buttonMonitorsComponent.fireButtonMonitor.update();
+			buttonMonitorsComponent.explodeButtonMonitor.update();
+		}
+		
+	}
 	
 	Injector injector;
 
@@ -33,7 +48,7 @@ public class KeyboardControllerTemplate extends EntityTemplateImpl {
 		
 		entity.addComponent(new TagComponent(Tags.Controller));
 		entity.addComponent(new ControllerComponent(controller));
-		entity.addComponent(new ScriptComponent(injector.getInstance(ButtonsControllerScript.class)));
+		entity.addComponent(new ScriptComponent(injector.getInstance(ButtonsControllerScript.class), injector.getInstance(UpdateButtonMonitorsScript.class)));
 	}
 
 }

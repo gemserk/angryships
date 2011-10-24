@@ -15,10 +15,10 @@ public class ButtonsControllerScript extends ScriptJavaImpl {
 		
 		ButtonMonitorsComponent buttonMonitorsComponent = e.getComponent(ButtonMonitorsComponent.class);
 
-		buttonMonitorsComponent.leftButtonMonitor.update();
-		buttonMonitorsComponent.rightButtonMonitor.update();
-		buttonMonitorsComponent.fireButtonMonitor.update();
-		buttonMonitorsComponent.explodeButtonMonitor.update();
+//		buttonMonitorsComponent.leftButtonMonitor.update();
+//		buttonMonitorsComponent.rightButtonMonitor.update();
+//		buttonMonitorsComponent.fireButtonMonitor.update();
+//		buttonMonitorsComponent.explodeButtonMonitor.update();
 
 		ControllerComponent controllerComponent = GameComponents.getControllerComponent(e);
 		Controller controller = controllerComponent.controller;

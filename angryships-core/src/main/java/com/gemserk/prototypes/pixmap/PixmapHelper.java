@@ -122,20 +122,22 @@ public class PixmapHelper implements Disposable {
 	public void eraseCircle(float x, float y, float radius) {
 		if (lastModification == modifications.length)
 			return;
+		
+		float scaleX = pixmap.getWidth() / sprite.getWidth();
 
-		if (x + radius < 0 || y + radius < 0)
+		int newRadius = Math.round(radius * scaleX);
+		
+		if (x + newRadius < 0 || y + newRadius < 0) 
 			return;
 
-		if (x - radius > pixmap.getWidth() || y - radius > pixmap.getHeight())
+		if (x - newRadius > pixmap.getWidth() || y - newRadius > pixmap.getHeight())
 			return;
 
 		Blending blending = Pixmap.getBlending();
 		pixmap.setColor(0f, 0f, 0f, 0f);
 		Pixmap.setBlending(Blending.None);
 
-		float scaleX = pixmap.getWidth() / sprite.getWidth();
 
-		int newRadius = Math.round(radius * scaleX);
 		int newX = Math.round(x);
 		int newY = Math.round(y);
 
