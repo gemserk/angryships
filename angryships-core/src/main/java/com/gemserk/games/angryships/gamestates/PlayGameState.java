@@ -61,7 +61,7 @@ import com.gemserk.games.angryships.templates.ClusterBombMunitionSpawnerTemplate
 import com.gemserk.games.angryships.templates.ExplosionSpawnerTemplate;
 import com.gemserk.games.angryships.templates.HudButtonsControllerTemplate;
 import com.gemserk.games.angryships.templates.HudTemplate;
-import com.gemserk.games.angryships.templates.KamikazeBombTemplate;
+import com.gemserk.games.angryships.templates.KamikazeControllableBombTemplate;
 import com.gemserk.games.angryships.templates.KeyboardControllerTemplate;
 import com.gemserk.games.angryships.templates.StaticSpriteTemplate;
 import com.gemserk.games.angryships.templates.TargetTemplate;
@@ -390,7 +390,7 @@ public class PlayGameState extends GameStateImpl {
 		if (bombs.size() <= 0) {
 			if (controller.fire) {
 //				EntityTemplate bombEntityTemplate = injector.getInstance(BombTemplate.class);
-				EntityTemplate bombEntityTemplate = injector.getInstance(KamikazeBombTemplate.class);
+				EntityTemplate bombEntityTemplate = injector.getInstance(KamikazeControllableBombTemplate.class);
 				entityFactory.instantiate(bombEntityTemplate, new ParametersWrapper() //
 						.put("spatial", new SpatialImpl(2f, 10f, 0.75f, 0.75f, 0)) //
 						.put("controller", controller) //

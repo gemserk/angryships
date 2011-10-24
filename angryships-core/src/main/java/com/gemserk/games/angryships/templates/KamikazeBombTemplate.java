@@ -22,16 +22,13 @@ import com.gemserk.commons.gdx.box2d.BodyBuilder;
 import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.commons.gdx.games.SpatialPhysicsImpl;
 import com.gemserk.commons.reflection.Injector;
-import com.gemserk.games.angryships.components.ControllerComponent;
 import com.gemserk.games.angryships.components.ExplosionComponent;
+import com.gemserk.games.angryships.components.PixmapCollidableComponent;
 import com.gemserk.games.angryships.components.PixmapWorld;
 import com.gemserk.games.angryships.entities.Collisions;
 import com.gemserk.games.angryships.entities.Groups;
-import com.gemserk.games.angryships.gamestates.Controller;
 import com.gemserk.games.angryships.resources.GameResources;
 import com.gemserk.games.angryships.scripts.ExplodeWhenCollisionScript;
-import com.gemserk.games.angryships.scripts.MovementScript;
-import com.gemserk.games.angryships.templates.BombTemplate.AutoExplodeScript;
 import com.gemserk.prototypes.pixmap.PixmapHelper;
 import com.gemserk.resources.ResourceManager;
 
@@ -69,7 +66,6 @@ public class KamikazeBombTemplate extends EntityTemplateImpl {
 	@Override
 	public void apply(Entity entity) {
 		Spatial spatial = parameters.get("spatial");
-		Controller controller = parameters.get("controller");
 
 		Sprite sprite = resourceManager.getResourceValue(GameResources.Sprites.BombSprite);
 
@@ -79,7 +75,7 @@ public class KamikazeBombTemplate extends EntityTemplateImpl {
 				.fixture(bodyBuilder.fixtureDefBuilder() //
 						.circleShape(0.25f) //
 						.categoryBits(Collisions.Bomb) //
-						.maskBits((short) (Collisions.Target | Collisions.Explosion)) //
+						.maskBits((short) (Collisions.Target | Collisions.AreaTrigger)) //
 						.sensor() //
 				) //
 				.position(spatial.getX(), spatial.getY()) //
@@ -91,21 +87,19 @@ public class KamikazeBombTemplate extends EntityTemplateImpl {
 		entity.addComponent(new PhysicsComponent(body));
 		entity.addComponent(new AntiGravityComponent());
 
+		entity.addComponent(new MovementComponent(15f, 0f, 0f));
+		
 		entity.addComponent(new RenderableComponent(0));
 		entity.addComponent(new SpriteComponent(sprite, 0.5f, 0.5f, Color.WHITE));
 
 		entity.addComponent(new ExplosionComponent(injector.getInstance(ExplosionAnimationTemplate.class), 0.25f));
 
-		// entity.addComponent(new SpatialComponent(spatial));
 		entity.addComponent(new SpatialComponent(new SpatialPhysicsImpl(body, spatial)));
 
-		entity.addComponent(new MovementComponent(4f, 0f, 0f));
-		entity.addComponent(new ControllerComponent(controller));
+		entity.addComponent(new PixmapCollidableComponent());
 
 		entity.addComponent(new ScriptComponent( //
-				injector.getInstance(MovementScript.class), //
-				injector.getInstance(AutoExplodeScript.class), //
-				injector.getInstance(ErasePixmapWhenCollisionScript.class), //
+				 injector.getInstance(ErasePixmapWhenCollisionScript.class), //
 				injector.getInstance(ExplodeWhenCollisionScript.class) //
 		));
 	}
