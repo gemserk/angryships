@@ -12,10 +12,15 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.adwhirl.AdWhirlViewHandler;
+import com.gemserk.commons.artemis.EntityBuilder;
 import com.gemserk.commons.artemis.WorldWrapper;
+import com.gemserk.commons.artemis.components.ScriptComponent;
+import com.gemserk.commons.artemis.events.Event;
 import com.gemserk.commons.artemis.events.EventManager;
 import com.gemserk.commons.artemis.events.EventManagerImpl;
+import com.gemserk.commons.artemis.events.reflection.Handles;
 import com.gemserk.commons.artemis.render.RenderLayers;
+import com.gemserk.commons.artemis.scripts.ScriptJavaImpl;
 import com.gemserk.commons.artemis.systems.CameraUpdateSystem;
 import com.gemserk.commons.artemis.systems.EventManagerWorldSystem;
 import com.gemserk.commons.artemis.systems.MovementSystem;
@@ -30,6 +35,7 @@ import com.gemserk.commons.artemis.systems.SpriteUpdateSystem;
 import com.gemserk.commons.artemis.templates.EntityFactory;
 import com.gemserk.commons.artemis.templates.EntityFactoryImpl;
 import com.gemserk.commons.artemis.templates.EntityTemplate;
+import com.gemserk.commons.artemis.templates.EntityTemplateImpl;
 import com.gemserk.commons.gdx.GameStateImpl;
 import com.gemserk.commons.gdx.audio.SoundPlayer;
 import com.gemserk.commons.gdx.box2d.BodyBuilder;
@@ -38,7 +44,6 @@ import com.gemserk.commons.gdx.camera.CameraRestrictedImpl;
 import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
 import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
 import com.gemserk.commons.gdx.games.SpatialImpl;
-import com.gemserk.commons.gdx.gui.ButtonHandler;
 import com.gemserk.commons.gdx.gui.Container;
 import com.gemserk.commons.gdx.gui.GuiControls;
 import com.gemserk.commons.gdx.time.TimeStepProviderGameStateImpl;
@@ -46,15 +51,23 @@ import com.gemserk.commons.reflection.Injector;
 import com.gemserk.commons.reflection.InjectorImpl;
 import com.gemserk.componentsengine.input.InputDevicesMonitorImpl;
 import com.gemserk.componentsengine.input.LibgdxInputMappingBuilder;
+import com.gemserk.componentsengine.utils.Parameters;
 import com.gemserk.componentsengine.utils.ParametersWrapper;
+import com.gemserk.games.angryships.Game;
+import com.gemserk.games.angryships.GameInformation;
 import com.gemserk.games.angryships.components.PixmapWorld;
+import com.gemserk.games.angryships.entities.Events;
 import com.gemserk.games.angryships.entities.Groups;
+import com.gemserk.games.angryships.entities.Tags;
 import com.gemserk.games.angryships.input.CustomImageButton;
 import com.gemserk.games.angryships.render.Layers;
 import com.gemserk.games.angryships.resources.GameResources;
+import com.gemserk.games.angryships.scripts.GameModeNormalScript;
 import com.gemserk.games.angryships.systems.AntiGravitySystem;
 import com.gemserk.games.angryships.systems.Box2dRenderSystem;
 import com.gemserk.games.angryships.systems.PixmapCollidableSystem;
+import com.gemserk.games.angryships.systems.TimerTriggerSystem;
+import com.gemserk.games.angryships.systems.TimerUpdateSystem;
 import com.gemserk.games.angryships.templates.AreaTriggerTemplate;
 import com.gemserk.games.angryships.templates.CameraFollowTemplate;
 import com.gemserk.games.angryships.templates.ClusterBombMunitionSpawnerTemplate;
@@ -66,9 +79,12 @@ import com.gemserk.games.angryships.templates.KeyboardControllerTemplate;
 import com.gemserk.games.angryships.templates.StaticSpriteTemplate;
 import com.gemserk.games.angryships.templates.TargetTemplate;
 import com.gemserk.games.angryships.templates.TerrainEntityTemplate;
+import com.gemserk.games.angryships.templates.TimerTriggerTemplate;
 import com.gemserk.resources.ResourceManager;
 
 public class PlayGameState extends GameStateImpl {
+
+	Game game;
 
 	private GL10 gl;
 	private SpriteBatch spriteBatch;
@@ -131,6 +147,7 @@ public class PlayGameState extends GameStateImpl {
 		screen = new Container();
 
 		Container moveButtonsContainer = new Container("MovementButtonsContainer");
+		moveButtonsContainer.setPosition(Gdx.graphics.getWidth() * 0f, -Gdx.graphics.getHeight() * 0.5f);
 
 		Sprite turnRightSprite = resourceManager.getResourceValue(GameResources.Sprites.TurnRightButtonSprite);
 
@@ -139,22 +156,6 @@ public class PlayGameState extends GameStateImpl {
 				.center(0.5f, 0.5f) //
 				.position(Gdx.graphics.getWidth() * (1f - 0.085f), Gdx.graphics.getHeight() * 0.15f) //
 				.color(1f, 1f, 1f, 1f) //
-				.handler(new ButtonHandler() {
-					// @Override
-					// public void onPressed(Control control) {
-					// controller.right = true;
-					// }
-					//
-					// @Override
-					// public void onReleased(Control control) {
-					// controller.right = false;
-					// }
-					//
-					// @Override
-					// public void onLeave(Control control) {
-					// controller.right = false;
-					// }
-				}) //
 				.build());
 
 		Sprite explodeSprite = resourceManager.getResourceValue(GameResources.Sprites.FireButtonSprite);
@@ -164,12 +165,6 @@ public class PlayGameState extends GameStateImpl {
 				.center(0.5f, 0.5f) //
 				.position(Gdx.graphics.getWidth() * (1f - 3 * 0.085f), Gdx.graphics.getHeight() * 0.15f) //
 				.color(1f, 1f, 1f, 1f) //
-				.handler(new ButtonHandler() {
-					// @Override
-					// public void onReleased(Control control) {
-					// controller.explode = true;
-					// }
-				}) //
 				.build());
 
 		Sprite turnLeftSprite = resourceManager.getResourceValue(GameResources.Sprites.TurnLeftButtonSprite);
@@ -179,25 +174,10 @@ public class PlayGameState extends GameStateImpl {
 				.center(0.5f, 0.5f) //
 				.position(Gdx.graphics.getWidth() * 0.085f, Gdx.graphics.getHeight() * 0.15f) //
 				.color(1f, 1f, 1f, 1f) //
-				.handler(new ButtonHandler() {
-					// @Override
-					// public void onPressed(Control control) {
-					// controller.left = true;
-					// }
-					//
-					// @Override
-					// public void onReleased(Control control) {
-					// controller.left = false;
-					// }
-					//
-					// @Override
-					// public void onLeave(Control control) {
-					// controller.left = false;
-					// }
-				}) //
 				.build());
 
 		Container fireButtonsContainer = new Container("FireButtonsContainer");
+		fireButtonsContainer.setPosition(Gdx.graphics.getWidth() * 0f, -Gdx.graphics.getHeight() * 0.5f);
 
 		Sprite fireButtonSprite = resourceManager.getResourceValue(GameResources.Sprites.FireButtonSprite);
 
@@ -205,14 +185,7 @@ public class PlayGameState extends GameStateImpl {
 				.id("FireButton") //
 				.center(0.5f, 0.5f) //
 				.position(Gdx.graphics.getWidth() * (1f - 0.085f), Gdx.graphics.getHeight() * 0.15f) //
-				// .position(Gdx.graphics.getWidth() * (1f - 0.25f), Gdx.graphics.getHeight() * 0.15f) //
 				.color(1f, 1f, 1f, 1f) //
-				.handler(new ButtonHandler() {
-					// @Override
-					// public void onReleased(Control control) {
-					// controller.fire = true;
-					// }
-				}) //
 				.build());
 
 		screen.add(moveButtonsContainer);
@@ -236,6 +209,7 @@ public class PlayGameState extends GameStateImpl {
 
 		entityFactory = new EntityFactoryImpl(worldWrapper.getWorld());
 		EventManager eventManager = new EventManagerImpl();
+		EntityBuilder entityBuilder = new EntityBuilder(worldWrapper.getWorld());
 
 		physicsWorld = new com.badlogic.gdx.physics.box2d.World(new Vector2(0f, -10f), false);
 
@@ -266,6 +240,9 @@ public class PlayGameState extends GameStateImpl {
 
 		worldWrapper.addUpdateSystem(injector.getInstance(EventManagerWorldSystem.class));
 		worldWrapper.addUpdateSystem(new ReflectionRegistratorEventSystem(eventManager));
+
+		worldWrapper.addUpdateSystem(injector.getInstance(TimerUpdateSystem.class));
+		worldWrapper.addUpdateSystem(injector.getInstance(TimerTriggerSystem.class));
 
 		worldWrapper.addRenderSystem(injector.getInstance(CameraUpdateSystem.class));
 		worldWrapper.addRenderSystem(injector.getInstance(SpriteUpdateSystem.class));
@@ -367,7 +344,53 @@ public class PlayGameState extends GameStateImpl {
 
 		entityFactory.instantiate(injector.getInstance(HudTemplate.class));
 
-		// CustomImageButton turnRightButton = screen.findControl("TurnRightButton");
+		entityFactory.instantiate(new EntityTemplateImpl() {
+			@Override
+			public void apply(Entity entity) {
+				entity.addComponent(new ScriptComponent(injector.getInstance(GameModeNormalScript.class)));
+			}
+		});
+
+		entityBuilder //
+				.component(new ScriptComponent(new ScriptJavaImpl() {
+
+					private final Parameters parameters = new ParametersWrapper();
+
+					private World world;
+
+					@Override
+					public void init(World world, Entity e) {
+						this.world = world;
+					}
+
+					@Handles(ids = Events.gameOver)
+					public void gameOver(Event event) {
+						Gdx.app.log(GameInformation.applicationId, "game over");
+
+						Entity controller = world.getTagManager().getEntity(Tags.Controller);
+
+						if (controller != null)
+							controller.delete();
+
+						TimerTriggerTemplate timerTriggerTemplate = injector.getInstance(TimerTriggerTemplate.class);
+
+						entityFactory.instantiate(timerTriggerTemplate, parameters //
+								.put("time", 2.5f) //
+								.put("eventId", Events.restartLevel) //
+								);
+
+					}
+
+					@Handles(ids = Events.restartLevel)
+					public void restartLevel(Event event) {
+						game.transition(game.playScreen) //
+								.restartScreen() //
+								.leaveTime(0.5f) //
+								.start();
+					}
+
+				})) //
+				.build();
 
 	}
 
@@ -389,7 +412,7 @@ public class PlayGameState extends GameStateImpl {
 
 		if (bombs.size() <= 0) {
 			if (controller.fire) {
-//				EntityTemplate bombEntityTemplate = injector.getInstance(BombTemplate.class);
+				// EntityTemplate bombEntityTemplate = injector.getInstance(BombTemplate.class);
 				EntityTemplate bombEntityTemplate = injector.getInstance(KamikazeControllableBombTemplate.class);
 				entityFactory.instantiate(bombEntityTemplate, new ParametersWrapper() //
 						.put("spatial", new SpatialImpl(2f, 10f, 0.75f, 0.75f, 0)) //
