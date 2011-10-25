@@ -57,6 +57,7 @@ import com.gemserk.componentsengine.utils.ParametersWrapper;
 import com.gemserk.games.angryships.Game;
 import com.gemserk.games.angryships.GameInformation;
 import com.gemserk.games.angryships.components.PixmapWorld;
+import com.gemserk.games.angryships.components.PlayerData;
 import com.gemserk.games.angryships.entities.Events;
 import com.gemserk.games.angryships.entities.Groups;
 import com.gemserk.games.angryships.entities.Tags;
@@ -183,6 +184,13 @@ public class PlayGameState extends GameStateImpl {
 
 		fireButtonsContainer.add(GuiControls.imageButton(new CustomImageButton(fireButtonSprite)) //
 				.id("FireButton") //
+				.center(0.5f, 0.5f) //
+				.position(Gdx.graphics.getWidth() * (1f - 0.085f), Gdx.graphics.getHeight() * 0.15f) //
+				.color(1f, 1f, 1f, 1f) //
+				.build());
+		
+		fireButtonsContainer.add(GuiControls.label("NA") //
+				.id("NormalBombCountLabel") //
 				.center(0.5f, 0.5f) //
 				.position(Gdx.graphics.getWidth() * (1f - 0.085f), Gdx.graphics.getHeight() * 0.15f) //
 				.color(1f, 1f, 1f, 1f) //
@@ -339,6 +347,7 @@ public class PlayGameState extends GameStateImpl {
 
 		entityFactory.instantiate(injector.getInstance(PlayerTemplate.class), new ParametersWrapper() //
 				.put("controller", controller) //
+				.put("playerData", new PlayerData(5)) //
 				);
 
 		entityFactory.instantiate(new EntityTemplateImpl() {

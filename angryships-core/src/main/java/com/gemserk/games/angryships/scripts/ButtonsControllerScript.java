@@ -12,13 +12,7 @@ public class ButtonsControllerScript extends ScriptJavaImpl {
 
 	@Override
 	public void update(World world, Entity e) {
-		
 		ButtonMonitorsComponent buttonMonitorsComponent = e.getComponent(ButtonMonitorsComponent.class);
-
-//		buttonMonitorsComponent.leftButtonMonitor.update();
-//		buttonMonitorsComponent.rightButtonMonitor.update();
-//		buttonMonitorsComponent.fireButtonMonitor.update();
-//		buttonMonitorsComponent.explodeButtonMonitor.update();
 
 		ControllerComponent controllerComponent = GameComponents.getControllerComponent(e);
 		Controller controller = controllerComponent.controller;
@@ -27,7 +21,6 @@ public class ButtonsControllerScript extends ScriptJavaImpl {
 		controller.right = buttonMonitorsComponent.rightButtonMonitor.isHolded();
 		controller.fire = buttonMonitorsComponent.fireButtonMonitor.isReleased();
 		controller.explode = buttonMonitorsComponent.explodeButtonMonitor.isReleased();
-
 	}
 
 }
