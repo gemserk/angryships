@@ -2,7 +2,6 @@ package com.gemserk.games.angryships.gamestates;
 
 import com.artemis.Entity;
 import com.artemis.World;
-import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
@@ -33,6 +32,7 @@ import com.gemserk.commons.artemis.systems.RenderableSystem;
 import com.gemserk.commons.artemis.systems.ScriptSystem;
 import com.gemserk.commons.artemis.systems.SoundSpawnerSystem;
 import com.gemserk.commons.artemis.systems.SpriteUpdateSystem;
+import com.gemserk.commons.artemis.systems.TagSystem;
 import com.gemserk.commons.artemis.templates.EntityFactory;
 import com.gemserk.commons.artemis.templates.EntityFactoryImpl;
 import com.gemserk.commons.artemis.templates.EntityTemplate;
@@ -74,8 +74,8 @@ import com.gemserk.games.angryships.templates.ClusterBombMunitionSpawnerTemplate
 import com.gemserk.games.angryships.templates.ExplosionSpawnerTemplate;
 import com.gemserk.games.angryships.templates.HudButtonsControllerTemplate;
 import com.gemserk.games.angryships.templates.HudTemplate;
-import com.gemserk.games.angryships.templates.KamikazeControllableBombTemplate;
 import com.gemserk.games.angryships.templates.KeyboardControllerTemplate;
+import com.gemserk.games.angryships.templates.PlayerTemplate;
 import com.gemserk.games.angryships.templates.StaticSpriteTemplate;
 import com.gemserk.games.angryships.templates.TargetTemplate;
 import com.gemserk.games.angryships.templates.TerrainEntityTemplate;
@@ -243,6 +243,7 @@ public class PlayGameState extends GameStateImpl {
 
 		worldWrapper.addUpdateSystem(injector.getInstance(TimerUpdateSystem.class));
 		worldWrapper.addUpdateSystem(injector.getInstance(TimerTriggerSystem.class));
+		worldWrapper.addUpdateSystem(injector.getInstance(TagSystem.class));
 
 		worldWrapper.addRenderSystem(injector.getInstance(CameraUpdateSystem.class));
 		worldWrapper.addRenderSystem(injector.getInstance(SpriteUpdateSystem.class));
@@ -328,14 +329,6 @@ public class PlayGameState extends GameStateImpl {
 					);
 		}
 
-		// entityFactory.instantiate(injector.getInstance(HudButtonsControllerTemplate.class), new ParametersWrapper() //
-		// .put("controller", controller) //
-		// .put("leftButtonMonitor", ((CustomImageButton) screen.findControl("TurnLeftButton")).getButtonMonitor()) //
-		// .put("rightButtonMonitor", ((CustomImageButton) screen.findControl("TurnRightButton")).getButtonMonitor()) //
-		// .put("fireButtonMonitor", ((CustomImageButton) screen.findControl("FireButton")).getButtonMonitor()) //
-		// .put("explodeButtonMonitor", ((CustomImageButton) screen.findControl("ExplodeButton")).getButtonMonitor()) //
-		// );
-
 		entityFactory.instantiate(targetTemplate, new ParametersWrapper() //
 				.put("spatial", new SpatialImpl(23.5f, 7f, 1f, 1f, 0)) //
 				);
@@ -343,6 +336,10 @@ public class PlayGameState extends GameStateImpl {
 		entityFactory.instantiate(injector.getInstance(ClusterBombMunitionSpawnerTemplate.class));
 
 		entityFactory.instantiate(injector.getInstance(HudTemplate.class));
+
+		entityFactory.instantiate(injector.getInstance(PlayerTemplate.class), new ParametersWrapper() //
+				.put("controller", controller) //
+				);
 
 		entityFactory.instantiate(new EntityTemplateImpl() {
 			@Override
@@ -365,7 +362,10 @@ public class PlayGameState extends GameStateImpl {
 
 					@Handles(ids = Events.gameOver)
 					public void gameOver(Event event) {
-						Gdx.app.log(GameInformation.applicationId, "game over");
+
+						boolean win = world.getGroupManager().getEntities(Groups.Targets).size() == 0;
+
+						Gdx.app.log(GameInformation.applicationId, "Game over: " + (win ? "win" : "lose"));
 
 						Entity controller = world.getTagManager().getEntity(Tags.Controller);
 
@@ -392,13 +392,13 @@ public class PlayGameState extends GameStateImpl {
 				})) //
 				.build();
 
+		worldWrapper.update(1);
+
 	}
 
 	@Override
 	public void update() {
 		super.update();
-
-		controller.fire = false;
 
 		Synchronizers.synchronize(getDelta());
 
@@ -407,43 +407,6 @@ public class PlayGameState extends GameStateImpl {
 		inputDevicesMonitor.update();
 
 		worldWrapper.update(getDeltaInMs());
-
-		ImmutableBag<Entity> bombs = worldWrapper.getWorld().getGroupManager().getEntities(Groups.Bombs);
-
-		if (bombs.size() <= 0) {
-			if (controller.fire) {
-				// EntityTemplate bombEntityTemplate = injector.getInstance(BombTemplate.class);
-				EntityTemplate bombEntityTemplate = injector.getInstance(KamikazeControllableBombTemplate.class);
-				entityFactory.instantiate(bombEntityTemplate, new ParametersWrapper() //
-						.put("spatial", new SpatialImpl(2f, 10f, 0.75f, 0.75f, 0)) //
-						.put("controller", controller) //
-						);
-
-			}
-		}
-
-		// if (inputDevicesMonitor.getButton("releaseBomb").isReleased()) {
-		//
-		// EntityTemplate miniBombTemplate = injector.getInstance(ClusterBombMunitionTemplate.class);
-		// Vector2 position = new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
-		//
-		// worldCamera.unproject(position);
-		// System.out.println(position);
-		//
-		// for (int i = 0; i < 3; i++) {
-		//
-		// Entity minibomb = entityFactory.instantiate(miniBombTemplate, new ParametersWrapper() //
-		// .put("spatial", new SpatialImpl(position.x, position.y, 0.4f, 0.4f, MathUtils.random(0f, 360f))) //
-		// );
-		//
-		// PhysicsComponent physicsComponent = Components.physicsComponent(minibomb);
-		// Body body = physicsComponent.getBody();
-		// body.applyLinearImpulse(MathUtils.random(-3f, 3f), 0f, body.getPosition().x, body.getPosition().y);
-		//
-		// }
-		//
-		// }
-
 	}
 
 	@Override
