@@ -27,8 +27,10 @@ public class HudScript extends ScriptJavaImpl {
 	private static final String gameOverListenerProperty = "gameOverProperty";
 	private static final String visibleProperty = "visibleProperty";
 
-	Container screen;
 	EventManager eventManager;
+
+	// this one could be a parameter instead, be stored in a custom component or the properties component instead being unique.
+	Container screen;
 
 	@Override
 	public void init(World world, Entity e) {
