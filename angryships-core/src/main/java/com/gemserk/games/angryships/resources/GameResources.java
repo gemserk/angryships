@@ -19,6 +19,8 @@ public class GameResources extends LibgdxResourceBuilder {
 		public static final String LwjglLogo = "LwjglLogo";
 		public static final String LibgdxLogo = "LibgdxLogo";
 		
+		public static final String WhiteRectangleSprite = "WhiteRectangleSprite";
+		
 		public static final String BackgroundSprite = "BackgroundSprite";
 		public static final String SecondBackgroundSprite = "SecondBackgroundSprite";
 
@@ -27,13 +29,15 @@ public class GameResources extends LibgdxResourceBuilder {
 		public static final String TurnRightButtonSprite = "TurnRightButtonSprite";
 		public static final String TurnLeftButtonSprite = "TurnLeftButtonSprite";
 		public static final String FireButtonSprite = "FireButtonSprite";
+		
+		public static final String RestartButtonSprite = "RestartButtonSprite";
 
 	}
 
 	public static class Animations {
 
 		public static final String BombExplosionAnimation = "BombExplosionAnimation";
-		
+
 		public static final String ItemIdleAnimation = "ItemIdleAnimation";
 
 	}
@@ -41,6 +45,12 @@ public class GameResources extends LibgdxResourceBuilder {
 	public static class Sounds {
 
 		public static final String BombExplosion = "BombExplosionSound";
+
+	}
+	
+	public static class Fonts {
+
+		public static final String MessageFont = "MessageFont";
 
 	}
 
@@ -60,6 +70,9 @@ public class GameResources extends LibgdxResourceBuilder {
 		sprite(Sprites.GemserkLogoBlur, "GemserkLogoTextureBlur");
 		sprite(Sprites.LwjglLogo, "LwjglLogoTexture", 0, 0, 512, 185);
 		sprite(Sprites.LibgdxLogo, "LibgdxLogoTexture", 0, 25, 512, 256 - 50);
+		
+		texture("WhiteRectangleTexture", "data/images/white-rectangle.png", true);
+		sprite(Sprites.WhiteRectangleSprite, "WhiteRectangleTexture");
 
 		texture("BackgroundTexture", "data/levels/superangrysheep-background.png", true);
 		sprite(Sprites.BackgroundSprite, "BackgroundTexture");
@@ -84,11 +97,16 @@ public class GameResources extends LibgdxResourceBuilder {
 
 		texture("ButtonTurnRightTexture", "data/gui/button-turn-right.png", true);
 		sprite(Sprites.TurnRightButtonSprite, "ButtonTurnRightTexture");
+		
+		texture("ButtonRestartTexture", "data/gui/button-restart.png", true);
+		sprite(Sprites.RestartButtonSprite, "ButtonRestartTexture");
 
 		sound(Sounds.BombExplosion, "data/audio/bomb-explosion.ogg");
 		
 		pixmapHelper("Level01_0", "data/levels/level01-0.png");
 		pixmapHelper("Level01_1", "data/levels/level01-1.png");
+		
+		font(Fonts.MessageFont, "data/fonts/purisa-18.png", "data/fonts/purisa-18.fnt", false);
 		
 	}
 	

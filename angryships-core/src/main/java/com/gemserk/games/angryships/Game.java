@@ -28,6 +28,7 @@ import com.gemserk.componentsengine.input.InputDevicesMonitorImpl;
 import com.gemserk.componentsengine.input.LibgdxInputMappingBuilder;
 import com.gemserk.componentsengine.utils.Parameters;
 import com.gemserk.componentsengine.utils.ParametersWrapper;
+import com.gemserk.games.angryships.gamestates.GameOverGameState;
 import com.gemserk.games.angryships.gamestates.PlayGameState;
 import com.gemserk.games.angryships.gamestates.SplashGameState;
 import com.gemserk.games.angryships.resources.GameResources;
@@ -70,6 +71,7 @@ public class Game extends com.gemserk.commons.gdx.Game {
 	
 	public Screen splashScreen;
 	public Screen playScreen;
+	public Screen gameOverScreen;
 	
 	public Parameters getGameData() {
 		return gameData;
@@ -123,9 +125,11 @@ public class Game extends com.gemserk.commons.gdx.Game {
 
 		GameState splashGameState = injector.getInstance(SplashGameState.class);
 		GameState playGameState = injector.getInstance(PlayGameState.class);
+		GameState gameOverGameState = injector.getInstance(GameOverGameState.class);
 
 		splashScreen = new ScreenImpl(splashGameState);
 		playScreen = new ScreenImpl(playGameState);
+		gameOverScreen = new ScreenImpl(gameOverGameState);
 
 		EventListenerReflectionRegistrator registrator = new EventListenerReflectionRegistrator(eventManager);
 

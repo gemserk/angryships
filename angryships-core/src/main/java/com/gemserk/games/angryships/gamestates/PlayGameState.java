@@ -98,10 +98,6 @@ public class PlayGameState extends GameStateImpl {
 
 	private InputDevicesMonitorImpl<String> inputDevicesMonitor;
 
-	boolean rotate = false;
-
-	Controller controller;
-
 	Libgdx2dCamera guiCamera;
 
 	ResourceManager<String> resourceManager;
@@ -147,7 +143,7 @@ public class PlayGameState extends GameStateImpl {
 
 		Gdx.graphics.getGL10().glClearColor(0.5f, 0.5f, 0.5f, 0f);
 
-		controller = new Controller();
+		Controller controller = new Controller();
 
 		// /
 
@@ -234,8 +230,8 @@ public class PlayGameState extends GameStateImpl {
 
 		injector = new InjectorImpl();
 
-//		SignalRegistry signalRegistry = new SignalRegistryImpl();
-//		bombSpawnedSignal = signalRegistry.register(Events.bombSpawned);
+		// SignalRegistry signalRegistry = new SignalRegistryImpl();
+		// bombSpawnedSignal = signalRegistry.register(Events.bombSpawned);
 
 		injector.bind("timeStepProvider", new TimeStepProviderGameStateImpl(this));
 		injector.bind("renderLayers", renderLayers);
@@ -246,7 +242,7 @@ public class PlayGameState extends GameStateImpl {
 		injector.bind("soundPlayer", soundPlayer);
 		injector.bind("bodyBuilder", bodyBuilder);
 		injector.bind("screen", screen);
-//		injector.bind("signalRegistry", signalRegistry);
+		// injector.bind("signalRegistry", signalRegistry);
 
 		worldWrapper.addUpdateSystem(injector.getInstance(PreviousStateSpatialSystem.class));
 		worldWrapper.addUpdateSystem(injector.getInstance(AntiGravitySystem.class));
@@ -357,7 +353,7 @@ public class PlayGameState extends GameStateImpl {
 
 		entityFactory.instantiate(injector.getInstance(PlayerTemplate.class), new ParametersWrapper() //
 				.put("controller", controller) //
-				.put("playerData", new PlayerData(5)) //
+				.put("playerData", new PlayerData(1)) //
 				);
 
 		entityFactory.instantiate(new EntityTemplateImpl() {
@@ -402,9 +398,10 @@ public class PlayGameState extends GameStateImpl {
 
 					@Handles(ids = Events.restartLevel)
 					public void restartLevel(Event event) {
-						game.transition(game.playScreen) //
+						game.transition(game.gameOverScreen) //
+								.parameter("worldWrapper", worldWrapper) //
 								.restartScreen() //
-								.leaveTime(0.5f) //
+								.leaveTime(0f) //
 								.start();
 					}
 
@@ -426,7 +423,7 @@ public class PlayGameState extends GameStateImpl {
 		inputDevicesMonitor.update();
 
 		if (inputDevicesMonitor.getButton(Actions.releaseBomb).isReleased()) {
-//			bombSpawnedSignal.signal(this);
+			// bombSpawnedSignal.signal(this);
 		}
 
 		worldWrapper.update(getDeltaInMs());
@@ -454,9 +451,9 @@ public class PlayGameState extends GameStateImpl {
 
 	@Override
 	public void dispose() {
-		pixmapWorld.dispose();
+		// pixmapWorld.dispose();
+		worldWrapper.dispose();
 		spriteBatch.dispose();
-		resourceManager.unloadAll();
 	}
 
 }

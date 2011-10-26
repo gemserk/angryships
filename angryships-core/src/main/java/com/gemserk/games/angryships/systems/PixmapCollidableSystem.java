@@ -5,6 +5,7 @@ import com.artemis.EntityProcessingSystem;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Disposable;
 import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.gdx.games.Spatial;
@@ -15,7 +16,7 @@ import com.gemserk.games.angryships.components.PixmapCollision;
 import com.gemserk.games.angryships.components.PixmapWorld;
 import com.gemserk.prototypes.pixmap.PixmapHelper;
 
-public class PixmapCollidableSystem extends EntityProcessingSystem {
+public class PixmapCollidableSystem extends EntityProcessingSystem implements Disposable {
 
 	private static final Color color = new Color();
 	private static final Vector2 position = new Vector2();
@@ -62,6 +63,11 @@ public class PixmapCollidableSystem extends EntityProcessingSystem {
 		for (int i = 0; i < pixmaps.size; i++) 
 			pixmaps.get(i).update();
 		
+	}
+
+	@Override
+	public void dispose() {
+		pixmapWorld.dispose();		
 	}
 
 }
