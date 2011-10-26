@@ -30,6 +30,7 @@ public class GameResources extends LibgdxResourceBuilder {
 		public static final String TurnLeftButtonSprite = "TurnLeftButtonSprite";
 		public static final String FireButtonSprite = "FireButtonSprite";
 		
+		public static final String PauseButtonSprite = "PauseButtonSprite";
 		public static final String RestartButtonSprite = "RestartButtonSprite";
 
 	}
@@ -74,10 +75,10 @@ public class GameResources extends LibgdxResourceBuilder {
 		texture("WhiteRectangleTexture", "data/images/white-rectangle.png", true);
 		sprite(Sprites.WhiteRectangleSprite, "WhiteRectangleTexture");
 
-		texture("BackgroundTexture", "data/levels/superangrysheep-background.png", true);
+		texture("BackgroundTexture", "data/levels/background.png", true);
 		sprite(Sprites.BackgroundSprite, "BackgroundTexture");
 
-		texture("SecondBackgroundTexture", "data/levels/superangrysheep-background2.png", true);
+		texture("SecondBackgroundTexture", "data/levels/background2.png", true);
 		sprite(Sprites.SecondBackgroundSprite, "SecondBackgroundTexture");
 
 		texture("BombExplosionSpriteSheet", "data/animations/bomb-explosion-animation.png", true);
@@ -100,11 +101,15 @@ public class GameResources extends LibgdxResourceBuilder {
 		
 		texture("ButtonRestartTexture", "data/gui/button-restart.png", true);
 		sprite(Sprites.RestartButtonSprite, "ButtonRestartTexture");
+		
+		texture("ButtonPauseTexture", "data/gui/button-pause.png", true);
+		sprite(Sprites.PauseButtonSprite, "ButtonPauseTexture");
 
 		sound(Sounds.BombExplosion, "data/audio/bomb-explosion.ogg");
 		
 		pixmapHelper("Level01_0", "data/levels/level01-0.png");
 		pixmapHelper("Level01_1", "data/levels/level01-1.png");
+		pixmapHelper("Level01-ground", "data/levels/ground.png");
 		
 		font(Fonts.MessageFont, "data/fonts/purisa-18.png", "data/fonts/purisa-18.fnt", false);
 		

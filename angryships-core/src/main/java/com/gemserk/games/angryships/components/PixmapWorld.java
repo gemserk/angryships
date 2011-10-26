@@ -4,6 +4,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.gemserk.prototypes.pixmap.PixmapHelper;
 
+// could be named something like PixmapManager instead if it will be globally used.
+
 public class PixmapWorld implements Disposable {
 	
 	Array<PixmapHelper> pixmaps = new Array<PixmapHelper>();

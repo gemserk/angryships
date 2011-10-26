@@ -120,7 +120,7 @@ public class PlayGameState extends GameStateImpl {
 
 		spriteBatch = new SpriteBatch();
 
-		float worldScaleFactor = 1.5f;
+		float worldScaleFactor = 1f;
 
 		Rectangle backgroundCameraWorldBounds = new Rectangle(-1024f * worldScaleFactor * 0.5f, -512 * worldScaleFactor * 0.5f, 1024f * worldScaleFactor, 512f * worldScaleFactor);
 
@@ -327,6 +327,16 @@ public class PlayGameState extends GameStateImpl {
 				.put("terrainId", "Level01_1") //
 				);
 
+		entityFactory.instantiate(terrainEntityTemplate, new ParametersWrapper() //
+				.put("spatial", new SpatialImpl(worldBounds.x + 12.8f, 12.8f * 0.5f, 12.8f * 2, 12.8f, 0)) //
+				.put("terrainId", "Level01-ground") //
+				);
+
+		entityFactory.instantiate(terrainEntityTemplate, new ParametersWrapper() //
+				.put("spatial", new SpatialImpl(worldBounds.x + 12.8f + 12.8f * 2, 12.8f * 0.5f, 12.8f * 2, 12.8f, 0)) //
+				.put("terrainId", "Level01-ground") //
+				);
+
 		entityFactory.instantiate(explosionSpawnerTemplate, new ParametersWrapper());
 
 		if (Gdx.app.getType() == ApplicationType.Desktop || Gdx.app.getType() == ApplicationType.Applet) {
@@ -353,7 +363,7 @@ public class PlayGameState extends GameStateImpl {
 
 		entityFactory.instantiate(injector.getInstance(PlayerTemplate.class), new ParametersWrapper() //
 				.put("controller", controller) //
-				.put("playerData", new PlayerData(1)) //
+				.put("playerData", new PlayerData(10)) //
 				);
 
 		entityFactory.instantiate(new EntityTemplateImpl() {
@@ -400,6 +410,7 @@ public class PlayGameState extends GameStateImpl {
 					public void restartLevel(Event event) {
 						game.transition(game.gameOverScreen) //
 								.parameter("worldWrapper", worldWrapper) //
+								.parameter("pixmapWorld", pixmapWorld) //
 								.restartScreen() //
 								.leaveTime(0f) //
 								.start();

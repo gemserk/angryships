@@ -122,12 +122,12 @@ public class PixmapHelper implements Disposable {
 	public void eraseCircle(float x, float y, float radius) {
 		if (lastModification == modifications.length)
 			return;
-		
+
 		float scaleX = pixmap.getWidth() / sprite.getWidth();
 
 		int newRadius = Math.round(radius * scaleX);
-		
-		if (x + newRadius < 0 || y + newRadius < 0) 
+
+		if (x + newRadius < 0 || y + newRadius < 0)
 			return;
 
 		if (x - newRadius > pixmap.getWidth() || y - newRadius > pixmap.getHeight())
@@ -136,7 +136,6 @@ public class PixmapHelper implements Disposable {
 		Blending blending = Pixmap.getBlending();
 		pixmap.setColor(0f, 0f, 0f, 0f);
 		Pixmap.setBlending(Blending.None);
-
 
 		int newX = Math.round(x);
 		int newY = Math.round(y);
@@ -209,6 +208,8 @@ public class PixmapHelper implements Disposable {
 	 * Reload all the pixmap data to the opengl texture, to be used after the game was resumed.
 	 */
 	public void reload() {
+		// texture.dispose();
+		// if (texture.getTextureObjectHandle() == 0)
 		texture.load(new PixmapTextureData(pixmap, pixmap.getFormat(), false, false));
 	}
 

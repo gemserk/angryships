@@ -20,6 +20,7 @@ import com.gemserk.commons.gdx.gui.GuiControls;
 import com.gemserk.commons.gdx.gui.animation4j.converters.GuiConverters;
 import com.gemserk.commons.reflection.Injector;
 import com.gemserk.games.angryships.Game;
+import com.gemserk.games.angryships.components.PixmapWorld;
 import com.gemserk.games.angryships.input.CustomImageButton;
 import com.gemserk.games.angryships.resources.GameResources;
 import com.gemserk.resources.ResourceManager;
@@ -34,26 +35,23 @@ public class GameOverGameState extends GameStateImpl {
 
 	Game game;
 	ResourceManager<String> resourceManager;
-	Synchronizer synchronizer;
+	AdWhirlViewHandler adWhirlViewHandler;
+	Injector injector;
 
 	private GL10 gl;
 	private SpriteBatch spriteBatch;
 
+	Synchronizer synchronizer;
 	Libgdx2dCamera guiCamera;
-
-	AdWhirlViewHandler adWhirlViewHandler;
-
 	WorldWrapper worldWrapper;
-
-	Injector injector;
-
+	PixmapWorld pixmapWorld;
 	Container screen;
 
 	@Override
 	public void init() {
 		gl = Gdx.graphics.getGL10();
 		gl.glClearColor(0f, 0f, 0f, 1f);
-		
+
 		synchronizer = new Synchronizer();
 		spriteBatch = new SpriteBatch();
 
@@ -90,6 +88,7 @@ public class GameOverGameState extends GameStateImpl {
 				.build());
 
 		worldWrapper = getParameters().get("worldWrapper");
+		pixmapWorld = getParameters().get("pixmapWorld");
 	}
 
 	@Override
@@ -109,15 +108,15 @@ public class GameOverGameState extends GameStateImpl {
 					.build();
 
 			synchronizer.transition(hideTransition);
-			
-			synchronizer.monitor(hideTransition, new TransitionEventHandler(){
+
+			synchronizer.monitor(hideTransition, new TransitionEventHandler() {
 				@Override
 				public void onTransitionFinished(Transition transition) {
 					game.transition(game.playScreen) //
-					.disposeCurrent() //
-					.restartScreen() //
-					.leaveTime(0f) //
-					.start();
+							.disposeCurrent() //
+							.restartScreen() //
+							.leaveTime(0f) //
+							.start();
 				}
 			});
 
@@ -137,6 +136,7 @@ public class GameOverGameState extends GameStateImpl {
 
 	@Override
 	public void resume() {
+		pixmapWorld.reload();
 		adWhirlViewHandler.show();
 		Gdx.input.setCatchBackKey(false);
 
