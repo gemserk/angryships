@@ -85,6 +85,12 @@ import com.gemserk.resources.ResourceManager;
 
 public class PlayGameState extends GameStateImpl {
 
+	public static class Actions {
+
+		public static final String releaseBomb = "releaseBomb";
+
+	}
+
 	Game game;
 
 	private GL10 gl;
@@ -188,7 +194,7 @@ public class PlayGameState extends GameStateImpl {
 				.position(Gdx.graphics.getWidth() * (1f - 0.085f), Gdx.graphics.getHeight() * 0.15f) //
 				.color(1f, 1f, 1f, 1f) //
 				.build());
-		
+
 		fireButtonsContainer.add(GuiControls.label("NA") //
 				.id("NormalBombCountLabel") //
 				.center(0.5f, 0.5f) //
@@ -202,7 +208,7 @@ public class PlayGameState extends GameStateImpl {
 		inputDevicesMonitor = new InputDevicesMonitorImpl<String>();
 		new LibgdxInputMappingBuilder<String>(inputDevicesMonitor, Gdx.input) {
 			{
-				monitorPointerDown("releaseBomb", 0);
+				monitorPointerDown(Actions.releaseBomb, 0);
 			}
 		};
 
@@ -228,6 +234,9 @@ public class PlayGameState extends GameStateImpl {
 
 		injector = new InjectorImpl();
 
+//		SignalRegistry signalRegistry = new SignalRegistryImpl();
+//		bombSpawnedSignal = signalRegistry.register(Events.bombSpawned);
+
 		injector.bind("timeStepProvider", new TimeStepProviderGameStateImpl(this));
 		injector.bind("renderLayers", renderLayers);
 		injector.bind("entityFactory", entityFactory);
@@ -237,6 +246,7 @@ public class PlayGameState extends GameStateImpl {
 		injector.bind("soundPlayer", soundPlayer);
 		injector.bind("bodyBuilder", bodyBuilder);
 		injector.bind("screen", screen);
+//		injector.bind("signalRegistry", signalRegistry);
 
 		worldWrapper.addUpdateSystem(injector.getInstance(PreviousStateSpatialSystem.class));
 		worldWrapper.addUpdateSystem(injector.getInstance(AntiGravitySystem.class));
@@ -415,7 +425,12 @@ public class PlayGameState extends GameStateImpl {
 
 		inputDevicesMonitor.update();
 
+		if (inputDevicesMonitor.getButton(Actions.releaseBomb).isReleased()) {
+//			bombSpawnedSignal.signal(this);
+		}
+
 		worldWrapper.update(getDeltaInMs());
+
 	}
 
 	@Override

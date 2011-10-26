@@ -19,7 +19,6 @@ import com.gemserk.games.angryships.components.ControllerComponent;
 import com.gemserk.games.angryships.components.GameComponents;
 import com.gemserk.games.angryships.components.PlayerComponent;
 import com.gemserk.games.angryships.components.PlayerData;
-import com.gemserk.games.angryships.entities.Events;
 import com.gemserk.games.angryships.entities.Groups;
 import com.gemserk.games.angryships.entities.Tags;
 import com.gemserk.games.angryships.gamestates.Controller;
@@ -31,20 +30,20 @@ public class PlayerTemplate extends EntityTemplateImpl {
 		EntityFactory entityFactory;
 		Injector injector;
 		EventManager eventManager;
-		
+
 		Container screen;
-		
+
 		@Override
 		public void init(World world, Entity e) {
 			Text normalBombsCountLabel = screen.findControl("NormalBombCountLabel");
-			
+
 			if (normalBombsCountLabel != null) {
 				PlayerComponent playerComponent = e.getComponent(PlayerComponent.class);
 				PlayerData playerData = playerComponent.playerData;
-				
+
 				normalBombsCountLabel.setText("x" + playerData.bombsLeft);
 			}
-			
+
 		}
 
 		@Override
@@ -69,14 +68,14 @@ public class PlayerTemplate extends EntityTemplateImpl {
 
 			PlayerComponent playerComponent = e.getComponent(PlayerComponent.class);
 			PlayerData playerData = playerComponent.playerData;
-			
+
 			playerData.bombsLeft--;
-			
-			eventManager.registerEvent(Events.bombSpawned, e);
-			
+
+			// eventManager.registerEvent(Events.bombSpawned, e);
+
 			Text normalBombsCountLabel = screen.findControl("NormalBombCountLabel");
-			
-			if (normalBombsCountLabel != null) 
+
+			if (normalBombsCountLabel != null)
 				normalBombsCountLabel.setText("x" + playerData.bombsLeft);
 		}
 
@@ -88,7 +87,7 @@ public class PlayerTemplate extends EntityTemplateImpl {
 	public void apply(Entity entity) {
 		Controller controller = parameters.get("controller");
 		PlayerData playerData = parameters.get("playerData");
-		
+
 		entity.addComponent(new TagComponent(Tags.Player));
 		entity.addComponent(new ControllerComponent(controller));
 		entity.addComponent(new PlayerComponent(playerData));

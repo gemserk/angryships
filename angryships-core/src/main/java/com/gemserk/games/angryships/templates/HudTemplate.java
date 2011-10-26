@@ -1,6 +1,7 @@
 package com.gemserk.games.angryships.templates;
 
 import com.artemis.Entity;
+import com.gemserk.commons.artemis.components.PropertiesComponent;
 import com.gemserk.commons.artemis.components.ScriptComponent;
 import com.gemserk.commons.artemis.templates.EntityTemplateImpl;
 import com.gemserk.commons.reflection.Injector;
@@ -12,6 +13,7 @@ public class HudTemplate extends EntityTemplateImpl {
 
 	@Override
 	public void apply(Entity entity) {
+		entity.addComponent(new PropertiesComponent());
 		entity.addComponent(new ScriptComponent(injector.getInstance(HudScript.class)));
 	}
 
