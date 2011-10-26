@@ -19,11 +19,12 @@ public class StaticSpriteTemplate extends EntityTemplateImpl {
 		Spatial spatial = parameters.get("spatial");
 		String spriteId = parameters.get("spriteId");
 		Integer layer = parameters.get("layer");
+		Color color = parameters.get("color", Color.WHITE);
 		
 		Sprite sprite = resourceManager.getResourceValue(spriteId);
 		
 		entity.addComponent(new RenderableComponent(layer));
-		entity.addComponent(new SpriteComponent(sprite, 0.5f, 0.5f, Color.WHITE));
+		entity.addComponent(new SpriteComponent(sprite, 0.5f, 0.5f, color));
 		entity.addComponent(new SpatialComponent(spatial));
 	}
 

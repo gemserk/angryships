@@ -104,15 +104,23 @@ public class GameResources extends LibgdxResourceBuilder {
 		
 		texture("ButtonPauseTexture", "data/gui/button-pause.png", true);
 		sprite(Sprites.PauseButtonSprite, "ButtonPauseTexture");
-
-		sound(Sounds.BombExplosion, "data/audio/bomb-explosion.ogg");
 		
+		sound(Sounds.BombExplosion, "data/audio/bomb-explosion.ogg");
+
+		texture("LevelGroundTexture", "data/levels/ground.png", true);
+		sprite("LevelGroundSprite", "LevelGroundTexture");
+		
+		texture("Level01_0Texture", "data/levels/level01-0.png", true);
+		sprite("Level01_0Sprite", "Level01_0Texture");
+
+		texture("Level01_1Texture", "data/levels/level01-1.png", true);
+		sprite("Level01_1Sprite", "Level01_1Texture");
+
 		pixmapHelper("Level01_0", "data/levels/level01-0.png");
 		pixmapHelper("Level01_1", "data/levels/level01-1.png");
 		pixmapHelper("Level01-ground", "data/levels/ground.png");
 		
 		font(Fonts.MessageFont, "data/fonts/purisa-18.png", "data/fonts/purisa-18.fnt", false);
-		
 	}
 	
 	public void pixmapHelper(String id, final String file) {
@@ -123,4 +131,5 @@ public class GameResources extends LibgdxResourceBuilder {
 			}
 		});
 	}
+	
 }

@@ -4,6 +4,7 @@ import com.artemis.Entity;
 import com.artemis.World;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -132,9 +133,9 @@ public class PlayGameState extends GameStateImpl {
 		Rectangle worldBounds = new Rectangle(-10, 0, 50f, 25f);
 
 		worldCamera.move(Gdx.graphics.getWidth() * 0.25f, Gdx.graphics.getHeight() * 0.5f);
-		worldCamera.zoom(1f);
+		worldCamera.zoom(worldScaleFactor);
 
-		Camera worldFollowCamera = new CameraRestrictedImpl(0f, 0f, 40f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), worldBounds);
+		Camera worldFollowCamera = new CameraRestrictedImpl(0f, 0f, 40f * worldScaleFactor, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), worldBounds);
 
 		Camera backgroundFollowCamera = new CameraRestrictedImpl(0f, 0f, 1f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), backgroundCameraWorldBounds);
 		Camera secondBackgroundFollowCamera = new CameraRestrictedImpl(0f, 0f, 1f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), backgroundCameraWorldBounds);
@@ -308,13 +309,13 @@ public class PlayGameState extends GameStateImpl {
 		entityFactory.instantiate(cameraFollowTemplate, new ParametersWrapper() //
 				.put("libgdx2dCamera", backgroundCamera) //
 				.put("camera", backgroundFollowCamera) //
-				.put("distance", new Float(1f)) //
+				.put("distance", new Float(0.5f)) //
 				);
 
 		entityFactory.instantiate(cameraFollowTemplate, new ParametersWrapper() //
 				.put("libgdx2dCamera", secondBackgroundCamera) //
 				.put("camera", secondBackgroundFollowCamera) //
-				.put("distance", new Float(0.5f)) //
+				.put("distance", new Float(0.25f)) //
 				);
 
 		entityFactory.instantiate(terrainEntityTemplate, new ParametersWrapper() //
@@ -322,19 +323,49 @@ public class PlayGameState extends GameStateImpl {
 				.put("terrainId", "Level01_0") //
 				);
 
+		entityFactory.instantiate(staticSpriteTemplate, new ParametersWrapper() //
+				.put("spriteId", "Level01_0Sprite") //
+				.put("spatial", new SpatialImpl(10f, 10f, 12.8f, 12.8f, 0)) //
+				.put("color", new Color(0.2f, 0.2f, 0.2f, 0.75f)) //
+				.put("layer", -360) //
+				);
+
 		entityFactory.instantiate(terrainEntityTemplate, new ParametersWrapper() //
 				.put("spatial", new SpatialImpl(10f + 12.8f, 10, 12.8f, 12.8f, 0)) //
 				.put("terrainId", "Level01_1") //
 				);
 
-		entityFactory.instantiate(terrainEntityTemplate, new ParametersWrapper() //
-				.put("spatial", new SpatialImpl(worldBounds.x + 12.8f, 12.8f * 0.5f, 12.8f * 2, 12.8f, 0)) //
-				.put("terrainId", "Level01-ground") //
+		entityFactory.instantiate(staticSpriteTemplate, new ParametersWrapper() //
+				.put("spriteId", "Level01_1Sprite") //
+				.put("spatial", new SpatialImpl(10f + 12.8f, 10, 12.8f, 12.8f, 0)) //
+				.put("color", new Color(0.2f, 0.2f, 0.2f, 0.75f)) //
+				.put("layer", -360) //
 				);
 
 		entityFactory.instantiate(terrainEntityTemplate, new ParametersWrapper() //
-				.put("spatial", new SpatialImpl(worldBounds.x + 12.8f + 12.8f * 2, 12.8f * 0.5f, 12.8f * 2, 12.8f, 0)) //
+				.put("spatial", new SpatialImpl(worldBounds.x + 12.8f, 12.8f * 0.48f, 12.8f * 2, 12.8f, 0)) //
 				.put("terrainId", "Level01-ground") //
+				.put("resistance", 2f) //
+				);
+
+		entityFactory.instantiate(staticSpriteTemplate, new ParametersWrapper() //
+				.put("spriteId", "LevelGroundSprite") //
+				.put("spatial", new SpatialImpl(worldBounds.x + 12.8f, 12.8f * 0.48f, 12.8f * 2, 12.8f, 0)) //
+				.put("color", new Color(0.2f, 0.2f, 0.2f, 0.75f)) //
+				.put("layer", -360) //
+				);
+
+		entityFactory.instantiate(terrainEntityTemplate, new ParametersWrapper() //
+				.put("spatial", new SpatialImpl(worldBounds.x + 12.8f + 12.8f * 2, 12.8f * 0.48f, 12.8f * 2, 12.8f, 0)) //
+				.put("terrainId", "Level01-ground") //
+				.put("resistance", 2f) //
+				);
+
+		entityFactory.instantiate(staticSpriteTemplate, new ParametersWrapper() //
+				.put("spriteId", "LevelGroundSprite") //
+				.put("spatial", new SpatialImpl(worldBounds.x + 12.8f + 12.8f * 2, 12.8f * 0.48f, 12.8f * 2, 12.8f, 0)) //
+				.put("color", new Color(0.2f, 0.2f, 0.2f, 0.75f)) //
+				.put("layer", -360) //
 				);
 
 		entityFactory.instantiate(explosionSpawnerTemplate, new ParametersWrapper());

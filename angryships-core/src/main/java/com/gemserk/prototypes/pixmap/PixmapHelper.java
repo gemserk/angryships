@@ -33,6 +33,7 @@ public class PixmapHelper implements Disposable {
 	public Texture texture;
 
 	public final Color color = new Color();
+	public float radiusFactor = 1f;
 
 	// only allow 10 modifications
 	private PixmapChange[] modifications = new PixmapChange[10];
@@ -42,7 +43,7 @@ public class PixmapHelper implements Disposable {
 	private Pixmap renderPixmap64;
 	private Pixmap renderPixmap128;
 	private Pixmap renderPixmap256;
-
+	
 	public PixmapHelper(Pixmap pixmap, Sprite sprite, Texture texture) {
 		this.pixmap = pixmap;
 		this.sprite = sprite;
@@ -125,7 +126,7 @@ public class PixmapHelper implements Disposable {
 
 		float scaleX = pixmap.getWidth() / sprite.getWidth();
 
-		int newRadius = Math.round(radius * scaleX);
+		int newRadius = Math.round(radius * scaleX * radiusFactor);
 
 		if (x + newRadius < 0 || y + newRadius < 0)
 			return;

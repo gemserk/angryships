@@ -62,7 +62,7 @@ public class PlayerTemplate extends EntityTemplateImpl {
 			EntityTemplate bombEntityTemplate = injector.getInstance(BombTemplate.class);
 			// EntityTemplate bombEntityTemplate = injector.getInstance(KamikazeControllableBombTemplate.class);
 
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < 2; i++) {
 				entityFactory.instantiate(bombEntityTemplate, new ParametersWrapper() //
 						.put("spatial", new SpatialImpl(0f + i, 5f, 0.75f, 0.75f, 0)) //
 						.put("controller", controller) //

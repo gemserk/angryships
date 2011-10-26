@@ -21,7 +21,10 @@ public class TerrainEntityTemplate extends EntityTemplateImpl {
 		String terrainId = parameters.get("terrainId");
 		Spatial spatial = parameters.get("spatial");
 		
+		Float resistance = parameters.get("resistance", 1f);
+		
 		PixmapHelper terrain = resourceManager.getResourceValue(terrainId);
+		terrain.radiusFactor = 1f / resistance;
 		
 		// spatial.setSize(terrain.pixmap.getWidth(), terrain.pixmap.getHeight());
 		
