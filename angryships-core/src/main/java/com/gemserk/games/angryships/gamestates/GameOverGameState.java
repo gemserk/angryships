@@ -1,6 +1,7 @@
 package com.gemserk.games.angryships.gamestates;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,6 +20,8 @@ import com.gemserk.commons.gdx.gui.Control;
 import com.gemserk.commons.gdx.gui.GuiControls;
 import com.gemserk.commons.gdx.gui.animation4j.converters.GuiConverters;
 import com.gemserk.commons.reflection.Injector;
+import com.gemserk.componentsengine.input.InputDevicesMonitorImpl;
+import com.gemserk.componentsengine.input.LibgdxInputMappingBuilder;
 import com.gemserk.games.angryships.Game;
 import com.gemserk.games.angryships.components.PixmapWorld;
 import com.gemserk.games.angryships.input.CustomImageButton;
@@ -31,6 +34,12 @@ public class GameOverGameState extends GameStateImpl {
 
 		static final String RestartButton = "RestartButton";
 
+	}
+	
+	private static class Actions {
+		
+		static final String Restart = "Restart";
+		
 	}
 
 	Game game;
@@ -46,6 +55,7 @@ public class GameOverGameState extends GameStateImpl {
 	WorldWrapper worldWrapper;
 	PixmapWorld pixmapWorld;
 	Container screen;
+	private InputDevicesMonitorImpl<String> inputDevicesMonitor;
 
 	@Override
 	public void init() {
@@ -89,18 +99,29 @@ public class GameOverGameState extends GameStateImpl {
 
 		worldWrapper = getParameters().get("worldWrapper");
 		pixmapWorld = getParameters().get("pixmapWorld");
+		
+		inputDevicesMonitor = new InputDevicesMonitorImpl<String>();
+		new LibgdxInputMappingBuilder<String>(inputDevicesMonitor, Gdx.input) {
+			{
+				monitorKeys(Actions.Restart, Keys.ENTER, Keys.SPACE, Keys.ESCAPE);
+			}
+		};
 	}
 
 	@Override
 	public void update() {
 		super.update();
 		synchronizer.synchronize(getDelta());
+		
 		screen.update();
+		inputDevicesMonitor.update();
+		
 		worldWrapper.update(getDeltaInMs());
+		
 
 		CustomImageButton restartButton = screen.findControl("RestartButton");
 
-		if (restartButton.getButtonMonitor().isReleased()) {
+		if (restartButton.getButtonMonitor().isReleased() || inputDevicesMonitor.getButton(Actions.Restart).isReleased()) {
 
 			Transition hideTransition = Transitions.mutableTransition(restartButton, GuiConverters.controlPositionConverter) //
 					.end(0.5f, Gdx.graphics.getWidth() * 0.5f, Gdx.graphics.getHeight() * -0.5f) //
