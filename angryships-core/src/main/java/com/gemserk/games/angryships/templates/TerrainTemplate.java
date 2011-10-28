@@ -11,7 +11,7 @@ import com.gemserk.games.angryships.components.PixmapWorld;
 import com.gemserk.prototypes.pixmap.PixmapHelper;
 import com.gemserk.resources.ResourceManager;
 
-public class TerrainEntityTemplate extends EntityTemplateImpl {
+public class TerrainTemplate extends EntityTemplateImpl {
 
 	PixmapWorld pixmapWorld;
 	ResourceManager<String> resourceManager;

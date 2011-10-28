@@ -79,7 +79,7 @@ import com.gemserk.games.angryships.templates.KeyboardControllerTemplate;
 import com.gemserk.games.angryships.templates.PlayerTemplate;
 import com.gemserk.games.angryships.templates.StaticSpriteTemplate;
 import com.gemserk.games.angryships.templates.TargetTemplate;
-import com.gemserk.games.angryships.templates.TerrainEntityTemplate;
+import com.gemserk.games.angryships.templates.TerrainTemplate;
 import com.gemserk.games.angryships.templates.TimerTriggerTemplate;
 import com.gemserk.resources.ResourceManager;
 
@@ -266,7 +266,7 @@ public class PlayGameState extends GameStateImpl {
 
 		worldWrapper.init();
 
-		EntityTemplate terrainEntityTemplate = injector.getInstance(TerrainEntityTemplate.class);
+		EntityTemplate terrainEntityTemplate = injector.getInstance(TerrainTemplate.class);
 		EntityTemplate explosionSpawnerTemplate = injector.getInstance(ExplosionSpawnerTemplate.class);
 		EntityTemplate keyboardControllerTemplate = injector.getInstance(KeyboardControllerTemplate.class);
 		EntityTemplate targetTemplate = injector.getInstance(TargetTemplate.class);
