@@ -31,8 +31,9 @@ public class ExplosionAnimationTemplate extends EntityTemplateImpl {
 		Spatial spatial = parameters.get("spatial");
 		Float radius = parameters.get("radius");
 		
-		spatial.setSize(radius * 4f, radius * 4f);
-//		spatial.setSize(currentFrame.getWidth(), currentFrame.getHeight());
+		int newRadius = Math.round(radius * 4f);
+		
+		spatial.setSize(newRadius, newRadius);
 		spatial.setAngle(MathUtils.random(0f, 360f));
 		
 		entity.addComponent(new RenderableComponent(0));
