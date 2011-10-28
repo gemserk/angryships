@@ -8,7 +8,6 @@ import com.gemserk.commons.artemis.events.EventManager;
 import com.gemserk.commons.artemis.scripts.ScriptJavaImpl;
 import com.gemserk.commons.gdx.box2d.Contacts;
 import com.gemserk.commons.gdx.box2d.Contacts.Contact;
-import com.gemserk.games.angryships.entities.Collisions;
 import com.gemserk.games.angryships.entities.Events;
 
 public class ExplodeWhenCollisionScript extends ScriptJavaImpl {
@@ -30,8 +29,8 @@ public class ExplodeWhenCollisionScript extends ScriptJavaImpl {
 			Contact contact = contacts.getContact(i);
 			String type = (String) contact.getOtherFixture().getUserData();
 
-			if (type == Collisions.RemoveAreaType)
-				continue;
+//			if (type == Collisions.RemoveAreaType)
+//				continue;
 			
 			sensor = false;
 			break;

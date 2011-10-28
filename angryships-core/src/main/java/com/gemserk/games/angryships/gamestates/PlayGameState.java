@@ -66,6 +66,7 @@ import com.gemserk.games.angryships.input.CustomImageButton;
 import com.gemserk.games.angryships.render.Layers;
 import com.gemserk.games.angryships.resources.GameResources;
 import com.gemserk.games.angryships.scripts.GameModeNormalScript;
+import com.gemserk.games.angryships.systems.Box2dRenderSystem;
 import com.gemserk.games.angryships.systems.PixmapCollidableSystem;
 import com.gemserk.games.angryships.systems.TimerTriggerSystem;
 import com.gemserk.games.angryships.systems.TimerUpdateSystem;
@@ -129,7 +130,7 @@ public class PlayGameState extends GameStateImpl {
 		worldCamera = new Libgdx2dCameraTransformImpl(Gdx.graphics.getWidth() * 0.25f, Gdx.graphics.getHeight() * 0.49f);
 		guiCamera = new Libgdx2dCameraTransformImpl();
 
-		Rectangle worldBounds = new Rectangle(-10, 0, 50f, 25f);
+		Rectangle worldBounds = new Rectangle(-10, 0, 40f, 25f);
 
 		worldCamera.move(Gdx.graphics.getWidth() * 0.25f, Gdx.graphics.getHeight() * 0.5f);
 		worldCamera.zoom(worldScaleFactor);
@@ -262,7 +263,7 @@ public class PlayGameState extends GameStateImpl {
 		worldWrapper.addRenderSystem(injector.getInstance(CameraUpdateSystem.class));
 		worldWrapper.addRenderSystem(injector.getInstance(SpriteUpdateSystem.class));
 		worldWrapper.addRenderSystem(injector.getInstance(RenderableSystem.class));
-		// worldWrapper.addRenderSystem(new Box2dRenderSystem(worldCamera, physicsWorld));
+		worldWrapper.addRenderSystem(new Box2dRenderSystem(worldCamera, physicsWorld));
 
 		worldWrapper.init();
 
@@ -278,13 +279,13 @@ public class PlayGameState extends GameStateImpl {
 				.put("area", new Rectangle(worldBounds.x - 1f, worldBounds.y, 1f, worldBounds.height)) //
 				);
 		entityFactory.instantiate(areaTriggerTemplate, new ParametersWrapper() //
-				.put("area", new Rectangle(worldBounds.x + worldBounds.width, worldBounds.y, 1f, worldBounds.height)) //
+				.put("area", new Rectangle(worldBounds.x + worldBounds.width + 8f, worldBounds.y, 1f, worldBounds.height)) //
 				);
 		entityFactory.instantiate(areaTriggerTemplate, new ParametersWrapper() //
-				.put("area", new Rectangle(worldBounds.x, worldBounds.y - 1f, worldBounds.width, 1f)) //
+				.put("area", new Rectangle(worldBounds.x, worldBounds.y + 0f, worldBounds.width + 10f, 1.5f)) //
 				);
 		entityFactory.instantiate(areaTriggerTemplate, new ParametersWrapper() //
-				.put("area", new Rectangle(worldBounds.x, worldBounds.y + worldBounds.height, worldBounds.width, 1f)) //
+				.put("area", new Rectangle(worldBounds.x, worldBounds.y + worldBounds.height + 2f, worldBounds.width, 1f)) //
 				);
 
 		entityFactory.instantiate(staticSpriteTemplate, new ParametersWrapper() //
@@ -341,36 +342,36 @@ public class PlayGameState extends GameStateImpl {
 				.put("layer", -360) //
 				);
 
-		entityFactory.instantiate(terrainEntityTemplate, new ParametersWrapper() //
-				.put("spatial", new SpatialImpl(worldBounds.x + 12.8f, 12.8f * 0.48f, 12.8f * 2, 12.8f, 0)) //
-				.put("terrainId", "Level01-ground") //
-				.put("resistance", 1f) //
-				);
+		// entityFactory.instantiate(terrainEntityTemplate, new ParametersWrapper() //
+		// .put("spatial", new SpatialImpl(worldBounds.x + 12.8f, 12.8f * 0.48f, 12.8f * 2, 12.8f, 0)) //
+		// .put("terrainId", "Level01-ground") //
+		// .put("resistance", 1f) //
+		// );
 
 		entityFactory.instantiate(staticSpriteTemplate, new ParametersWrapper() //
 				.put("spriteId", "LevelGroundSprite") //
 				.put("spatial", new SpatialImpl(worldBounds.x + 12.8f, 12.8f * 0.48f, 12.8f * 2, 12.8f, 0)) //
-				.put("color", new Color(0f, 0f, 0f, 0.35f)) //
+				.put("color", Color.WHITE) //
 				.put("layer", -360) //
 				);
 
-		entityFactory.instantiate(terrainEntityTemplate, new ParametersWrapper() //
-				.put("spatial", new SpatialImpl(worldBounds.x + 12.8f + 12.8f * 2, 12.8f * 0.48f, 12.8f * 2, 12.8f, 0)) //
-				.put("terrainId", "Level01-ground") //
-				.put("resistance", 1f) //
-				);
+		// entityFactory.instantiate(terrainEntityTemplate, new ParametersWrapper() //
+		// .put("spatial", new SpatialImpl(worldBounds.x + 12.8f + 12.8f * 2, 12.8f * 0.48f, 12.8f * 2, 12.8f, 0)) //
+		// .put("terrainId", "Level01-ground") //
+		// .put("resistance", 1f) //
+		// );
 
 		entityFactory.instantiate(staticSpriteTemplate, new ParametersWrapper() //
 				.put("spriteId", "LevelGroundSprite") //
 				.put("spatial", new SpatialImpl(worldBounds.x + 12.8f + 12.8f * 2, 12.8f * 0.48f, 12.8f * 2, 12.8f, 0)) //
-				.put("color", new Color(0f, 0f, 0f, 0.35f)) //
+				.put("color", Color.WHITE) //
 				.put("layer", -360) //
 				);
 
 		entityFactory.instantiate(staticSpriteTemplate, new ParametersWrapper() //
 				.put("spriteId", GameResources.Sprites.FarmSprite) //
 				.put("spatial", new SpatialImpl(-1f, 3f, 3.2f, 3.2f, 0f)) //
-				.put("layer", -351) //
+				.put("layer", -361) //
 				);
 
 		entityFactory.instantiate(explosionSpawnerTemplate, new ParametersWrapper());
