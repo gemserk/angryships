@@ -7,6 +7,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.utils.GdxNativesLoader;
 import com.gemserk.commons.adwhirl.AdWhirlViewHandler;
+import com.gemserk.commons.gdx.DensityUtils.Density;
+import com.gemserk.commons.gdx.DensityUtilsFixedImpl;
 import com.gemserk.commons.utils.gdx.LwjglLibgdxLibraryUtils;
 
 public class Applet extends java.applet.Applet {
@@ -59,6 +61,7 @@ public class Applet extends java.applet.Applet {
 					};
 					
 					game.setAdWhirlViewHandler(new AdWhirlViewHandler());
+					game.setDensityUtils(new DensityUtilsFixedImpl(Density.High));
 
 					application = new LwjglApplication(game, false, this) {
 						public com.badlogic.gdx.Application.ApplicationType getType() {

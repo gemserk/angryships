@@ -38,6 +38,8 @@ import com.gemserk.commons.artemis.templates.EntityFactory;
 import com.gemserk.commons.artemis.templates.EntityFactoryImpl;
 import com.gemserk.commons.artemis.templates.EntityTemplate;
 import com.gemserk.commons.artemis.templates.EntityTemplateImpl;
+import com.gemserk.commons.gdx.DensityUtils;
+import com.gemserk.commons.gdx.DensityUtils.Density;
 import com.gemserk.commons.gdx.GameStateImpl;
 import com.gemserk.commons.gdx.audio.SoundPlayer;
 import com.gemserk.commons.gdx.box2d.BodyBuilder;
@@ -104,6 +106,7 @@ public class PlayGameState extends GameStateImpl {
 	ResourceManager<String> resourceManager;
 	AdWhirlViewHandler adWhirlViewHandler;
 	SoundPlayer soundPlayer;
+	DensityUtils densityUtils;
 
 	WorldWrapper worldWrapper;
 
@@ -149,6 +152,20 @@ public class PlayGameState extends GameStateImpl {
 		// /
 
 		screen = new Container();
+		
+		float buttonWidth = 128f;
+		float buttonHeight = 128f;
+		
+		if (densityUtils.getDensity() == Density.Low) {
+			buttonWidth = 64f;
+			buttonHeight = 64f;
+		} else if (densityUtils.getDensity() == Density.Medium) {
+			buttonWidth = 96f;
+			buttonHeight = 96f;
+		}
+		
+		float defaultWidth = buttonWidth / Gdx.graphics.getWidth();
+		float defaultHeight = buttonHeight / Gdx.graphics.getHeight();
 
 		Container moveButtonsContainer = new Container("MovementButtonsContainer");
 		moveButtonsContainer.setPosition(Gdx.graphics.getWidth() * 0f, -Gdx.graphics.getHeight() * 0.5f);
@@ -158,7 +175,8 @@ public class PlayGameState extends GameStateImpl {
 		moveButtonsContainer.add(GuiControls.imageButton(new CustomImageButton(turnRightSprite)) //
 				.id("TurnRightButton") //
 				.center(0.5f, 0.5f) //
-				.position(Gdx.graphics.getWidth() * (1f - 0.085f), Gdx.graphics.getHeight() * 0.15f) //
+				.size(buttonWidth, buttonHeight) //
+				.position(Gdx.graphics.getWidth() * (1f - defaultWidth * 0.5f), Gdx.graphics.getHeight() * defaultHeight * 0.5f) //
 				.color(1f, 1f, 1f, 1f) //
 				.build());
 
@@ -167,7 +185,8 @@ public class PlayGameState extends GameStateImpl {
 		moveButtonsContainer.add(GuiControls.imageButton(new CustomImageButton(explodeSprite)) //
 				.id("ExplodeButton") //
 				.center(0.5f, 0.5f) //
-				.position(Gdx.graphics.getWidth() * (1f - 3 * 0.085f), Gdx.graphics.getHeight() * 0.15f) //
+				.size(buttonWidth, buttonHeight) //
+				.position(Gdx.graphics.getWidth() * (1f - defaultWidth * 0.5f - defaultWidth), Gdx.graphics.getHeight() * defaultHeight * 0.5f) //
 				.color(1f, 1f, 1f, 1f) //
 				.build());
 
@@ -176,7 +195,8 @@ public class PlayGameState extends GameStateImpl {
 		moveButtonsContainer.add(GuiControls.imageButton(new CustomImageButton(turnLeftSprite)) //
 				.id("TurnLeftButton") //
 				.center(0.5f, 0.5f) //
-				.position(Gdx.graphics.getWidth() * 0.085f, Gdx.graphics.getHeight() * 0.15f) //
+				.size(buttonWidth, buttonHeight) //
+				.position(Gdx.graphics.getWidth() * (0f + defaultWidth * 0.5f), Gdx.graphics.getHeight() * defaultHeight * 0.5f) //
 				.color(1f, 1f, 1f, 1f) //
 				.build());
 
@@ -188,14 +208,32 @@ public class PlayGameState extends GameStateImpl {
 		fireButtonsContainer.add(GuiControls.imageButton(new CustomImageButton(fireButtonSprite)) //
 				.id("FireButton") //
 				.center(0.5f, 0.5f) //
-				.position(Gdx.graphics.getWidth() * (1f - 0.085f), Gdx.graphics.getHeight() * 0.15f) //
+				.size(buttonWidth, buttonHeight) //
+				.position(Gdx.graphics.getWidth() * (1f - defaultWidth * 0.5f), Gdx.graphics.getHeight() * defaultHeight * 0.5f) //
 				.color(1f, 1f, 1f, 1f) //
 				.build());
 
 		fireButtonsContainer.add(GuiControls.label("NA") //
 				.id("NormalBombCountLabel") //
 				.center(0.5f, 0.5f) //
-				.position(Gdx.graphics.getWidth() * (1f - 0.085f), Gdx.graphics.getHeight() * 0.15f) //
+				.position(Gdx.graphics.getWidth() * (1f - defaultWidth * 0.5f), Gdx.graphics.getHeight() * defaultHeight * 0.5f) //
+				.color(1f, 1f, 1f, 1f) //
+				.build());
+
+		Sprite kamikazeBombButtonSprite = resourceManager.getResourceValue(GameResources.Sprites.FireButtonSprite);
+
+		fireButtonsContainer.add(GuiControls.imageButton(new CustomImageButton(kamikazeBombButtonSprite)) //
+				.id("FireButton") //
+				.center(0.5f, 0.5f) //
+				.size(buttonWidth, buttonHeight) //
+				.position(Gdx.graphics.getWidth() * (1f - defaultWidth * 0.5f - defaultWidth), Gdx.graphics.getHeight() * defaultHeight * 0.5f) //
+				.color(1f, 1f, 1f, 1f) //
+				.build());
+
+		fireButtonsContainer.add(GuiControls.label("NA") //
+				.id("KamikazeBombCountLabel") //
+				.center(0.5f, 0.5f) //
+				.position(Gdx.graphics.getWidth() * (1f - defaultWidth * 0.5f - defaultWidth), Gdx.graphics.getHeight() * defaultHeight * 0.5f) //
 				.color(1f, 1f, 1f, 1f) //
 				.build());
 
@@ -400,7 +438,7 @@ public class PlayGameState extends GameStateImpl {
 
 		entityFactory.instantiate(injector.getInstance(PlayerTemplate.class), new ParametersWrapper() //
 				.put("controller", controller) //
-				.put("playerData", new PlayerData(10)) //
+				.put("playerData", new PlayerData(5, 5)) //
 				);
 
 		entityFactory.instantiate(new EntityTemplateImpl() {

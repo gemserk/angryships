@@ -15,6 +15,7 @@ import com.gemserk.commons.adwhirl.AdWhirlAndroidHandler;
 import com.gemserk.commons.adwhirl.AdWhirlViewHandler;
 import com.gemserk.commons.adwhirl.CustomAdViewHandler;
 import com.gemserk.commons.adwhirl.PausableAdWhirlLayout;
+import com.gemserk.commons.gdx.DensityUtilsImpl;
 
 public class AndroidApplication extends com.badlogic.gdx.backends.android.AndroidApplication implements AdWhirlInterface {
 
@@ -52,6 +53,7 @@ public class AndroidApplication extends com.badlogic.gdx.backends.android.Androi
 		// AdWhirlViewHandler adWhirlViewHandler = new AdWhirlViewHandler();
 
 		game.setAdWhirlViewHandler(adWhirlViewHandler);
+		game.setDensityUtils(new DensityUtilsImpl());
 
 		int diWidth = 320;
 		int diHeight = 52;

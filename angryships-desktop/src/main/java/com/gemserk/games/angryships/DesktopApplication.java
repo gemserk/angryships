@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.gemserk.commons.adwhirl.AdWhirlViewHandler;
+import com.gemserk.commons.gdx.DensityUtils.Density;
+import com.gemserk.commons.gdx.DensityUtilsFixedImpl;
 
 public class DesktopApplication {
 
@@ -22,7 +24,7 @@ public class DesktopApplication {
 
 			String displayString = argv[0];
 			String[] displayValues = displayString.split("x");
-			
+
 			if (displayValues.length < 2)
 				return;
 
@@ -53,9 +55,21 @@ public class DesktopApplication {
 		config.forceExit = true;
 		config.vSyncEnabled = true;
 
+		Density density = Density.ExtraHigh;
+		if (config.width <= 320)
+			density = Density.Low;
+		else if (config.width <= 480)
+			density = Density.Medium;
+		else if (config.width <= 800)
+			density = Density.High;
+		else 
+			density = Density.ExtraHigh;
+
 		Game game = new Game();
-		
+
 		game.setAdWhirlViewHandler(new AdWhirlViewHandler());
+
+		game.setDensityUtils(new DensityUtilsFixedImpl(density));
 
 		boolean runningInDebug = System.getProperty("runningInDebug") != null;
 

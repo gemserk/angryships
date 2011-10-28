@@ -15,6 +15,7 @@ import com.gemserk.commons.adwhirl.AdWhirlViewHandler;
 import com.gemserk.commons.artemis.events.EventManager;
 import com.gemserk.commons.artemis.events.EventManagerImpl;
 import com.gemserk.commons.artemis.events.reflection.EventListenerReflectionRegistrator;
+import com.gemserk.commons.gdx.DensityUtils;
 import com.gemserk.commons.gdx.GameState;
 import com.gemserk.commons.gdx.GlobalTime;
 import com.gemserk.commons.gdx.Screen;
@@ -68,6 +69,7 @@ public class Game extends com.gemserk.commons.gdx.Game {
 	 */
 	private Parameters gameData;
 	private AdWhirlViewHandler adWhirlViewHandler;
+	DensityUtils densityUtils;
 	
 	public Screen splashScreen;
 	public Screen playScreen;
@@ -86,6 +88,10 @@ public class Game extends com.gemserk.commons.gdx.Game {
 	
 	public void setAdWhirlViewHandler(AdWhirlViewHandler adWhirlViewHandler) {
 		this.adWhirlViewHandler = adWhirlViewHandler;
+	}
+	
+	public void setDensityUtils(DensityUtils densityUtils) {
+		this.densityUtils = densityUtils;
 	}
 
 	@Override
@@ -113,6 +119,7 @@ public class Game extends com.gemserk.commons.gdx.Game {
 		injector.bind("eventManager", new EventManagerImpl());
 		injector.bind("resourceManager", new CustomResourceManager<String>());
 		injector.bind("adWhirlViewHandler", adWhirlViewHandler);
+		injector.bind("densityUtils", densityUtils);
 		injector.bind("soundPlayer", new SoundPlayer());
 		
 		injector.injectMembers(this);
