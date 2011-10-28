@@ -171,8 +171,10 @@ public class Game extends com.gemserk.commons.gdx.Game {
 			}
 		}
 
-		if (inputDevicesMonitor.getButton("restartScreen").isReleased())
+		if (inputDevicesMonitor.getButton("restartScreen").isReleased()) {
+			resourceManager.unloadAll();
 			getScreen().restart();
+		}
 
 		if (inputDevicesMonitor.getButton("toggleFps").isReleased())
 			setShowFps(!isShowFps());

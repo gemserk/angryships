@@ -262,7 +262,7 @@ public class PlayGameState extends GameStateImpl {
 		worldWrapper.addRenderSystem(injector.getInstance(CameraUpdateSystem.class));
 		worldWrapper.addRenderSystem(injector.getInstance(SpriteUpdateSystem.class));
 		worldWrapper.addRenderSystem(injector.getInstance(RenderableSystem.class));
-//		worldWrapper.addRenderSystem(new Box2dRenderSystem(worldCamera, physicsWorld));
+		// worldWrapper.addRenderSystem(new Box2dRenderSystem(worldCamera, physicsWorld));
 
 		worldWrapper.init();
 
@@ -325,7 +325,7 @@ public class PlayGameState extends GameStateImpl {
 		entityFactory.instantiate(staticSpriteTemplate, new ParametersWrapper() //
 				.put("spriteId", "Level01_0Sprite") //
 				.put("spatial", new SpatialImpl(10f, 10f, 12.8f, 12.8f, 0)) //
-				.put("color", new Color(0.2f, 0.2f, 0.2f, 0.75f)) //
+				.put("color", new Color(0f, 0f, 0f, 0.35f)) //
 				.put("layer", -360) //
 				);
 
@@ -337,34 +337,40 @@ public class PlayGameState extends GameStateImpl {
 		entityFactory.instantiate(staticSpriteTemplate, new ParametersWrapper() //
 				.put("spriteId", "Level01_1Sprite") //
 				.put("spatial", new SpatialImpl(10f + 12.8f, 10, 12.8f, 12.8f, 0)) //
-				.put("color", new Color(0.2f, 0.2f, 0.2f, 0.75f)) //
+				.put("color", new Color(0f, 0f, 0f, 0.35f)) //
 				.put("layer", -360) //
 				);
 
 		entityFactory.instantiate(terrainEntityTemplate, new ParametersWrapper() //
 				.put("spatial", new SpatialImpl(worldBounds.x + 12.8f, 12.8f * 0.48f, 12.8f * 2, 12.8f, 0)) //
 				.put("terrainId", "Level01-ground") //
-				.put("resistance", 2f) //
+				.put("resistance", 1f) //
 				);
 
 		entityFactory.instantiate(staticSpriteTemplate, new ParametersWrapper() //
 				.put("spriteId", "LevelGroundSprite") //
 				.put("spatial", new SpatialImpl(worldBounds.x + 12.8f, 12.8f * 0.48f, 12.8f * 2, 12.8f, 0)) //
-				.put("color", new Color(0.2f, 0.2f, 0.2f, 0.75f)) //
+				.put("color", new Color(0f, 0f, 0f, 0.35f)) //
 				.put("layer", -360) //
 				);
 
 		entityFactory.instantiate(terrainEntityTemplate, new ParametersWrapper() //
 				.put("spatial", new SpatialImpl(worldBounds.x + 12.8f + 12.8f * 2, 12.8f * 0.48f, 12.8f * 2, 12.8f, 0)) //
 				.put("terrainId", "Level01-ground") //
-				.put("resistance", 2f) //
+				.put("resistance", 1f) //
 				);
 
 		entityFactory.instantiate(staticSpriteTemplate, new ParametersWrapper() //
 				.put("spriteId", "LevelGroundSprite") //
 				.put("spatial", new SpatialImpl(worldBounds.x + 12.8f + 12.8f * 2, 12.8f * 0.48f, 12.8f * 2, 12.8f, 0)) //
-				.put("color", new Color(0.2f, 0.2f, 0.2f, 0.75f)) //
+				.put("color", new Color(0f, 0f, 0f, 0.35f)) //
 				.put("layer", -360) //
+				);
+
+		entityFactory.instantiate(staticSpriteTemplate, new ParametersWrapper() //
+				.put("spriteId", GameResources.Sprites.FarmSprite) //
+				.put("spatial", new SpatialImpl(-1f, 3f, 3.2f, 3.2f, 0f)) //
+				.put("layer", -351) //
 				);
 
 		entityFactory.instantiate(explosionSpawnerTemplate, new ParametersWrapper());

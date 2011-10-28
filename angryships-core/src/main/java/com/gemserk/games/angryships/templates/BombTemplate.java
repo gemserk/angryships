@@ -3,6 +3,7 @@ package com.gemserk.games.angryships.templates;
 import com.artemis.Entity;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.gemserk.commons.artemis.components.AntiGravityComponent;
@@ -17,7 +18,6 @@ import com.gemserk.commons.gdx.box2d.BodyBuilder;
 import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.commons.gdx.games.SpatialPhysicsImpl;
 import com.gemserk.commons.reflection.Injector;
-import com.gemserk.games.angryships.components.ClusterBombComponent;
 import com.gemserk.games.angryships.components.ControllerComponent;
 import com.gemserk.games.angryships.components.ExplosionComponent;
 import com.gemserk.games.angryships.components.PixmapCollidableComponent;
@@ -32,6 +32,8 @@ import com.gemserk.games.angryships.scripts.PixmapCollidableScript;
 import com.gemserk.resources.ResourceManager;
 
 public class BombTemplate extends EntityTemplateImpl {
+	
+	private static final Vector2 velocity = new Vector2();
 	
 	ResourceManager<String> resourceManager;
 	Injector injector;
@@ -70,7 +72,10 @@ public class BombTemplate extends EntityTemplateImpl {
 		
 		entity.addComponent(new SpatialComponent(new SpatialPhysicsImpl(body, spatial)));
 
-		entity.addComponent(new MovementComponent(4f, 0f, 0f));
+		velocity.set(4f, 0f);
+		velocity.rotate(spatial.getAngle());
+		
+		entity.addComponent(new MovementComponent(velocity.x, velocity.y, 0f));
 
 		entity.addComponent(new ControllerComponent(controller));
 
@@ -83,7 +88,7 @@ public class BombTemplate extends EntityTemplateImpl {
 				injector.getInstance(ExplodeWhenCollisionScript.class) //
 		));
 
-		entity.addComponent(new ClusterBombComponent(3));
+//		entity.addComponent(new ClusterBombComponent(3));
 
 	}
 

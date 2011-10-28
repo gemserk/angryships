@@ -21,6 +21,7 @@ public class TerrainEntityTemplate extends EntityTemplateImpl {
 		String terrainId = parameters.get("terrainId");
 		Spatial spatial = parameters.get("spatial");
 		
+		Integer layer = parameters.get("layer", -350);
 		Float resistance = parameters.get("resistance", 1f);
 		
 		PixmapHelper terrain = resourceManager.getResourceValue(terrainId);
@@ -30,7 +31,7 @@ public class TerrainEntityTemplate extends EntityTemplateImpl {
 		
 		pixmapWorld.addPixmap(terrain);
 		
-		entity.addComponent(new RenderableComponent(-350));
+		entity.addComponent(new RenderableComponent(layer));
 		entity.addComponent(new SpriteComponent(terrain.sprite, 0.5f, 0.5f, Color.WHITE));
 		
 		entity.addComponent(new SpatialComponent(spatial));

@@ -32,6 +32,8 @@ public class GameResources extends LibgdxResourceBuilder {
 		
 		public static final String PauseButtonSprite = "PauseButtonSprite";
 		public static final String RestartButtonSprite = "RestartButtonSprite";
+		
+		public static final String FarmSprite = "FarmSprite";
 
 	}
 
@@ -121,6 +123,9 @@ public class GameResources extends LibgdxResourceBuilder {
 		pixmapHelper("Level01-ground", "data/levels/ground.png");
 		
 		font(Fonts.MessageFont, "data/fonts/purisa-18.png", "data/fonts/purisa-18.fnt", false);
+		
+		texture("FarmTexture", "data/images/farm.png", true);
+		sprite(Sprites.FarmSprite, "FarmTexture");
 	}
 	
 	public void pixmapHelper(String id, final String file) {
