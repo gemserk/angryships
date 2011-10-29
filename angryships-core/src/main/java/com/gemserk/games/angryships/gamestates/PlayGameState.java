@@ -323,7 +323,7 @@ public class PlayGameState extends GameStateImpl {
 				.put("area", new Rectangle(worldBounds.x, worldBounds.y + 0f, worldBounds.width + 10f, 1.5f)) //
 				);
 		entityFactory.instantiate(areaTriggerTemplate, new ParametersWrapper() //
-				.put("area", new Rectangle(worldBounds.x, worldBounds.y + worldBounds.height + 2f, worldBounds.width, 1f)) //
+				.put("area", new Rectangle(worldBounds.x, worldBounds.y + worldBounds.height + 2f, worldBounds.width + 10f, 1f)) //
 				);
 
 		entityFactory.instantiate(staticSpriteTemplate, new ParametersWrapper() //
