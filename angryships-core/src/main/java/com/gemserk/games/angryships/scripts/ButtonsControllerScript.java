@@ -20,6 +20,7 @@ public class ButtonsControllerScript extends ScriptJavaImpl {
 		controller.left = buttonMonitorsComponent.leftButtonMonitor.isHolded();
 		controller.right = buttonMonitorsComponent.rightButtonMonitor.isHolded();
 		controller.fire = buttonMonitorsComponent.fireButtonMonitor.isReleased();
+		controller.secondFire = buttonMonitorsComponent.secondFireButtonMonitor.isReleased();
 		controller.explode = buttonMonitorsComponent.explodeButtonMonitor.isReleased();
 	}
 

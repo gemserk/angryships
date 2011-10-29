@@ -223,7 +223,7 @@ public class PlayGameState extends GameStateImpl {
 		Sprite kamikazeBombButtonSprite = resourceManager.getResourceValue(GameResources.Sprites.FireButtonSprite);
 
 		fireButtonsContainer.add(GuiControls.imageButton(new CustomImageButton(kamikazeBombButtonSprite)) //
-				.id("FireButton") //
+				.id("SecondFireButton") //
 				.center(0.5f, 0.5f) //
 				.size(buttonWidth, buttonHeight) //
 				.position(Gdx.graphics.getWidth() * (1f - defaultWidth * 0.5f - defaultWidth), Gdx.graphics.getHeight() * defaultHeight * 0.5f) //
@@ -424,6 +424,7 @@ public class PlayGameState extends GameStateImpl {
 					.put("leftButtonMonitor", ((CustomImageButton) screen.findControl("TurnLeftButton")).getButtonMonitor()) //
 					.put("rightButtonMonitor", ((CustomImageButton) screen.findControl("TurnRightButton")).getButtonMonitor()) //
 					.put("fireButtonMonitor", ((CustomImageButton) screen.findControl("FireButton")).getButtonMonitor()) //
+					.put("secondFireButtonMonitor", ((CustomImageButton) screen.findControl("SecondFireButton")).getButtonMonitor()) //
 					.put("explodeButtonMonitor", ((CustomImageButton) screen.findControl("ExplodeButton")).getButtonMonitor()) //
 					);
 		}
@@ -438,7 +439,7 @@ public class PlayGameState extends GameStateImpl {
 
 		entityFactory.instantiate(injector.getInstance(PlayerTemplate.class), new ParametersWrapper() //
 				.put("controller", controller) //
-				.put("playerData", new PlayerData(5, 5)) //
+				.put("playerData", new PlayerData(5, 3)) //
 				);
 
 		entityFactory.instantiate(new EntityTemplateImpl() {

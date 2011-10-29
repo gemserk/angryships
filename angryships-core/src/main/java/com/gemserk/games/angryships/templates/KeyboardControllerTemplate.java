@@ -26,6 +26,7 @@ public class KeyboardControllerTemplate extends EntityTemplateImpl {
 			buttonMonitorsComponent.leftButtonMonitor.update();
 			buttonMonitorsComponent.rightButtonMonitor.update();
 			buttonMonitorsComponent.fireButtonMonitor.update();
+			buttonMonitorsComponent.secondFireButtonMonitor.update();
 			buttonMonitorsComponent.explodeButtonMonitor.update();
 		}
 		
@@ -42,6 +43,7 @@ public class KeyboardControllerTemplate extends EntityTemplateImpl {
 		buttonMonitorsComponent.leftButtonMonitor = LibgdxInputMappingBuilder.keyButtonMonitor(Gdx.input, Keys.LEFT);
 		buttonMonitorsComponent.rightButtonMonitor = LibgdxInputMappingBuilder.keyButtonMonitor(Gdx.input, Keys.RIGHT);
 		buttonMonitorsComponent.fireButtonMonitor = LibgdxInputMappingBuilder.keyButtonMonitor(Gdx.input, Keys.SPACE);
+		buttonMonitorsComponent.secondFireButtonMonitor  = LibgdxInputMappingBuilder.keyButtonMonitor(Gdx.input, Keys.ENTER);
 		buttonMonitorsComponent.explodeButtonMonitor = LibgdxInputMappingBuilder.keyButtonMonitor(Gdx.input, Keys.SPACE);
 		
 		entity.addComponent(buttonMonitorsComponent);

@@ -10,15 +10,15 @@
  xmlns:xlink="http://www.w3.org/1999/xlink"
  xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
  xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
- width="512"
- height="512"
+ width="256"
+ height="256"
  id="svg14425"
  version="1.1"
  inkscape:version="0.48.1 r9760"
  sodipodi:docname="farm.svg"
  inkscape:export-filename="/home/acoppes/workspace/angryships/angryships-desktop/src/main/resources/data/images/farm.png"
- inkscape:export-xdpi="22.5"
- inkscape:export-ydpi="22.5">
+ inkscape:export-xdpi="90"
+ inkscape:export-ydpi="90">
 <defs
  id="defs14427">
 <linearGradient
@@ -49,7 +49,7 @@
  x2="267.592"
  y2="476.994"
  gradientUnits="userSpaceOnUse"
- gradientTransform="matrix(1,0,0,1.09454,590.224,-9.29542)" />
+ gradientTransform="matrix(1,0,0,1.09454,339.102,94.6636)" />
 </defs>
 <sodipodi:namedview
  id="base"
@@ -58,9 +58,9 @@
  borderopacity="1.0"
  inkscape:pageopacity="0.0"
  inkscape:pageshadow="2"
- inkscape:zoom="1.04747"
- inkscape:cx="458.516"
- inkscape:cy="217.655"
+ inkscape:zoom="0.740677"
+ inkscape:cx="583.639"
+ inkscape:cy="233.652"
  inkscape:current-layer="layer1"
  inkscape:document-units="px"
  showgrid="false"
@@ -85,20 +85,20 @@
  id="layer1"
  inkscape:label="Layer 1"
  inkscape:groupmode="layer"
- transform="translate(0,-88)">
+ transform="translate(0,-344)">
 <rect
  style="fill:url(#linearGradient3883);fill-opacity:1;fill-rule:nonzero;stroke:none"
  id="rect3875"
  width="506.822"
  height="242.277"
- x="612.42"
- y="240.488"
+ x="361.298"
+ y="344.447"
  inkscape:export-filename="/tmp/farm2.png"
  inkscape:export-xdpi="180"
  inkscape:export-ydpi="180" />
 <path
  style="fill:#6f1400;fill-opacity:1;fill-rule:nonzero;stroke:none"
- d="M 774.934,354.861 792.724,318.8 859.754,264.906 906.094,303.013 941.014,347.108 932.644,430.652 783.524,429.882 z"
+ d="M 523.812,458.82 541.602,422.759 608.632,368.865 654.972,406.972 689.892,451.067 681.522,534.611 532.402,533.841 z"
  id="rect14700"
  inkscape:connector-curvature="0"
  sodipodi:nodetypes="cccccccc"
@@ -110,11 +110,11 @@
  id="rect14444"
  width="83.8918"
  height="84.196"
- x="1091.6"
- y="92.9746" />
+ x="840.478"
+ y="196.934" />
 <rect
- y="60.3276"
- x="1121.93"
+ y="164.287"
+ x="870.808"
  height="84.196"
  width="83.8918"
  id="rect14446"
@@ -123,14 +123,14 @@
  sodipodi:nodetypes="cccccccccccccccc"
  inkscape:connector-curvature="0"
  id="path15597"
- d="M 860.334,255.313 786.104,314.215 775.924,346.215 756.954,356.364 761.894,362.509 783.744,350.692 794.024,317.955 860.164,265.577 927.184,318.623 937.614,351.186 959.284,362.831 964.214,356.686 945.164,346.469 934.864,314.25 865.884,259.985 z"
+ d="M 609.212,359.272 534.982,418.174 524.802,450.174 505.832,460.323 510.772,466.468 532.622,454.651 542.902,421.914 609.042,369.536 676.062,422.582 686.492,455.145 708.162,466.79 713.092,460.645 694.042,450.428 683.742,418.209 614.762,363.944 z"
  style="fill:#00411c;fill-opacity:1;fill-rule:nonzero;stroke:none"
  inkscape:export-filename="/tmp/farm2.png"
  inkscape:export-xdpi="180"
  inkscape:export-ydpi="180" />
 <path
  style="fill:#b82d27;fill-opacity:1;fill-rule:nonzero;stroke:none"
- d="M 783.494,349.446 792.354,319.054 860.564,266.249 928.234,321.231 935.384,349.71 929.964,419.615 786.734,419.615 z"
+ d="M 532.372,453.405 541.232,423.013 609.442,370.208 677.112,425.19 684.262,453.669 678.842,523.574 535.612,523.574 z"
  id="rect14692"
  inkscape:connector-curvature="0"
  sodipodi:nodetypes="cccccccc"
@@ -139,7 +139,7 @@
  inkscape:export-ydpi="180" />
 <path
  style="fill:#db7918;fill-opacity:1;fill-rule:nonzero;stroke:none"
- d="M 825.534,358.631 859.844,352.004 902.514,359.016 891.684,419.797 833.584,419.797 z"
+ d="M 574.412,462.59 608.722,455.963 651.392,462.975 640.562,523.756 582.462,523.756 z"
  id="rect14696"
  inkscape:connector-curvature="0"
  sodipodi:nodetypes="cccccc"
@@ -148,7 +148,7 @@
  inkscape:export-ydpi="180" />
 <path
  style="fill:#db7918;fill-opacity:1;fill-rule:nonzero;stroke:none"
- d="M 847.324,301.995 874.434,301.995 878.134,325.701 843.624,323.444 z"
+ d="M 596.202,405.954 623.312,405.954 627.012,429.66 592.502,427.403 z"
  id="rect14698"
  inkscape:connector-curvature="0"
  sodipodi:nodetypes="ccccc"
@@ -160,52 +160,52 @@
  id="rect15472"
  width="115.684"
  height="9.86516"
- x="650.123"
- y="-670.36"
+ x="542.169"
+ y="-420.93"
  transform="matrix(0.718025,0.696018,-0.696018,0.718025,0,0)" />
 <rect
  transform="matrix(-0.718025,0.696018,0.696018,0.718025,0,0)"
- y="628.326"
- x="-690.511"
+ y="528.186"
+ x="-437.842"
  height="9.86516"
  width="115.684"
  id="rect15474"
  style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.404273;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
 <rect
  transform="matrix(0.243668,0.969859,-0.969859,0.243668,0,0)"
- y="-973.249"
- x="296.573"
+ y="-704.365"
+ x="336.208"
  height="10.1338"
- width="49.9386"
+ width="49.9387"
  id="rect15476"
  style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.404272;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
 <rect
  style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.404272;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
  id="rect15478"
- width="49.9387"
+ width="49.9388"
  height="10.1338"
- x="-159.163"
- y="837.109"
+ x="2.85284"
+ y="618.888"
  transform="matrix(-0.243668,0.969859,0.969859,0.243668,0,0)" />
 <rect
  style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.404273;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
  id="rect15480"
- width="29.5039"
+ width="29.504"
  height="9.97575"
- x="906.546"
- y="-484.263"
+ x="753.524"
+ y="-259.644"
  transform="matrix(0.836317,0.548247,-0.548247,0.836317,0,0)" />
 <rect
  transform="matrix(-0.836317,0.548247,0.548247,0.836317,0,0)"
- y="538.864"
- x="-654.96"
+ y="488.13"
+ x="-387.948"
  height="9.97577"
- width="29.5039"
+ width="29.504"
  id="rect15482"
  style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.404274;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
 <path
  style="fill:#000000;fill-opacity:0.392157;fill-rule:nonzero;stroke:none"
- d="M 860.964,265.443 788.294,322.445 778.694,352.244 784.544,358.507 786.004,357.734 796.044,326.06 860.804,275.376 926.414,326.694 934.834,352.658 941.784,346.753 933.944,322.473 866.404,269.967 860.964,265.443 z"
+ d="M 609.842,369.402 537.172,426.404 527.572,456.203 533.422,462.466 534.882,461.693 544.922,430.019 609.682,379.335 675.292,430.653 683.712,456.617 690.662,450.712 682.822,426.432 615.282,373.926 609.842,369.402 z"
  id="path15589"
  inkscape:connector-curvature="0"
  inkscape:export-filename="/tmp/farm2.png"
@@ -213,7 +213,7 @@
  inkscape:export-ydpi="180" />
 <path
  style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
- d="M 860.594,260.441 787.924,317.432 777.964,348.394 759.394,358.214 764.224,364.159 785.624,352.726 795.674,321.051 860.434,270.372 926.044,321.697 936.254,353.204 957.464,364.471 962.294,358.525 943.644,348.64 933.564,317.466 866.034,264.961 z"
+ d="M 609.472,364.4 536.802,421.391 526.842,452.353 508.272,462.173 513.102,468.118 534.502,456.685 544.552,425.01 609.312,374.331 674.922,425.656 685.132,457.163 706.342,468.43 711.172,462.484 692.522,452.599 682.442,421.425 614.912,368.92 z"
  id="rect15495"
  inkscape:connector-curvature="0"
  sodipodi:nodetypes="cccccccccccccccc"
@@ -222,7 +222,7 @@
  inkscape:export-ydpi="180" />
 <path
  style="fill:#feb312;fill-opacity:1;fill-rule:nonzero;stroke:none"
- d="M 882.574,407.593 870.984,408.78 858.564,414.85 854.594,411.125 840.904,407.98 831.054,418.547 831.854,419.899 891.704,419.706 893.354,417.167 892.444,415.622 882.574,407.593 z"
+ d="M 631.452,511.552 619.862,512.739 607.442,518.809 603.472,515.084 589.782,511.939 579.932,522.506 580.732,523.858 640.582,523.665 642.232,521.126 641.322,519.581 631.452,511.552 z"
  id="path15584"
  inkscape:connector-curvature="0"
  inkscape:export-filename="/tmp/farm2.png"
@@ -230,7 +230,7 @@
  inkscape:export-ydpi="180" />
 <path
  style="fill:#6f1400;fill-opacity:1;fill-rule:nonzero;stroke:none"
- d="M 831.284,419.911 834.164,420.104 825.504,358.9 860.724,352.549 902.494,359.67 891.524,420.296 894.024,420.296 907.114,357.745 859.574,349.085 820.694,357.36 z"
+ d="M 580.162,523.87 583.042,524.063 574.382,462.859 609.602,456.508 651.372,463.629 640.402,524.255 642.902,524.255 655.992,461.704 608.452,453.044 569.572,461.319 z"
  id="path15533"
  inkscape:connector-curvature="0"
  inkscape:export-filename="/tmp/farm2.png"
@@ -238,7 +238,7 @@
  inkscape:export-ydpi="180" />
 <path
  style="fill:#6f1400;fill-opacity:1;fill-rule:nonzero;stroke:none"
- d="M 843.214,323.337 844.054,323.224 847.604,303.678 874.004,305.041 877.644,324.474 878.474,324.702 876.334,302.087 845.554,300.949 z"
+ d="M 592.092,427.296 592.932,427.183 596.482,407.637 622.882,409 626.522,428.433 627.352,428.661 625.212,406.046 594.432,404.908 z"
  id="path15535"
  inkscape:connector-curvature="0"
  sodipodi:nodetypes="ccccccccc"
@@ -249,14 +249,14 @@
  sodipodi:nodetypes="ccccc"
  inkscape:connector-curvature="0"
  id="path15582"
- d="M 890.974,325.523 832.714,321.542 832.324,325.236 890.584,329.217 z"
+ d="M 639.852,429.482 581.592,425.501 581.202,429.195 639.462,433.176 z"
  style="fill:#000000;fill-opacity:0.219608;fill-rule:nonzero;stroke:none"
  inkscape:export-filename="/tmp/farm2.png"
  inkscape:export-xdpi="180"
  inkscape:export-ydpi="180" />
 <path
  style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
- d="M 890.204,324.176 831.944,320.195 831.554,323.889 889.814,327.87 z"
+ d="M 639.082,428.135 580.822,424.154 580.432,427.848 638.692,431.829 z"
  id="rect15526"
  inkscape:connector-curvature="0"
  sodipodi:nodetypes="ccccc"
@@ -267,14 +267,14 @@
  sodipodi:nodetypes="cccccccccccccccccccccccc"
  inkscape:connector-curvature="0"
  id="path15580"
- d="M 844.364,325.577 850.364,319.153 856.864,320.643 858.764,322.412 864.674,319.526 870.174,318.967 874.874,322.785 877.874,327.905 873.674,324.988 874.474,328.93 872.874,331.629 872.474,328.464 869.674,326.185 870.674,332.001 865.674,328.237 865.474,331.35 864.974,335.075 862.964,331.056 859.164,328.596 856.964,333.231 854.164,328.259 848.664,331.685 849.464,325.944 z"
+ d="M 593.242,429.536 599.242,423.112 605.742,424.602 607.642,426.371 613.552,423.485 619.052,422.926 623.752,426.744 626.752,431.864 622.552,428.947 623.352,432.889 621.752,435.588 621.352,432.423 618.552,430.144 619.552,435.96 614.552,432.196 614.352,435.309 613.852,439.034 611.842,435.015 608.042,432.555 605.842,437.19 603.042,432.218 597.542,435.644 598.342,429.903 z"
  style="fill:#000000;fill-opacity:0.219608;fill-rule:nonzero;stroke:none"
  inkscape:export-filename="/tmp/farm2.png"
  inkscape:export-xdpi="180"
  inkscape:export-ydpi="180" />
 <path
  style="fill:#feb312;fill-opacity:1;fill-rule:nonzero;stroke:none"
- d="M 843.304,323.364 849.304,316.94 855.804,318.429 857.704,320.198 863.614,317.312 869.114,316.753 873.814,320.571 876.814,325.692 872.614,322.775 873.414,326.716 871.814,329.416 871.414,326.251 868.614,323.971 869.614,329.788 864.614,326.024 864.414,329.137 863.914,332.861 861.914,328.843 858.104,326.382 855.904,331.018 853.104,326.045 847.604,329.472 848.404,323.731 z"
+ d="M 592.182,427.323 598.182,420.899 604.682,422.388 606.582,424.157 612.492,421.271 617.992,420.712 622.692,424.53 625.692,429.651 621.492,426.734 622.292,430.675 620.692,433.375 620.292,430.21 617.492,427.93 618.492,433.747 613.492,429.983 613.292,433.096 612.792,436.82 610.792,432.802 606.982,430.341 604.782,434.977 601.982,430.004 596.482,433.431 597.282,427.69 z"
  id="path15556"
  inkscape:connector-curvature="0"
  sodipodi:nodetypes="cccccccccccccccccccccccc"
@@ -285,47 +285,47 @@
  sodipodi:nodetypes="cccccccccccccccccccccccc"
  inkscape:connector-curvature="0"
  id="path15558"
- d="M 1146.55,206.389 1165.05,186.593 1185.09,191.183 1190.95,196.635 1209.14,187.741 1226.09,186.019 1240.58,197.782 1249.83,213.562 1236.88,204.574 1239.35,216.718 1234.42,225.039 1233.18,215.283 1224.55,208.26 1227.63,226.186 1212.22,214.584 1211.6,224.178 1210.06,235.655 1203.9,223.274 1192.18,215.689 1185.4,229.972 1176.77,214.649 1159.81,225.21 1162.28,207.519 z"
+ d="M 895.428,310.348 913.928,290.552 933.968,295.142 939.828,300.594 958.018,291.7 974.968,289.978 989.458,301.741 998.708,317.521 985.758,308.533 988.228,320.677 983.298,328.998 982.058,319.242 973.428,312.219 976.508,330.145 961.098,318.543 960.478,328.137 958.938,339.614 952.778,327.233 941.058,319.648 934.278,333.931 925.648,318.608 908.688,329.169 911.158,311.478 z"
  style="fill:#6f1400;fill-opacity:1;fill-rule:nonzero;stroke:none" />
 <path
  style="fill:#feb312;fill-opacity:1;fill-rule:nonzero;stroke:none"
- d="M 1347.52,81.6916 1373.98,103.055 1375.42,124.418 1362.43,110.902 1337.42,107.415 z"
+ d="M 1096.4,185.651 1122.86,207.014 1124.3,228.377 1111.31,214.861 1086.3,211.374 z"
  id="path15564"
  inkscape:connector-curvature="0" />
 <path
  inkscape:connector-curvature="0"
  id="path15566"
- d="M 1345.39,87.4686 1356.78,117.881 1346.41,137.109 1342.47,119.545 1322.61,105.329 z"
+ d="M 1094.27,191.428 1105.66,221.84 1095.29,241.068 1091.35,223.504 1071.49,209.288 z"
  style="fill:#feb312;fill-opacity:1;fill-rule:nonzero;stroke:none" />
 <path
  style="fill:#feb312;fill-opacity:1;fill-rule:nonzero;stroke:none"
- d="M 1339.89,95.4596 1337.08,127.474 1319.16,141.416 1323.21,123.872 1311.17,103.695 z"
+ d="M 1088.77,199.419 1085.96,231.433 1068.04,245.375 1072.09,227.831 1060.05,207.654 z"
  id="path15568"
  inkscape:connector-curvature="0" />
 <path
  inkscape:connector-curvature="0"
  id="path15570"
- d="M 1277.5,80.3836 1251.05,101.747 1249.6,123.11 1262.59,109.594 1287.6,106.107 z"
+ d="M 1026.38,184.343 999.928,205.706 998.478,227.069 1011.47,213.553 1036.48,210.066 z"
  style="fill:#feb312;fill-opacity:1;fill-rule:nonzero;stroke:none" />
 <path
  style="fill:#feb312;fill-opacity:1;fill-rule:nonzero;stroke:none"
- d="M 1279.63,86.1606 1268.24,116.573 1278.61,135.801 1282.55,118.237 1302.41,104.021 z"
+ d="M 1028.51,190.12 1017.12,220.532 1027.49,239.76 1031.43,222.196 1051.29,207.98 z"
  id="path15572"
  inkscape:connector-curvature="0" />
 <path
  inkscape:connector-curvature="0"
  id="path15576"
- d="M 1298.87,94.8806 1291.33,115.026 1298.2,127.763 1300.81,116.128 1313.96,106.711 z"
+ d="M 1047.75,198.84 1040.21,218.985 1047.08,231.722 1049.69,220.087 1062.84,210.67 z"
  style="fill:#feb312;fill-opacity:1;fill-rule:nonzero;stroke:none" />
 <path
  style="fill:#feb312;fill-opacity:1;fill-rule:nonzero;stroke:none"
- d="M 1272.97,88.2316 1275.37,90.4106 1300.39,106.543 1325.4,105.671 1352.33,94.7706 1347.04,79.9476 1331.17,74.2796 1313.37,87.3596 1293.65,82.9996 1277.95,81.2556 z"
+ d="M 1021.85,192.191 1024.25,194.37 1049.27,210.502 1074.28,209.63 1101.21,198.73 1095.92,183.907 1080.05,178.239 1062.25,191.319 1042.53,186.959 1026.83,185.215 z"
  id="path15578"
  inkscape:connector-curvature="0"
  sodipodi:nodetypes="ccccccccccc" />
 <g
  id="g15622"
- transform="translate(613.761,-214.1)">
+ transform="translate(362.639,-110.141)">
 <path
  sodipodi:nodetypes="cccccc"
  style="fill:#005500;fill-opacity:1;fill-rule:nonzero;stroke:none"
@@ -347,7 +347,7 @@
 </g>
 <g
  id="g15632"
- transform="translate(571.907,-146.959)">
+ transform="translate(320.785,-43)">
 <path
  inkscape:connector-curvature="0"
  id="path15609"
@@ -369,7 +369,7 @@
 </g>
 <path
  style="fill:#005500;fill-opacity:1;fill-rule:nonzero;stroke:none"
- d="M 612.023,418.343 C 612.023,418.343 650.199,416.911 669.293,417.11 693.541,417.363 717.728,420.421 741.974,420.193 762.134,420.003 782.174,416.643 802.324,416.493 824.524,416.327 846.644,419.679 868.844,419.576 891.054,419.473 913.154,415.748 935.364,415.877 959.854,416.019 984.174,420.81 1008.66,420.809 1030.06,420.808 1051.31,416.79 1072.71,416.493 1088.32,416.276 1119.5,418.343 1119.5,418.343 L 1119.5,468.045 612.023,468.045 z"
+ d="M 360.901,522.302 C 360.901,522.302 399.077,520.87 418.171,521.069 442.419,521.322 466.606,524.38 490.852,524.152 511.012,523.962 531.052,520.602 551.202,520.452 573.402,520.286 595.522,523.638 617.722,523.535 639.932,523.432 662.032,519.707 684.242,519.836 708.732,519.978 733.052,524.769 757.538,524.768 778.938,524.767 800.188,520.749 821.588,520.452 837.198,520.235 868.378,522.302 868.378,522.302 L 868.378,572.004 360.901,572.004 z"
  id="rect14694"
  inkscape:connector-curvature="0"
  sodipodi:nodetypes="cssssssscccc"
@@ -378,7 +378,7 @@
  inkscape:export-ydpi="90" />
 <g
  id="g15637"
- transform="translate(524.041,72.2569)"
+ transform="translate(272.919,176.216)"
  inkscape:export-filename="/tmp/farm.png"
  inkscape:export-xdpi="90"
  inkscape:export-ydpi="90">
@@ -402,7 +402,7 @@
  sodipodi:nodetypes="cccccc" />
 </g>
 <g
- transform="translate(630.421,12.6426)"
+ transform="translate(379.299,116.602)"
  id="g15645"
  inkscape:export-filename="/tmp/farm.png"
  inkscape:export-xdpi="90"
@@ -428,7 +428,7 @@
 </g>
 <g
  id="g15653"
- transform="translate(681.033,10.2446)"
+ transform="translate(429.911,114.204)"
  inkscape:export-filename="/tmp/farm.png"
  inkscape:export-xdpi="90"
  inkscape:export-ydpi="90">
@@ -452,7 +452,7 @@
  inkscape:connector-curvature="0" />
 </g>
 <g
- transform="matrix(-0.75879,0,0,0.75879,1289.28,112.069)"
+ transform="matrix(-0.75879,0,0,0.75879,1038.16,216.028)"
  id="g15661"
  inkscape:export-filename="/tmp/farm.png"
  inkscape:export-xdpi="90"
@@ -478,7 +478,7 @@
 </g>
 <g
  id="g15669"
- transform="matrix(-0.765083,0,0,0.765083,1271.46,151.025)"
+ transform="matrix(-0.765083,0,0,0.765083,1020.34,254.984)"
  inkscape:export-filename="/tmp/farm.png"
  inkscape:export-xdpi="90"
  inkscape:export-ydpi="90">
@@ -502,7 +502,7 @@
  sodipodi:nodetypes="cccccc" />
 </g>
 <g
- transform="translate(401.089,80.1049)"
+ transform="translate(149.967,184.064)"
  id="g15677"
  inkscape:export-filename="/tmp/farm.png"
  inkscape:export-xdpi="90"
@@ -528,7 +528,7 @@
 </g>
 <g
  id="g15685"
- transform="translate(507.474,14.4896)"
+ transform="translate(256.352,118.449)"
  inkscape:export-filename="/tmp/farm.png"
  inkscape:export-xdpi="90"
  inkscape:export-ydpi="90">
@@ -552,7 +552,7 @@
  inkscape:connector-curvature="0" />
 </g>
 <g
- transform="translate(556.086,12.0926)"
+ transform="translate(304.964,116.052)"
  id="g15693"
  inkscape:export-filename="/tmp/farm.png"
  inkscape:export-xdpi="90"
@@ -578,7 +578,7 @@
 </g>
 <g
  id="g15701"
- transform="matrix(-0.75879,0,0,0.75879,1164.33,113.918)"
+ transform="matrix(-0.75879,0,0,0.75879,913.208,217.877)"
  inkscape:export-filename="/tmp/farm.png"
  inkscape:export-xdpi="90"
  inkscape:export-ydpi="90">
@@ -602,7 +602,7 @@
  inkscape:connector-curvature="0" />
 </g>
 <g
- transform="matrix(-0.765083,0,0,0.765083,1148.51,158.873)"
+ transform="matrix(-0.765083,0,0,0.765083,897.388,262.832)"
  id="g15709"
  inkscape:export-filename="/tmp/farm.png"
  inkscape:export-xdpi="90"
@@ -628,7 +628,7 @@
 </g>
 <g
  id="g15717"
- transform="matrix(-1,0,0,1,1204.79,76.1809)"
+ transform="matrix(-1,0,0,1,953.668,180.14)"
  inkscape:export-filename="/tmp/farm.png"
  inkscape:export-xdpi="90"
  inkscape:export-ydpi="90">
@@ -652,7 +652,7 @@
  sodipodi:nodetypes="cccccc" />
 </g>
 <g
- transform="matrix(-1,0,0,1,1100.41,16.5663)"
+ transform="matrix(-1,0,0,1,849.288,120.525)"
  id="g15725"
  inkscape:export-filename="/tmp/farm.png"
  inkscape:export-xdpi="90"
@@ -678,7 +678,7 @@
 </g>
 <g
  id="g15733"
- transform="matrix(-1,0,0,1,1050.56,9.23558)"
+ transform="matrix(-1,0,0,1,799.438,113.195)"
  inkscape:export-filename="/tmp/farm.png"
  inkscape:export-xdpi="90"
  inkscape:export-ydpi="90">
@@ -702,7 +702,7 @@
  inkscape:connector-curvature="0" />
 </g>
 <g
- transform="matrix(0.75879,0,0,0.75879,443.543,115.994)"
+ transform="matrix(0.75879,0,0,0.75879,192.421,219.953)"
  id="g15741"
  inkscape:export-filename="/tmp/farm.png"
  inkscape:export-xdpi="90"
@@ -728,7 +728,7 @@
 </g>
 <g
  id="g15749"
- transform="matrix(0.765083,0,0,0.765083,457.365,154.949)"
+ transform="matrix(0.765083,0,0,0.765083,206.243,258.908)"
  inkscape:export-filename="/tmp/farm.png"
  inkscape:export-xdpi="90"
  inkscape:export-ydpi="90">
@@ -758,14 +758,14 @@
  sodipodi:nodetypes="cssssssscccc"
  inkscape:connector-curvature="0"
  id="path3105"
- d="M 1119.5,440.578 C 1119.5,440.578 1081.32,439.146 1062.23,439.345 1037.98,439.598 1013.79,442.656 989.554,442.428 969.394,442.238 949.354,438.878 929.194,438.728 907.004,438.562 884.874,441.914 862.684,441.811 840.474,441.708 818.364,437.983 796.164,438.112 771.674,438.254 747.354,443.045 722.863,443.044 701.464,443.043 680.208,439.025 658.811,438.728 643.204,438.511 612.023,440.578 612.023,440.578 L 612.023,490.28 1119.5,490.28 z"
+ d="M 868.378,544.537 C 868.378,544.537 830.198,543.105 811.108,543.304 786.858,543.557 762.668,546.615 738.432,546.387 718.272,546.197 698.232,542.837 678.072,542.687 655.882,542.521 633.752,545.873 611.562,545.77 589.352,545.667 567.242,541.942 545.042,542.071 520.552,542.213 496.232,547.004 471.741,547.003 450.342,547.002 429.086,542.984 407.689,542.687 392.082,542.47 360.901,544.537 360.901,544.537 L 360.901,594.239 868.378,594.239 z"
  style="fill:#003f00;fill-opacity:1;fill-rule:nonzero;stroke:none" />
 <g
  inkscape:export-ydpi="90"
  inkscape:export-xdpi="90"
  inkscape:export-filename="/tmp/farm.png"
  id="g3885"
- transform="matrix(-1,0,0,1,1033.2,11.6336)">
+ transform="matrix(-1,0,0,1,782.078,115.593)">
 <path
  sodipodi:nodetypes="cccccc"
  style="fill:#005500;fill-opacity:1;fill-rule:nonzero;stroke:none"
@@ -789,7 +789,7 @@
  inkscape:export-ydpi="90"
  inkscape:export-xdpi="90"
  inkscape:export-filename="/tmp/farm.png"
- transform="matrix(-1,0,0,1,984.594,14.7846)"
+ transform="matrix(-1,0,0,1,733.472,118.744)"
  id="g3893">
 <path
  inkscape:connector-curvature="0"
@@ -815,7 +815,7 @@
  inkscape:export-xdpi="90"
  inkscape:export-filename="/tmp/farm.png"
  id="g3901"
- transform="matrix(0.75879,0,0,0.75879,376.336,111.061)">
+ transform="matrix(0.75879,0,0,0.75879,125.214,215.02)">
 <path
  sodipodi:nodetypes="cccccc"
  style="fill:#005500;fill-opacity:1;fill-rule:nonzero;stroke:none"
@@ -836,7 +836,7 @@
  inkscape:connector-curvature="0" />
 </g>
 <g
- transform="matrix(-1,0,0,1,1467.27,13.4836)"
+ transform="matrix(-1,0,0,1,1216.15,117.443)"
  id="g3909"
  inkscape:export-filename="/tmp/farm.png"
  inkscape:export-xdpi="90"
@@ -862,7 +862,7 @@
 </g>
 <g
  id="g3917"
- transform="matrix(-1,0,0,1,1418.66,16.6343)"
+ transform="matrix(-1,0,0,1,1167.54,120.593)"
  inkscape:export-filename="/tmp/farm.png"
  inkscape:export-xdpi="90"
  inkscape:export-ydpi="90">
@@ -886,7 +886,7 @@
  inkscape:connector-curvature="0" />
 </g>
 <g
- transform="matrix(0.75879,0,0,0.75879,810.404,112.911)"
+ transform="matrix(0.75879,0,0,0.75879,559.282,216.87)"
  id="g3925"
  inkscape:export-filename="/tmp/farm.png"
  inkscape:export-xdpi="90"
@@ -913,43 +913,43 @@
 <path
  sodipodi:nodetypes="cccccc"
  style="fill:#005500;fill-opacity:1;fill-rule:nonzero;stroke:none"
- d="M 937.684,210.544 934.304,194.46 937.384,184.29 938.554,193.58 940.734,200.837 z"
+ d="M 686.562,314.503 683.182,298.419 686.262,288.249 687.432,297.539 689.612,304.796 z"
  id="path3935"
  inkscape:connector-curvature="0" />
 <path
  inkscape:connector-curvature="0"
  id="path3937"
- d="M 937.834,209.24 940.634,193.045 947.254,184.73 944.904,193.795 944.264,201.347 z"
+ d="M 686.712,313.199 689.512,297.004 696.132,288.689 693.782,297.754 693.142,305.306 z"
  style="fill:#005500;fill-opacity:1;fill-rule:nonzero;stroke:none"
  sodipodi:nodetypes="cccccc" />
 <path
  sodipodi:nodetypes="cccccc"
  style="fill:#005500;fill-opacity:1;fill-rule:nonzero;stroke:none"
- d="M 940.314,211.203 929.094,199.192 926.464,188.898 932.274,196.241 937.904,201.317 z"
+ d="M 689.192,315.162 677.972,303.151 675.342,292.857 681.152,300.2 686.782,305.276 z"
  id="path3939"
  inkscape:connector-curvature="0" />
 <path
  inkscape:connector-curvature="0"
  id="path3944"
- d="M 937.984,206.721 931.394,200.722 929.074,194.525 932.784,198.641 936.194,201.36 z"
+ d="M 686.862,310.68 680.272,304.681 677.952,298.484 681.662,302.6 685.072,305.319 z"
  style="fill:#008033;fill-opacity:1;fill-rule:nonzero;stroke:none"
  sodipodi:nodetypes="cccccc" />
 <path
  sodipodi:nodetypes="cccccc"
  style="fill:#008033;fill-opacity:1;fill-rule:nonzero;stroke:none"
- d="M 937.754,206.789 943.214,202.073 943.744,194.403 941.144,199.019 938.614,202.21 z"
+ d="M 686.632,310.748 692.092,306.032 692.622,298.362 690.022,302.978 687.492,306.169 z"
  id="path3946"
  inkscape:connector-curvature="0" />
 <path
  inkscape:connector-curvature="0"
  id="path3948"
- d="M 936.724,205.016 935.634,199.029 935.994,192.523 936.864,197.363 940.764,203.134 937.984,206.582 z"
+ d="M 685.602,308.975 684.512,302.988 684.872,296.482 685.742,301.322 689.642,307.093 686.862,310.541 z"
  style="fill:#008033;fill-opacity:1;fill-rule:nonzero;stroke:none"
  sodipodi:nodetypes="ccccccc"
  inkscape:transform-center-y="2.61589" />
 <g
  id="g4825"
- transform="matrix(2.46223,0,0,2.46223,-2177.87,-461.14)">
+ transform="matrix(1.23515,0,0,1.23515,-1092.86,67.6928)">
 <path
  sodipodi:nodetypes="cccccccccccccccc"
  inkscape:connector-curvature="0"

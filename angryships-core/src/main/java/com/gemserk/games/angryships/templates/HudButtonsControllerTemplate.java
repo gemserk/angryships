@@ -24,6 +24,7 @@ public class HudButtonsControllerTemplate extends EntityTemplateImpl {
 		buttonMonitorsComponent.leftButtonMonitor = parameters.get("leftButtonMonitor");
 		buttonMonitorsComponent.rightButtonMonitor = parameters.get("rightButtonMonitor");
 		buttonMonitorsComponent.fireButtonMonitor = parameters.get("fireButtonMonitor");
+		buttonMonitorsComponent.secondFireButtonMonitor = parameters.get("secondFireButtonMonitor");
 		buttonMonitorsComponent.explodeButtonMonitor = parameters.get("explodeButtonMonitor");
 		
 		entity.addComponent(buttonMonitorsComponent);

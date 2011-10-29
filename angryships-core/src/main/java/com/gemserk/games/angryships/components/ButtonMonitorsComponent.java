@@ -8,6 +8,7 @@ public class ButtonMonitorsComponent extends Component {
 	public ButtonMonitor leftButtonMonitor;
 	public ButtonMonitor rightButtonMonitor;
 	public ButtonMonitor fireButtonMonitor;
+	public ButtonMonitor secondFireButtonMonitor;
 	public ButtonMonitor explodeButtonMonitor;
 	
 }

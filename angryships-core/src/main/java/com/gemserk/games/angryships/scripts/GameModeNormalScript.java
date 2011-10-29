@@ -35,7 +35,7 @@ public class GameModeNormalScript extends ScriptJavaImpl {
 		
 		PlayerData playerData = playerComponent.playerData;
 
-		if (playerData.bombsLeft == 0 && bombs.size() == 0) {
+		if (playerData.bombsLeft == 0 && playerData.kamikazeBombsLeft == 0 && bombs.size() == 0) {
 			eventManager.registerEvent(Events.gameOver, player);
 			e.delete();
 			return;

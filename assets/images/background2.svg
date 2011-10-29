@@ -16,7 +16,7 @@
  version="1.1"
  inkscape:version="0.48.1 r9760"
  sodipodi:docname="background2.svg"
- inkscape:export-filename="/tmp/background.png"
+ inkscape:export-filename="/home/acoppes/workspace/angryships/angryships-desktop/src/main/resources/data/levels/ground.png"
  inkscape:export-xdpi="90"
  inkscape:export-ydpi="90"
  style="display:inline">
@@ -132,15 +132,6 @@
 </linearGradient>
 <filter
  inkscape:collect="always"
- id="filter6437"
- color-interpolation-filters="sRGB">
-<feGaussianBlur
- inkscape:collect="always"
- stdDeviation="4.66476"
- id="feGaussianBlur6439" />
-</filter>
-<filter
- inkscape:collect="always"
  id="filter6543"
  color-interpolation-filters="sRGB">
 <feGaussianBlur
@@ -166,9 +157,9 @@
  borderopacity="1.0"
  inkscape:pageopacity="0.0"
  inkscape:pageshadow="2"
- inkscape:zoom="1.35156"
- inkscape:cx="369.792"
- inkscape:cy="265.106"
+ inkscape:zoom="0.645842"
+ inkscape:cx="501.579"
+ inkscape:cy="289.681"
  inkscape:current-layer="layer1"
  inkscape:document-units="px"
  showgrid="false"
@@ -10943,7 +10934,7 @@
  inkscape:groupmode="layer"
  id="layer3"
  inkscape:label="Background"
- style="display:inline">
+ style="display:none">
 <rect
  style="fill:url(#linearGradient6570);fill-opacity:1;fill-rule:nonzero;stroke:none;display:inline"
  id="rect5565"
@@ -10956,7 +10947,7 @@
  inkscape:groupmode="layer"
  id="layer2"
  inkscape:label="SecondBackground"
- style="display:inline">
+ style="display:none">
 <path
  inkscape:connector-curvature="0"
  id="path6343"
@@ -10970,7 +10961,7 @@
  style="display:inline">
 <g
  id="g5549"
- transform="translate(-141.609,-85.1383)">
+ transform="translate(-415.324,-446.442)">
 <path
  inkscape:export-ydpi="180"
  inkscape:export-xdpi="180"
@@ -12236,7 +12227,7 @@
  inkscape:groupmode="layer"
  id="layer5"
  inkscape:label="Clouds"
- style="display:inline">
+ style="display:none">
 <path
  style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#dbdbdb;stroke-width:5.504;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
  d="M 176.925,40.946 C 160.286,40.946 146.282,52.163 142.295,67.347 137.838,65.998 133.129,65.255 128.222,65.255 105.854,65.255 87.0513,80.346 81.7246,100.773 79.8863,99.852 77.8214,99.338 75.6189,99.338 68.1263,99.338 62.0599,105.335 62.0599,112.725 62.0599,112.899 62.082,113.07 62.0886,113.241 61.3237,113.07 60.527,112.956 59.7092,112.956 53.8218,112.956 49.0455,117.667 49.0455,123.476 49.0455,129.036 53.4256,133.588 58.964,133.968 58.44,136.078 58.1614,138.262 58.1614,140.531 58.1614,155.769 70.6664,168.137 86.1103,168.137 95.7103,168.137 104.179,163.368 109.215,156.097 115.044,158.579 121.47,159.967 128.222,159.967 132.552,159.967 136.729,159.393 140.72,158.334 148.506,168.492 160.841,175.046 174.747,175.046 186.554,175.046 197.238,170.31 204.961,162.662 209.461,165.534 214.824,167.192 220.583,167.192 232.503,167.192 242.717,160.058 247.098,149.877 250.34,151.494 253.998,152.429 257.877,152.429 270.699,152.429 281.159,142.478 281.786,129.983 281.816,129.983 281.842,129.983 281.872,129.983 289.364,129.983 295.46,124.015 295.46,116.624 295.46,109.233 289.364,103.237 281.872,103.237 280.35,103.237 278.91,103.497 277.544,103.955 275.847,95.841 268.848,89.649 260.286,89.019 253.251,75.504 238.993,66.258 222.533,66.258 218.757,66.258 215.096,66.75 211.61,67.662 207.733,52.322 193.676,40.946 176.925,40.946 z"
