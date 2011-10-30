@@ -28,7 +28,7 @@ public class CameraScript extends ScriptJavaImpl {
 		for (int i = 0; i < bombEntities.size(); i++) {
 			Entity bomb = bombEntities.get(i);
 
-			SpatialComponent spatialComponent = Components.spatialComponent(bomb);
+			SpatialComponent spatialComponent = Components.getSpatialComponent(bomb);
 			Spatial spatial = spatialComponent.getSpatial();
 
 			midpointx += spatial.getX();

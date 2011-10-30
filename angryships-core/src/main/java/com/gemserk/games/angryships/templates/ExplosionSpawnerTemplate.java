@@ -42,7 +42,7 @@ public class ExplosionSpawnerTemplate extends EntityTemplateImpl {
 		public void explosion(Event event) {
 			Entity e = (Entity) event.getSource();
 			
-			SpatialComponent spatialComponent = Components.spatialComponent(e);
+			SpatialComponent spatialComponent = Components.getSpatialComponent(e);
 			Spatial spatial = spatialComponent.getSpatial();
 			
 			ExplosionComponent explosionComponent = GameComponents.getExplosionComponent(e);

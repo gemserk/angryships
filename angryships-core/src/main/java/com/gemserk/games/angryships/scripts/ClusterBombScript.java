@@ -39,7 +39,7 @@ public class ClusterBombScript extends ScriptJavaImpl {
 		if (clusterBombComponent == null)
 			return;
 
-		SpatialComponent spatialComponent = Components.spatialComponent(e);
+		SpatialComponent spatialComponent = Components.getSpatialComponent(e);
 
 		Spatial spatial = spatialComponent.getSpatial();
 
@@ -49,7 +49,7 @@ public class ClusterBombScript extends ScriptJavaImpl {
 			Entity clusterBombMunition = entityFactory.instantiate(clusterBombMunitionTemplate, parameters //
 					.put("spatial", new SpatialImpl(spatial.getX(), spatial.getY(), 0.4f, 0.4f, MathUtils.random(0f, 360f))) //
 					);
-			PhysicsComponent physicsComponent = Components.physicsComponent(clusterBombMunition);
+			PhysicsComponent physicsComponent = Components.getPhysicsComponent(clusterBombMunition);
 			Body body = physicsComponent.getBody();
 			body.applyLinearImpulse(MathUtils.random(-3f, 3f), 0f, body.getPosition().x, body.getPosition().y);
 		}

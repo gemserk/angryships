@@ -20,7 +20,7 @@ public class MovementScript extends ScriptJavaImpl {
 	public void update(World world, Entity e) {
 
 		MovementComponent movementComponent = Components.getMovementComponent(e);
-		SpatialComponent spatialComponent = Components.spatialComponent(e);
+		SpatialComponent spatialComponent = Components.getSpatialComponent(e);
 		ControllerComponent controllerComponent = GameComponents.getControllerComponent(e);
 		
 		Controller controller = controllerComponent.controller;

@@ -58,7 +58,7 @@ public class KamikazeControllableBombTemplate extends EntityTemplateImpl {
 			if (!controller.explode)
 				return;
 
-			SpatialComponent spatialComponent = Components.spatialComponent(e);
+			SpatialComponent spatialComponent = Components.getSpatialComponent(e);
 			Spatial spatial = spatialComponent.getSpatial();
 			
 			MovementComponent movementComponent = Components.getMovementComponent(e);

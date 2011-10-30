@@ -43,7 +43,7 @@ public class KamikazeBombTemplate extends EntityTemplateImpl {
 		@Override
 		public void update(World world, Entity e) {
 
-			SpatialComponent spatialComponent = Components.spatialComponent(e);
+			SpatialComponent spatialComponent = Components.getSpatialComponent(e);
 			Spatial spatial = spatialComponent.getSpatial();
 
 			Array<PixmapHelper> pixmaps = pixmapWorld.getPixmaps();

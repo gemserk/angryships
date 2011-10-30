@@ -13,7 +13,7 @@ public class UpdateAnimationScript extends ScriptJavaImpl {
 
 	@Override
 	public void update(com.artemis.World world, Entity e) {
-		SpriteComponent spriteComponent = Components.spriteComponent(e);
+		SpriteComponent spriteComponent = Components.getSpriteComponent(e);
 		AnimationComponent animationComponent = Components.getAnimationComponent(e);
 		Animation animation = animationComponent.getCurrentAnimation();
 		animation.update(GlobalTime.getDelta());

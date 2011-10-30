@@ -17,7 +17,7 @@ public class ExplodeWhenCollisionScript extends ScriptJavaImpl {
 	@Override
 	public void update(World world, Entity e) {
 
-		PhysicsComponent physicsComponent = Components.physicsComponent(e);
+		PhysicsComponent physicsComponent = Components.getPhysicsComponent(e);
 		Contacts contacts = physicsComponent.getContact();
 
 		if (!contacts.isInContact())

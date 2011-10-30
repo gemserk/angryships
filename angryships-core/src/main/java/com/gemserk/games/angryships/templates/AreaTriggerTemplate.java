@@ -25,7 +25,7 @@ public class AreaTriggerTemplate extends EntityTemplateImpl {
 
 		@Override
 		public void update(World world, Entity e) {
-			PhysicsComponent physicsComponent = Components.physicsComponent(e);
+			PhysicsComponent physicsComponent = Components.getPhysicsComponent(e);
 			Physics physics = physicsComponent.getPhysics();
 
 			Contacts contacts = physics.getContact();

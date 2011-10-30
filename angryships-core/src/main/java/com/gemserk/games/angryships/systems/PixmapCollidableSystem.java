@@ -34,7 +34,7 @@ public class PixmapCollidableSystem extends EntityProcessingSystem implements Di
 	@Override
 	protected void process(Entity e) {
 
-		SpatialComponent spatialComponent = Components.spatialComponent(e);
+		SpatialComponent spatialComponent = Components.getSpatialComponent(e);
 		Spatial spatial = spatialComponent.getSpatial();
 
 		PixmapCollidableComponent pixmapCollidableComponent = GameComponents.getPixmapCollidableComponent(e);
