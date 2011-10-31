@@ -27,6 +27,7 @@ import com.gemserk.commons.artemis.systems.ContainerSystem;
 import com.gemserk.commons.artemis.systems.EventManagerWorldSystem;
 import com.gemserk.commons.artemis.systems.MovementSystem;
 import com.gemserk.commons.artemis.systems.OwnerSystem;
+import com.gemserk.commons.artemis.systems.ParticleEmitterSystem;
 import com.gemserk.commons.artemis.systems.PhysicsSystem;
 import com.gemserk.commons.artemis.systems.PreviousStateSpatialSystem;
 import com.gemserk.commons.artemis.systems.ReflectionRegistratorEventSystem;
@@ -72,7 +73,6 @@ import com.gemserk.games.angryships.resources.GameResources;
 import com.gemserk.games.angryships.scripts.GameModeNormalScript;
 import com.gemserk.games.angryships.systems.Box2dRenderSystem;
 import com.gemserk.games.angryships.systems.PixmapCollidableSystem;
-import com.gemserk.games.angryships.systems.RenderLayerParticleEmitterImpl;
 import com.gemserk.games.angryships.systems.TimerTriggerSystem;
 import com.gemserk.games.angryships.systems.TimerUpdateSystem;
 import com.gemserk.games.angryships.templates.AreaTriggerTemplate;
@@ -256,8 +256,8 @@ public class PlayGameState extends GameStateImpl {
 
 		renderLayers.add(Layers.Background, new RenderLayerSpriteBatchImpl(-10000, -1000, backgroundCamera));
 		renderLayers.add(Layers.SecondBackground, new RenderLayerSpriteBatchImpl(-1000, -500, secondBackgroundCamera));
-		renderLayers.add(Layers.Particles, new RenderLayerParticleEmitterImpl(-500, -400, worldCamera));
-		renderLayers.add(Layers.World, new RenderLayerSpriteBatchImpl(-400, 500, worldCamera));
+//		renderLayers.add(Layers.Particles, new RenderLayerParticleEmitterImpl(-500, -400, worldCamera));
+		renderLayers.add(Layers.World, new RenderLayerSpriteBatchImpl(-500, 500, worldCamera));
 		renderLayers.add(Layers.Hud, new RenderLayerSpriteBatchImpl(500, 10000, guiCamera));
 
 		entityFactory = new EntityFactoryImpl(worldWrapper.getWorld());
@@ -305,7 +305,8 @@ public class PlayGameState extends GameStateImpl {
 		// 
 		worldWrapper.addUpdateSystem(injector.getInstance(OwnerSystem.class));
 		worldWrapper.addUpdateSystem(injector.getInstance(ContainerSystem.class));		
-
+		worldWrapper.addUpdateSystem(injector.getInstance(ParticleEmitterSystem.class));
+		
 		worldWrapper.addRenderSystem(injector.getInstance(CameraUpdateSystem.class));
 		worldWrapper.addRenderSystem(injector.getInstance(SpriteUpdateSystem.class));
 		worldWrapper.addRenderSystem(injector.getInstance(RenderableSystem.class));

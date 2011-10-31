@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.gemserk.commons.artemis.components.AntiGravityComponent;
 import com.gemserk.commons.artemis.components.Components;
+import com.gemserk.commons.artemis.components.ContainerComponent;
 import com.gemserk.commons.artemis.components.MovementComponent;
 import com.gemserk.commons.artemis.components.PhysicsComponent;
 import com.gemserk.commons.artemis.components.RenderableComponent;
@@ -133,6 +134,8 @@ public class KamikazeControllableBombTemplate extends EntityTemplateImpl {
 				injector.getInstance(SpawnKamikazeBombScript.class), //
 				injector.getInstance(ExplodeWhenCollisionScript.class) //
 		));
+		
+		entity.addComponent(new ContainerComponent());
 	}
 
 }
