@@ -56,6 +56,12 @@ public class GameResources extends LibgdxResourceBuilder {
 		public static final String MessageFont = "MessageFont";
 
 	}
+	
+	public static class ParticleEmitters {
+
+		public static final String ThrustEmitter = "ThrustEmitter";
+
+	}
 
 	public static void load(ResourceManager<String> resourceManager) {
 		new GameResources(resourceManager);
@@ -126,6 +132,10 @@ public class GameResources extends LibgdxResourceBuilder {
 		
 		texture("FarmTexture", "data/images/farm.png", true);
 		sprite(Sprites.FarmSprite, "FarmTexture");
+		
+		particleEffect("BombThrustEffect", "data/particles/ThrustEffect", "data/particles");
+		particleEmitter(ParticleEmitters.ThrustEmitter, "BombThrustEffect", "Thrust", 0.025f);
+		
 	}
 	
 	public void pixmapHelper(String id, final String file) {
