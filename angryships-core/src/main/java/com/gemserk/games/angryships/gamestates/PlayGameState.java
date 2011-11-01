@@ -71,7 +71,6 @@ import com.gemserk.games.angryships.input.CustomImageButton;
 import com.gemserk.games.angryships.render.Layers;
 import com.gemserk.games.angryships.resources.GameResources;
 import com.gemserk.games.angryships.scripts.GameModeNormalScript;
-import com.gemserk.games.angryships.systems.Box2dRenderSystem;
 import com.gemserk.games.angryships.systems.PixmapCollidableSystem;
 import com.gemserk.games.angryships.systems.TimerTriggerSystem;
 import com.gemserk.games.angryships.systems.TimerUpdateSystem;
@@ -310,7 +309,7 @@ public class PlayGameState extends GameStateImpl {
 		worldWrapper.addRenderSystem(injector.getInstance(CameraUpdateSystem.class));
 		worldWrapper.addRenderSystem(injector.getInstance(SpriteUpdateSystem.class));
 		worldWrapper.addRenderSystem(injector.getInstance(RenderableSystem.class));
-		worldWrapper.addRenderSystem(new Box2dRenderSystem(worldCamera, physicsWorld));
+//		worldWrapper.addRenderSystem(new Box2dRenderSystem(worldCamera, physicsWorld));
 
 		worldWrapper.init();
 
