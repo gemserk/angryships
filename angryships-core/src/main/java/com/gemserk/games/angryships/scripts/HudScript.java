@@ -37,13 +37,13 @@ public class HudScript extends ScriptJavaImpl {
 		Control menuButtonsPanel = screen.findControl("MovementButtonsContainer");
 		Control fireButtonsPanel = screen.findControl("FireButtonsContainer");
 
-		Synchronizers.transition(Transitions.mutableTransition(menuButtonsPanel, GuiConverters.controlPositionConverter) //
+		Synchronizers.transition(Transitions.transition(menuButtonsPanel, GuiConverters.controlPositionConverter) //
 				.start(Gdx.graphics.getWidth() * 0f, -Gdx.graphics.getHeight() * 0.5f) //
 				.end(0.5f, Gdx.graphics.getWidth() * 0f, -Gdx.graphics.getHeight() * 0.5f) //
 				.functions(InterpolationFunctions.easeIn(), InterpolationFunctions.easeIn()) //
 				.build());
 
-		Synchronizers.transition(Transitions.mutableTransition(fireButtonsPanel, GuiConverters.controlPositionConverter) //
+		Synchronizers.transition(Transitions.transition(fireButtonsPanel, GuiConverters.controlPositionConverter) //
 				.start(Gdx.graphics.getWidth() * 0f, -Gdx.graphics.getHeight() * 0.5f) //
 				.end(0.5f, Gdx.graphics.getWidth() * 0f, Gdx.graphics.getHeight() * 0f) //
 				.functions(InterpolationFunctions.easeIn(), InterpolationFunctions.easeIn()) //
@@ -79,13 +79,13 @@ public class HudScript extends ScriptJavaImpl {
 		Control menuButtonsPanel = screen.findControl("MovementButtonsContainer");
 		Control fireButtonsPanel = screen.findControl("FireButtonsContainer");
 
-		Synchronizers.transition(Transitions.mutableTransition(menuButtonsPanel, GuiConverters.controlPositionConverter) //
+		Synchronizers.transition(Transitions.transition(menuButtonsPanel, GuiConverters.controlPositionConverter) //
 				.start(Gdx.graphics.getWidth() * 0f, Gdx.graphics.getHeight() * 0f) //
 				.end(0.5f, Gdx.graphics.getWidth() * 0f, -Gdx.graphics.getHeight() * 0.5f) //
 				.functions(InterpolationFunctions.easeIn(), InterpolationFunctions.easeIn()) //
 				.build());
 
-		Synchronizers.transition(Transitions.mutableTransition(fireButtonsPanel, GuiConverters.controlPositionConverter) //
+		Synchronizers.transition(Transitions.transition(fireButtonsPanel, GuiConverters.controlPositionConverter) //
 				.start(Gdx.graphics.getWidth() * 0f, Gdx.graphics.getHeight() * 0f) //
 				.end(0.5f, Gdx.graphics.getWidth() * 0f, -Gdx.graphics.getHeight() * 0.5f) //
 				.functions(InterpolationFunctions.easeIn(), InterpolationFunctions.easeIn()) //
@@ -111,13 +111,13 @@ public class HudScript extends ScriptJavaImpl {
 
 		if (bombs.size() == 0 && visible.value) {
 
-			Synchronizers.transition(Transitions.mutableTransition(menuButtonsPanel, GuiConverters.controlPositionConverter) //
+			Synchronizers.transition(Transitions.transition(menuButtonsPanel, GuiConverters.controlPositionConverter) //
 					.start(Gdx.graphics.getWidth() * 0f, Gdx.graphics.getHeight() * 0f) //
 					.end(0.5f, Gdx.graphics.getWidth() * 0f, -Gdx.graphics.getHeight() * 0.5f) //
 					.functions(InterpolationFunctions.easeIn(), InterpolationFunctions.easeIn()) //
 					.build());
 
-			Synchronizers.transition(Transitions.mutableTransition(fireButtonsPanel, GuiConverters.controlPositionConverter) //
+			Synchronizers.transition(Transitions.transition(fireButtonsPanel, GuiConverters.controlPositionConverter) //
 					.start(Gdx.graphics.getWidth() * 0f, -Gdx.graphics.getHeight() * 0.5f) //
 					.end(0.5f, Gdx.graphics.getWidth() * 0f, Gdx.graphics.getHeight() * 0f) //
 					.functions(InterpolationFunctions.easeIn(), InterpolationFunctions.easeIn()) //
@@ -126,13 +126,13 @@ public class HudScript extends ScriptJavaImpl {
 			visible.value = false;
 		} else if (bombs.size() > 0 && !visible.value) {
 
-			Synchronizers.transition(Transitions.mutableTransition(menuButtonsPanel, GuiConverters.controlPositionConverter) //
+			Synchronizers.transition(Transitions.transition(menuButtonsPanel, GuiConverters.controlPositionConverter) //
 					.start(Gdx.graphics.getWidth() * 0f, -Gdx.graphics.getHeight() * 0.5f) //
 					.end(0.5f, Gdx.graphics.getWidth() * 0f, Gdx.graphics.getHeight() * 0f) //
 					.functions(InterpolationFunctions.easeIn(), InterpolationFunctions.easeIn()) //
 					.build());
 
-			Synchronizers.transition(Transitions.mutableTransition(fireButtonsPanel, GuiConverters.controlPositionConverter) //
+			Synchronizers.transition(Transitions.transition(fireButtonsPanel, GuiConverters.controlPositionConverter) //
 					.start(Gdx.graphics.getWidth() * 0f, Gdx.graphics.getHeight() * 0f) //
 					.end(0.5f, Gdx.graphics.getWidth() * 0f, -Gdx.graphics.getHeight() * 0.5f) //
 					.functions(InterpolationFunctions.easeIn(), InterpolationFunctions.easeIn()) //

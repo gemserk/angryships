@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.gemserk.animation4j.gdx.converters.LibgdxConverters;
 import com.gemserk.animation4j.transitions.Transitions;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.adwhirl.AdWhirlViewHandler;
@@ -66,7 +67,7 @@ public class SplashGameState extends com.gemserk.commons.gdx.gamestates.LoadingG
 		SpriteUtils.centerOn(lwjglLogo, width * 0.85f, lwjglLogo.getHeight() * 0.5f);
 		SpriteUtils.centerOn(libgdxLogo, width * 0.15f, libgdxLogo.getHeight() * 0.5f);
 
-		Synchronizers.transition(blurColor, Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).end(new Color(1f, 0f, 0f, 1f)).time(1f));
+		Synchronizers.transition(Transitions.transition(blurColor, LibgdxConverters.color()).start(1f, 0f, 0f, 0f).endObject(1f, new Color(1f, 0f, 0f, 1f)).build());
 
 		TaskQueue taskQueue = super.getTaskQueue();
 

@@ -50,7 +50,7 @@
 
 	<properties>
 		<compiler.version>1.6</compiler.version>
-		<commons.gdx.version>0.0.6-SNAPSHOT</commons.gdx.version>
+		<commons.gdx.version>0.0.8-SNAPSHOT</commons.gdx.version>
 		<datastore.version>0.0.6-SNAPSHOT</datastore.version>
 		<gdx.version>0.9.3-SNAPSHOT</gdx.version>
 		<jgoogleanalytics.version>1.2.1-GEMSERK-RC1</jgoogleanalytics.version>

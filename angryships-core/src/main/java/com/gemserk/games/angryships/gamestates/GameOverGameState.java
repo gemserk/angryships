@@ -123,7 +123,7 @@ public class GameOverGameState extends GameStateImpl {
 
 		if (restartButton.getButtonMonitor().isReleased() || inputDevicesMonitor.getButton(Actions.Restart).isReleased()) {
 
-			Transition hideTransition = Transitions.mutableTransition(restartButton, GuiConverters.controlPositionConverter) //
+			Transition hideTransition = Transitions.transition(restartButton, GuiConverters.controlPositionConverter) //
 					.end(0.5f, Gdx.graphics.getWidth() * 0.5f, Gdx.graphics.getHeight() * -0.5f) //
 					.functions(InterpolationFunctions.easeOut(), InterpolationFunctions.easeOut()) //
 					.build();
@@ -163,7 +163,7 @@ public class GameOverGameState extends GameStateImpl {
 
 		Control restartButton = screen.findControl(GuiScreen.RestartButton);
 
-		synchronizer.transition(Transitions.mutableTransition(restartButton, GuiConverters.controlPositionConverter) //
+		synchronizer.transition(Transitions.transition(restartButton, GuiConverters.controlPositionConverter) //
 				.start(Gdx.graphics.getWidth() * 0.5f, -Gdx.graphics.getHeight() * 0.5f) //
 				.end(0.5f, Gdx.graphics.getWidth() * 0.5f, Gdx.graphics.getHeight() * 0.5f) //
 				.functions(InterpolationFunctions.easeIn(), InterpolationFunctions.easeIn()) //

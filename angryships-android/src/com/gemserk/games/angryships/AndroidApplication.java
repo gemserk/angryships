@@ -32,10 +32,10 @@ public class AndroidApplication extends com.badlogic.gdx.backends.android.Androi
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 
 		config.useGL20 = false;
-		config.useAccelerometer = true;
-		config.useCompass = true;
+		config.useAccelerometer = false;
+		config.useCompass = false;
 		config.useWakelock = true;
-
+		
 		Game game = new Game();
 
 		View gameView = initializeForView(game, config);

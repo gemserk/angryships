@@ -18,21 +18,21 @@ public class GameResources extends LibgdxResourceBuilder {
 		public static final String GemserkLogoBlur = "GemserkLogoBlur";
 		public static final String LwjglLogo = "LwjglLogo";
 		public static final String LibgdxLogo = "LibgdxLogo";
-		
+
 		public static final String WhiteRectangleSprite = "WhiteRectangleSprite";
-		
+
 		public static final String BackgroundSprite = "BackgroundSprite";
 		public static final String SecondBackgroundSprite = "SecondBackgroundSprite";
 
 		public static final String BombSprite = "BombSprite";
-		
+
 		public static final String TurnRightButtonSprite = "TurnRightButtonSprite";
 		public static final String TurnLeftButtonSprite = "TurnLeftButtonSprite";
 		public static final String FireButtonSprite = "FireButtonSprite";
-		
+
 		public static final String PauseButtonSprite = "PauseButtonSprite";
 		public static final String RestartButtonSprite = "RestartButtonSprite";
-		
+
 		public static final String FarmSprite = "FarmSprite";
 
 	}
@@ -40,7 +40,6 @@ public class GameResources extends LibgdxResourceBuilder {
 	public static class Animations {
 
 		public static final String BombExplosionAnimation = "BombExplosionAnimation";
-
 		public static final String ItemIdleAnimation = "ItemIdleAnimation";
 
 	}
@@ -50,13 +49,13 @@ public class GameResources extends LibgdxResourceBuilder {
 		public static final String BombExplosion = "BombExplosionSound";
 
 	}
-	
+
 	public static class Fonts {
 
 		public static final String MessageFont = "MessageFont";
 
 	}
-	
+
 	public static class ParticleEmitters {
 
 		public static final String ThrustEmitter = "ThrustEmitter";
@@ -79,7 +78,7 @@ public class GameResources extends LibgdxResourceBuilder {
 		sprite(Sprites.GemserkLogoBlur, "GemserkLogoTextureBlur");
 		sprite(Sprites.LwjglLogo, "LwjglLogoTexture", 0, 0, 512, 185);
 		sprite(Sprites.LibgdxLogo, "LibgdxLogoTexture", 0, 25, 512, 256 - 50);
-		
+
 		texture("WhiteRectangleTexture", "data/images/white-rectangle.png", true);
 		sprite(Sprites.WhiteRectangleSprite, "WhiteRectangleTexture");
 
@@ -90,11 +89,12 @@ public class GameResources extends LibgdxResourceBuilder {
 		sprite(Sprites.SecondBackgroundSprite, "SecondBackgroundTexture");
 
 		texture("BombExplosionSpriteSheet", "data/animations/bomb-explosion-animation.png", true);
+		// resource(Animations.BombExplosionAnimation, animation2("BombExplosionSpriteSheet"));
 		animation(Animations.BombExplosionAnimation, "BombExplosionSpriteSheet", 0, 0, 128, 128, 15, false, 35);
-		
+
 		texture("ItemIdleSpriteSheet", "data/animations/item-idle-animation.png", true);
 		animation(Animations.ItemIdleAnimation, "ItemIdleSpriteSheet", 0, 0, 128, 128, 9, true, 200, 125);
-		
+
 		texture("BombTexture", "data/images/bomb.png", true);
 		sprite(Sprites.BombSprite, "BombTexture");
 
@@ -106,18 +106,18 @@ public class GameResources extends LibgdxResourceBuilder {
 
 		texture("ButtonTurnRightTexture", "data/gui/button-turn-right.png", true);
 		sprite(Sprites.TurnRightButtonSprite, "ButtonTurnRightTexture");
-		
+
 		texture("ButtonRestartTexture", "data/gui/button-restart.png", true);
 		sprite(Sprites.RestartButtonSprite, "ButtonRestartTexture");
-		
+
 		texture("ButtonPauseTexture", "data/gui/button-pause.png", true);
 		sprite(Sprites.PauseButtonSprite, "ButtonPauseTexture");
-		
+
 		sound(Sounds.BombExplosion, "data/audio/bomb-explosion.ogg");
 
 		texture("LevelGroundTexture", "data/levels/ground.png", true);
 		sprite("LevelGroundSprite", "LevelGroundTexture");
-		
+
 		texture("Level01_0Texture", "data/levels/level01-0.png", true);
 		sprite("Level01_0Sprite", "Level01_0Texture");
 
@@ -127,17 +127,17 @@ public class GameResources extends LibgdxResourceBuilder {
 		pixmapHelper("Level01_0", "data/levels/level01-0.png");
 		pixmapHelper("Level01_1", "data/levels/level01-1.png");
 		pixmapHelper("Level01-ground", "data/levels/ground.png");
-		
+
 		font(Fonts.MessageFont, "data/fonts/purisa-18.png", "data/fonts/purisa-18.fnt", false);
-		
+
 		texture("FarmTexture", "data/images/farm.png", true);
 		sprite(Sprites.FarmSprite, "FarmTexture");
-		
+
 		particleEffect("BombThrustEffect", "data/particles/ThrustEffect", "data/particles");
 		particleEmitter(ParticleEmitters.ThrustEmitter, "BombThrustEffect", "Thrust", 0.025f);
-		
+
 	}
-	
+
 	public void pixmapHelper(String id, final String file) {
 		resourceManager.addVolatile(id, new DataLoader<PixmapHelper>() {
 			@Override
@@ -146,5 +146,5 @@ public class GameResources extends LibgdxResourceBuilder {
 			}
 		});
 	}
-	
+
 }

@@ -188,27 +188,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jmock</groupId>
-			<artifactId>jmock</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jmock</groupId>
-			<artifactId>jmock-legacy</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jmock</groupId>
-			<artifactId>jmock-junit4</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>com.google.ads.admob</groupId>
 			<artifactId>admob</artifactId>
 			<version>${admob.version}</version>
@@ -228,6 +207,16 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>angryships-core</artifactId>
 			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-classic</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.gemserk.commons.gdx</groupId>
@@ -238,12 +227,29 @@
 			<groupId>com.badlogic.gdx</groupId>
 			<artifactId>gdx-backend-android</artifactId>
 			<version>${gdx.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>gdx-platform</artifactId>
+					<groupId>com.badlogic.gdx</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>com.badlogic.gdx</groupId>
+			<artifactId>gdx-platform</artifactId>
+			<version>${gdx.version}</version>
+			<classifier>natives-armeabi</classifier>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.gemserk.datastore</groupId>
-			<artifactId>datastore-android</artifactId>
-			<version>${datastore.version}</version>
+			<groupId>com.badlogic.gdx</groupId>
+			<artifactId>gdx-platform</artifactId>
+			<version>${gdx.version}</version>
+			<classifier>natives-armeabi-v7a</classifier>
+			<scope>provided</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>com.gemserk.analytics.googleanalytics</groupId>
 			<artifactId>jgoogleanalyticstracker-android</artifactId>

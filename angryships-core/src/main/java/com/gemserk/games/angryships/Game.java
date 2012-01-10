@@ -1,14 +1,16 @@
 package com.gemserk.games.angryships;
 
 import java.io.IOException;
-import java.util.Properties;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.FloatArray;
 import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.gdx.converters.LibgdxConverters;
 import com.gemserk.commons.adwhirl.AdWhirlViewHandler;
@@ -21,14 +23,16 @@ import com.gemserk.commons.gdx.GlobalTime;
 import com.gemserk.commons.gdx.Screen;
 import com.gemserk.commons.gdx.ScreenImpl;
 import com.gemserk.commons.gdx.audio.SoundPlayer;
+import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
+import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
 import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 import com.gemserk.commons.gdx.screens.transitions.TransitionBuilder;
+import com.gemserk.commons.performance.DeltaTimeLogger;
+import com.gemserk.commons.performance.TimeLogger;
 import com.gemserk.commons.reflection.Injector;
 import com.gemserk.commons.reflection.InjectorImpl;
 import com.gemserk.componentsengine.input.InputDevicesMonitorImpl;
 import com.gemserk.componentsengine.input.LibgdxInputMappingBuilder;
-import com.gemserk.componentsengine.utils.Parameters;
-import com.gemserk.componentsengine.utils.ParametersWrapper;
 import com.gemserk.games.angryships.gamestates.GameOverGameState;
 import com.gemserk.games.angryships.gamestates.PlayGameState;
 import com.gemserk.games.angryships.gamestates.SplashGameState;
@@ -64,20 +68,15 @@ public class Game extends com.gemserk.commons.gdx.Game {
 
 	private EventManager eventManager;
 
-	/**
-	 * Used to store global information about the game and to send data between GameStates and Screens.
-	 */
-	private Parameters gameData;
 	private AdWhirlViewHandler adWhirlViewHandler;
 	DensityUtils densityUtils;
 	
 	public Screen splashScreen;
 	public Screen playScreen;
 	public Screen gameOverScreen;
-	
-	public Parameters getGameData() {
-		return gameData;
-	}
+	private ShapeRenderer shapeRenderer;
+	private TimeLogger deltaTimeLogger;
+	private Libgdx2dCamera loggerCamera;
 
 	/**
 	 * Used to communicate between gamestates.
@@ -99,19 +98,6 @@ public class Game extends com.gemserk.commons.gdx.Game {
 
 		Converters.register(Vector2.class, LibgdxConverters.vector2());
 		Converters.register(Color.class, LibgdxConverters.color());
-
-		gameData = new ParametersWrapper();
-
-		try {
-			Properties properties = new Properties();
-			properties.load(Gdx.files.classpath("version.properties").read());
-			getGameData().put("version", properties.getProperty("version"));
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-
-		// ExecutorService executorService = Executors.newCachedThreadPool();
-		// Preferences preferences = Gdx.app.getPreferences("gemserk-" + GameInformation.applicationId);
 
 		Injector injector = new InjectorImpl();
 
@@ -154,6 +140,12 @@ public class Game extends com.gemserk.commons.gdx.Game {
 		};
 
 		Gdx.graphics.getGL10().glClearColor(0f, 0f, 0f, 1f);
+		
+		shapeRenderer = new ShapeRenderer();
+		deltaTimeLogger = new DeltaTimeLogger();
+		deltaTimeLogger.enable();
+		
+		loggerCamera = new Libgdx2dCameraTransformImpl();
 	}
 
 	@Override
@@ -190,6 +182,12 @@ public class Game extends com.gemserk.commons.gdx.Game {
 			setShowBox2dDebug(!isShowBox2dDebug());
 
 		eventManager.process();
+		
+		deltaTimeLogger.update();
+		
+		shapeRenderer.setProjectionMatrix(loggerCamera.getCombinedMatrix());
+		
+		renderTimeLoggerGraph(shapeRenderer, Color.RED, deltaTimeLogger, 1f / 60f, 10f * 1000f, Gdx.graphics.getHeight() * 0.5f);
 	}
 
 	public TransitionBuilder transition(Screen screen) {
@@ -207,6 +205,29 @@ public class Game extends com.gemserk.commons.gdx.Game {
 		super.dispose();
 		resourceManager.unloadAll();
 		spriteBatch.dispose();
+		shapeRenderer.dispose();
+	}
+	
+	private void renderTimeLoggerGraph(ShapeRenderer shapeRenderer, Color color, TimeLogger timeLogger, float midPoint, float scale, float y) {
+		FloatArray deltas = timeLogger.getDeltas();
+		int width = Gdx.graphics.getWidth();
+		int MAX_STEPS = 180;
+		int steps = Math.min(MAX_STEPS, deltas.size);
+		float lastY = 0;
+		float stepX = ((float) width) / MAX_STEPS;
+		shapeRenderer.setColor(color);
+		shapeRenderer.begin(ShapeType.Line);
+		int index = 0;
+		
+		for (int i = deltas.size - steps; i < deltas.size; i++) {
+			float nextY = y - (midPoint - deltas.get(i)) * scale;
+			float x1 = stepX * (index - 1);
+			float x2 = stepX * index;
+			shapeRenderer.line(x1, lastY, x2, nextY);
+			lastY = nextY;
+			index++;
+		}
+		shapeRenderer.end();
 	}
 
 }

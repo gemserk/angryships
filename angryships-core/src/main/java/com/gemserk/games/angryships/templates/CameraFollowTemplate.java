@@ -31,7 +31,7 @@ public class CameraFollowTemplate extends EntityTemplateImpl {
 		public void init(World world, Entity e) {
 			libgdxPointer = new LibgdxPointer(0);
 		}
-
+		
 		@Override
 		public void update(World world, Entity e) {
 
@@ -72,7 +72,7 @@ public class CameraFollowTemplate extends EntityTemplateImpl {
 		Libgdx2dCamera libgdx2dCamera = parameters.get("libgdx2dCamera");
 		Camera camera = parameters.get("camera");
 		Float distance = parameters.get("distance");
-
+		
 		entity.addComponent(new CameraComponent(libgdx2dCamera, camera));
 		entity.addComponent(new CameraDistanceComponent(distance));
 		entity.addComponent(new SpatialComponent(new SpatialImpl(0, 0)));
@@ -80,6 +80,7 @@ public class CameraFollowTemplate extends EntityTemplateImpl {
 				new DragCameraControllerScript(), //
 				injector.getInstance(CameraScript.class) //
 		));
+		
 	}
 
 }

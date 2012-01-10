@@ -196,7 +196,7 @@ public class PixmapHelper implements Disposable {
 			}
 
 			renderPixmap.drawPixmap(pixmap, 0, 0, x, y, dstWidth, dstHeight);
-
+			
 			Gdx.gl.glTexSubImage2D(GL10.GL_TEXTURE_2D, 0, x, y, dstWidth, dstHeight, //
 					renderPixmap.getGLFormat(), renderPixmap.getGLType(), renderPixmap.getPixels());
 
