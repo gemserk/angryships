@@ -29,6 +29,7 @@ import com.gemserk.games.angryships.entities.Collisions;
 import com.gemserk.games.angryships.entities.Groups;
 import com.gemserk.games.angryships.resources.GameResources;
 import com.gemserk.games.angryships.scripts.ExplodeWhenCollisionScript;
+import com.gemserk.games.angryships.scripts.RemoveWhenExplodedScript;
 import com.gemserk.prototypes.pixmap.PixmapHelper;
 import com.gemserk.resources.ResourceManager;
 
@@ -47,7 +48,7 @@ public class KamikazeBombTemplate extends EntityTemplateImpl {
 			Spatial spatial = spatialComponent.getSpatial();
 
 			Array<PixmapHelper> pixmaps = pixmapWorld.getPixmaps();
-			
+
 			for (int i = 0; i < pixmaps.size; i++) {
 				PixmapHelper pixmapHelper = pixmaps.get(i);
 				// PixmapHelper pixmapHelper = pixmapCollision.getContact(i);
@@ -88,7 +89,7 @@ public class KamikazeBombTemplate extends EntityTemplateImpl {
 		entity.addComponent(new AntiGravityComponent());
 
 		entity.addComponent(new MovementComponent(15f, 0f, 0f));
-		
+
 		entity.addComponent(new RenderableComponent(0));
 		entity.addComponent(new SpriteComponent(sprite, 0.5f, 0.5f, Color.WHITE));
 
@@ -99,8 +100,9 @@ public class KamikazeBombTemplate extends EntityTemplateImpl {
 		entity.addComponent(new PixmapCollidableComponent());
 
 		entity.addComponent(new ScriptComponent( //
-				 injector.getInstance(ErasePixmapWhenCollisionScript.class), //
-				injector.getInstance(ExplodeWhenCollisionScript.class) //
+				injector.getInstance(ErasePixmapWhenCollisionScript.class), //
+				injector.getInstance(ExplodeWhenCollisionScript.class), //
+				injector.getInstance(RemoveWhenExplodedScript.class) //
 		));
 	}
 

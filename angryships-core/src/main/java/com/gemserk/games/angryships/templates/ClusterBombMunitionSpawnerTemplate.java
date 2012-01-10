@@ -4,7 +4,7 @@ import com.artemis.Entity;
 import com.gemserk.commons.artemis.components.ScriptComponent;
 import com.gemserk.commons.artemis.templates.EntityTemplateImpl;
 import com.gemserk.commons.reflection.Injector;
-import com.gemserk.games.angryships.scripts.ClusterBombMunitionScript;
+import com.gemserk.games.angryships.scripts.ClusterBombMunitionSpawnerScript;
 
 public class ClusterBombMunitionSpawnerTemplate extends EntityTemplateImpl {
 
@@ -12,11 +12,7 @@ public class ClusterBombMunitionSpawnerTemplate extends EntityTemplateImpl {
 
 	@Override
 	public void apply(Entity entity) {
-
-		entity.addComponent(new ScriptComponent( //
-				injector.getInstance(ClusterBombMunitionScript.class) //
-		));
-
+		entity.addComponent(new ScriptComponent(injector.getInstance(ClusterBombMunitionSpawnerScript.class)));
 	}
 
 }

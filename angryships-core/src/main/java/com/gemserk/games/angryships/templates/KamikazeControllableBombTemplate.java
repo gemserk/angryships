@@ -38,6 +38,7 @@ import com.gemserk.games.angryships.scripts.AutoExplodeScript;
 import com.gemserk.games.angryships.scripts.ExplodeWhenCollisionScript;
 import com.gemserk.games.angryships.scripts.MovementScript;
 import com.gemserk.games.angryships.scripts.PixmapCollidableScript;
+import com.gemserk.games.angryships.scripts.RemoveWhenExplodedScript;
 import com.gemserk.resources.ResourceManager;
 
 public class KamikazeControllableBombTemplate extends EntityTemplateImpl {
@@ -60,7 +61,7 @@ public class KamikazeControllableBombTemplate extends EntityTemplateImpl {
 
 			SpatialComponent spatialComponent = Components.getSpatialComponent(e);
 			Spatial spatial = spatialComponent.getSpatial();
-			
+
 			MovementComponent movementComponent = Components.getMovementComponent(e);
 			Movement movement = movementComponent.getMovement();
 
@@ -69,9 +70,9 @@ public class KamikazeControllableBombTemplate extends EntityTemplateImpl {
 			Entity kamikazeBomb = entityFactory.instantiate(kamikazeBombTemplate, parameters //
 					.put("spatial", spatial) //
 					);
-			
+
 			MovementComponent kamikazeMovementComponent = Components.getMovementComponent(kamikazeBomb);
-			
+
 			kamikazeMovementComponent.getMovement().getLinearVelocity().rotate(movement.getLinearVelocity().angle());
 
 			e.delete();
@@ -79,8 +80,8 @@ public class KamikazeControllableBombTemplate extends EntityTemplateImpl {
 
 	}
 
-	private static final Vector2 velocity= new Vector2();
-	
+	private static final Vector2 velocity = new Vector2();
+
 	ResourceManager<String> resourceManager;
 	Injector injector;
 	BodyBuilder bodyBuilder;
@@ -119,7 +120,7 @@ public class KamikazeControllableBombTemplate extends EntityTemplateImpl {
 
 		velocity.set(4f, 0f);
 		velocity.rotate(spatial.getAngle());
-		
+
 		entity.addComponent(new MovementComponent(velocity.x, velocity.y, 0f));
 
 		entity.addComponent(new ControllerComponent(controller, 180f));
@@ -131,9 +132,10 @@ public class KamikazeControllableBombTemplate extends EntityTemplateImpl {
 				injector.getInstance(AutoExplodeScript.class), //
 				injector.getInstance(PixmapCollidableScript.class), //
 				injector.getInstance(SpawnKamikazeBombScript.class), //
-				injector.getInstance(ExplodeWhenCollisionScript.class) //
+				injector.getInstance(ExplodeWhenCollisionScript.class), //
+				injector.getInstance(RemoveWhenExplodedScript.class) //
 		));
-		
+
 		entity.addComponent(new ContainerComponent());
 	}
 

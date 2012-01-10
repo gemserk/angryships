@@ -20,10 +20,11 @@ import com.gemserk.componentsengine.utils.Parameters;
 import com.gemserk.componentsengine.utils.ParametersWrapper;
 import com.gemserk.games.angryships.components.ClusterBombComponent;
 import com.gemserk.games.angryships.components.Components;
+import com.gemserk.games.angryships.components.ExplosionComponent;
 import com.gemserk.games.angryships.entities.Events;
 import com.gemserk.games.angryships.templates.ClusterBombMunitionTemplate;
 
-public class ClusterBombMunitionScript extends ScriptJavaImpl {
+public class ClusterBombMunitionSpawnerScript extends ScriptJavaImpl {
 
 	EventManager eventManager;
 	EntityFactory entityFactory;
@@ -44,9 +45,22 @@ public class ClusterBombMunitionScript extends ScriptJavaImpl {
 		clusterBombStore.preCreate(10);
 	}
 
+	@Override
+	public void update(World world, Entity e) {
+		for (int i = 0; i < clusterBombStore.size(); i++) {
+			Entity entity = clusterBombStore.get(i);
+			ExplosionComponent explosionComponent = Components.getExplosionComponent(entity);
+			if (!entity.isActive())
+				System.out.println("entity not active!!");
+			else {
+				if (explosionComponent.exploded)
+					clusterBombStore.free(entity);
+			}
+		}
+	}
+
 	@Handles(ids = Events.explosion)
 	public void explosion(Event event) {
-
 		Entity e = (Entity) event.getSource();
 
 		ClusterBombComponent clusterBombComponent = Components.getClusterBombComponent(e);
@@ -60,19 +74,24 @@ public class ClusterBombMunitionScript extends ScriptJavaImpl {
 
 		for (int i = 0; i < clusterBombComponent.count; i++) {
 			Entity clusterBombMunition = clusterBombStore.get();
-			
+
+			ExplosionComponent explosionComponent = Components.getExplosionComponent(clusterBombMunition);
+			explosionComponent.exploded = false;
+
 			// Entity clusterBombMunition = entityFactory.instantiate(clusterBombMunitionTemplate, parameters //
 			// .put("spatial", new SpatialImpl(spatial.getX(), spatial.getY(), 0.4f, 0.4f, MathUtils.random(0f, 360f))) //
 			// );
 			Spatial clusterBombMunitionSpatial = Components.getSpatialComponent(clusterBombMunition).getSpatial();
-			
+
 			clusterBombMunitionSpatial.setPosition(spatial.getX(), spatial.getY());
 			clusterBombMunitionSpatial.setSize(0.4f, 0.4f);
 			clusterBombMunitionSpatial.setAngle(MathUtils.random(0f, 360f));
-			
+
 			PhysicsComponent physicsComponent = Components.getPhysicsComponent(clusterBombMunition);
 			Body body = physicsComponent.getBody();
 			body.applyLinearImpulse(MathUtils.random(-3f, 3f), 0f, body.getPosition().x, body.getPosition().y);
+
+			// Box2dUtils.setFilter(body, Collisions.Bomb, (short) (Collisions.Target | Collisions.AreaTrigger), (short) 0);
 		}
 
 	}

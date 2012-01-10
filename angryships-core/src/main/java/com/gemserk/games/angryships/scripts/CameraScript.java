@@ -26,6 +26,9 @@ public class CameraScript extends ScriptJavaImpl {
 
 		for (int i = 0; i < bombEntities.size(); i++) {
 			Entity bomb = bombEntities.get(i);
+			
+			if (!bomb.isEnabled())
+				continue;
 
 			SpatialComponent spatialComponent = Components.getSpatialComponent(bomb);
 			Spatial spatial = spatialComponent.getSpatial();

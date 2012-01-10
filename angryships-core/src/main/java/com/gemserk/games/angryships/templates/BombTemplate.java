@@ -31,6 +31,7 @@ import com.gemserk.games.angryships.scripts.AutoExplodeScript;
 import com.gemserk.games.angryships.scripts.ExplodeWhenCollisionScript;
 import com.gemserk.games.angryships.scripts.MovementScript;
 import com.gemserk.games.angryships.scripts.PixmapCollidableScript;
+import com.gemserk.games.angryships.scripts.RemoveWhenExplodedScript;
 import com.gemserk.resources.ResourceManager;
 
 public class BombTemplate extends EntityTemplateImpl {
@@ -86,12 +87,13 @@ public class BombTemplate extends EntityTemplateImpl {
 				injector.getInstance(MovementScript.class), //
 				injector.getInstance(PixmapCollidableScript.class), //
 				injector.getInstance(AutoExplodeScript.class), //
-				injector.getInstance(ExplodeWhenCollisionScript.class) //
+				injector.getInstance(ExplodeWhenCollisionScript.class), //
+				injector.getInstance(RemoveWhenExplodedScript.class) //
 		));
-		
+
 		entity.addComponent(new ContainerComponent());
 
-		 entity.addComponent(new ClusterBombComponent(6));
+		entity.addComponent(new ClusterBombComponent(5));
 	}
 
 }

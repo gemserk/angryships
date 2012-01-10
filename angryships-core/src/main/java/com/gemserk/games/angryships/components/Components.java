@@ -41,4 +41,11 @@ public class Components extends com.gemserk.commons.artemis.components.Component
 		return clusterBombComponentClass.cast(e.getComponent(clusterBombComponentType));
 	}
 
+	public static final Class<GroupComponent> groupComponentClass = GroupComponent.class;
+	public static final ComponentType groupComponentType = ComponentTypeManager.getTypeFor(groupComponentClass);
+	
+	public static GroupComponent getGroupComponent(Entity e) {
+		return groupComponentClass.cast(e.getComponent(groupComponentType));
+	}
+
 }

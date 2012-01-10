@@ -5,6 +5,7 @@ import com.artemis.World;
 import com.gemserk.commons.artemis.events.EventManager;
 import com.gemserk.commons.artemis.scripts.ScriptJavaImpl;
 import com.gemserk.games.angryships.components.Components;
+import com.gemserk.games.angryships.components.ExplosionComponent;
 import com.gemserk.games.angryships.components.PixmapCollidableComponent;
 import com.gemserk.games.angryships.components.PixmapCollision;
 import com.gemserk.games.angryships.entities.Events;
@@ -21,7 +22,10 @@ public class PixmapCollidableScript extends ScriptJavaImpl {
 		if (!pixmapCollision.isInContact())
 			return;
 
-		e.delete();
+		ExplosionComponent explosionComponent = Components.getExplosionComponent(e);
+		explosionComponent.exploded = true;
+		
+		// e.delete();
 
 		eventManager.registerEvent(Events.explosion, e);
 	}

@@ -16,6 +16,7 @@ import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.commons.gdx.games.SpatialPhysicsImpl;
 import com.gemserk.commons.reflection.Injector;
 import com.gemserk.games.angryships.components.ExplosionComponent;
+import com.gemserk.games.angryships.components.GroupComponent;
 import com.gemserk.games.angryships.components.PixmapCollidableComponent;
 import com.gemserk.games.angryships.entities.Collisions;
 import com.gemserk.games.angryships.entities.Groups;
@@ -30,41 +31,20 @@ public class ClusterBombMunitionTemplate extends EntityTemplateImpl {
 	Injector injector;
 	BodyBuilder bodyBuilder;
 
-	// private EntityStore cachedBombsStore;
-	//
-	// class MoveToStoreScript extends ScriptJavaImpl {
-	//
-	// private Entity e;
-	//
-	// @Override
-	// public void init(World world, Entity e) {
-	// this.e = e;
-	// super.init(world, e);
-	// }
-	//
-	// @Handles(ids=Events.explosion)
-	// public void moveToStore(Event event) {
-	// Object source = event.getSource();
-	// if (source != e)
-	// return;
-	// cachedBombsStore.free(e);
-	// }
-	//
-	// }
-
 	@Override
 	public void apply(Entity entity) {
-
 		Spatial spatial = parameters.get("spatial");
 
 		Sprite sprite = resourceManager.getResourceValue(GameResources.Sprites.BombSprite);
 
-		entity.setGroup(Groups.Bombs);
+		// entity.setGroup(Groups.Bombs);
+		entity.addComponent(new GroupComponent(Groups.Bombs));
 
 		Body body = bodyBuilder //
 				.fixture(bodyBuilder.fixtureDefBuilder() //
 						.circleShape(0.25f) //
 						.categoryBits(Collisions.Bomb) //
+						// .maskBits(Collisions.None) //
 						.maskBits((short) (Collisions.Target | Collisions.AreaTrigger)) //
 						.sensor() //
 				) //
@@ -73,6 +53,8 @@ public class ClusterBombMunitionTemplate extends EntityTemplateImpl {
 				.userData(entity) //
 				.type(BodyType.DynamicBody) //
 				.build();
+
+		body.setActive(false);
 
 		entity.addComponent(new PhysicsComponent(body));
 

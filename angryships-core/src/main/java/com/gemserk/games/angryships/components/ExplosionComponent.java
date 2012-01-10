@@ -7,6 +7,7 @@ public class ExplosionComponent extends Component {
 
 	public float radius;
 	public EntityTemplate explosionAnimationTemplate;
+	public boolean exploded = false;
 
 	public ExplosionComponent(EntityTemplate explosionAnimationTemplate, float radius) {
 		this.explosionAnimationTemplate = explosionAnimationTemplate;

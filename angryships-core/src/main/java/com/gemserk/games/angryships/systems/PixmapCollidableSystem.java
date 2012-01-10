@@ -29,7 +29,14 @@ public class PixmapCollidableSystem extends EntityProcessingSystem implements Di
 	public PixmapCollidableSystem() {
 		super(PixmapCollidableComponent.class);
 	}
-
+	
+	@Override
+	protected void disabled(Entity e) {
+		PixmapCollidableComponent pixmapCollidableComponent = Components.getPixmapCollidableComponent(e);
+		PixmapCollision pixmapCollision = pixmapCollidableComponent.pixmapCollision;
+		pixmapCollision.clearContacts();
+	}
+	
 	@Override
 	protected void process(Entity e) {
 

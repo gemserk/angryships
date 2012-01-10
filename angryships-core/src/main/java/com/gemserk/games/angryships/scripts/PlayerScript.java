@@ -88,9 +88,9 @@ public class PlayerScript extends ScriptJavaImpl {
 					.put("spatial", new SpatialImpl(0f + i, 5f, 0.75f, 0.75f, 45)) //
 					.put("controller", controller) //
 					);
-//			entityFactory.instantiate(thrustTemplate, new ParametersWrapper() //
-//					.put("owner", missile) //
-//					);
+			entityFactory.instantiate(thrustTemplate, new ParametersWrapper() //
+					.put("owner", missile) //
+					);
 		}
 
 		playerData.bombsLeft--;

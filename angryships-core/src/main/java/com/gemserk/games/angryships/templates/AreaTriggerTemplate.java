@@ -5,7 +5,6 @@ import com.artemis.World;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.PhysicsComponent;
 import com.gemserk.commons.artemis.components.ScriptComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
@@ -17,6 +16,8 @@ import com.gemserk.commons.gdx.box2d.Contacts.Contact;
 import com.gemserk.commons.gdx.games.Physics;
 import com.gemserk.commons.gdx.games.SpatialPhysicsImpl;
 import com.gemserk.commons.reflection.Injector;
+import com.gemserk.games.angryships.components.Components;
+import com.gemserk.games.angryships.components.ExplosionComponent;
 import com.gemserk.games.angryships.entities.Collisions;
 
 public class AreaTriggerTemplate extends EntityTemplateImpl {
@@ -37,7 +38,12 @@ public class AreaTriggerTemplate extends EntityTemplateImpl {
 				Entity otherEntity = (Entity) contact.getOtherFixture().getBody().getUserData();
 				if (otherEntity == null)
 					continue;
-				otherEntity.delete();
+				
+				ExplosionComponent explosionComponent = Components.getExplosionComponent(otherEntity);
+				
+				if (explosionComponent != null)
+					explosionComponent.exploded = true;
+				
 			}
 		}
 

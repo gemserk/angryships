@@ -22,6 +22,7 @@ import com.gemserk.games.angryships.entities.Collisions;
 import com.gemserk.games.angryships.entities.Groups;
 import com.gemserk.games.angryships.resources.GameResources;
 import com.gemserk.games.angryships.scripts.ExplodeWhenCollisionScript;
+import com.gemserk.games.angryships.scripts.RemoveWhenExplodedScript;
 import com.gemserk.games.angryships.scripts.UpdateAnimationScript;
 import com.gemserk.resources.ResourceManager;
 
@@ -65,7 +66,8 @@ public class TargetTemplate extends EntityTemplateImpl {
 
 		entity.addComponent(new ScriptComponent( //
 				injector.getInstance(UpdateAnimationScript.class), //
-				injector.getInstance(ExplodeWhenCollisionScript.class) //
+				injector.getInstance(ExplodeWhenCollisionScript.class), //
+				injector.getInstance(RemoveWhenExplodedScript.class) //
 		));
 	}
 
