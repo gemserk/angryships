@@ -28,7 +28,7 @@ import com.gemserk.resources.ResourceManager;
 public class ExplosionSpawnerTemplate extends EntityTemplateImpl {
 
 	public static class SpawnExplosionScript extends ScriptJavaImpl {
-		
+
 		private final Vector2 position = new Vector2();
 		private final Parameters parameters = new ParametersWrapper();
 
@@ -36,16 +36,29 @@ public class ExplosionSpawnerTemplate extends EntityTemplateImpl {
 		Injector injector;
 		PixmapWorld pixmapWorld;
 
+//		EntityStore explosionAnimationStore = new EntityStore(new StoreFactory<Entity>() {
+//			@Override
+//			public Entity createObject() {
+//				return entityFactory.instantiate(injector.getInstance(ExplosionAnimationTemplate.class), parameters //
+//						.put("spatial", new SpatialImpl(0f, 0f)) //
+//						.put("radius", 0f) //
+//						);
+//			}
+//		});
+
+//		public void init(com.artemis.World world, Entity e) {
+//			explosionAnimationStore.preCreate(10);
+//		}
 
 		@Handles(ids = Events.explosion)
 		public void explosion(Event event) {
 			Entity e = (Entity) event.getSource();
-			
+
 			SpatialComponent spatialComponent = Components.getSpatialComponent(e);
 			Spatial spatial = spatialComponent.getSpatial();
-			
+
 			ExplosionComponent explosionComponent = Components.getExplosionComponent(e);
-			
+
 			Array<PixmapHelper> pixmaps = pixmapWorld.getPixmaps();
 
 			for (int i = 0; i < pixmaps.size; i++) {
@@ -60,14 +73,25 @@ public class ExplosionSpawnerTemplate extends EntityTemplateImpl {
 				pixmapHelper.eraseCircle(position.x, position.y, explosionComponent.radius);
 			}
 
-			entityFactory.instantiate(explosionComponent.explosionAnimationTemplate, parameters //
-					.put("spatial", new SpatialImpl(spatial)) //
-					.put("radius", explosionComponent.radius) //
-					);
-			
+			// {
+			// Entity explosionAnimation = explosionAnimationStore.get();
+			// Spatial explosionAnimationSpatial = Components.getSpatialComponent(explosionAnimation).getSpatial();
+			// explosionAnimationSpatial.set(spatial);
+			//
+			// int newRadius = Math.round(explosionComponent.radius * 4f);
+			//
+			// explosionAnimationSpatial.setSize(newRadius, newRadius);
+			// explosionAnimationSpatial.setAngle(MathUtils.random(0f, 360f));
+			// }
+
+			// entityFactory.instantiate(explosionComponent.explosionAnimationTemplate, parameters //
+			// .put("spatial", new SpatialImpl(spatial)) //
+			// .put("radius", explosionComponent.radius) //
+			// );
+
 			SpatialImpl explosionSensorSpatial = new SpatialImpl(spatial);
 			explosionSensorSpatial.setSize(explosionComponent.radius, explosionComponent.radius);
-			
+
 			entityFactory.instantiate(injector.getInstance(ExplosionSensorTemplate.class), parameters //
 					.put("spatial", explosionSensorSpatial) //
 					);
@@ -81,9 +105,7 @@ public class ExplosionSpawnerTemplate extends EntityTemplateImpl {
 	@Override
 	public void apply(Entity entity) {
 		Sound sound = resourceManager.getResourceValue(GameResources.Sounds.BombExplosion);
-
 		entity.addComponent(new SoundSpawnerComponent(Events.explosion, sound));
-
 		entity.addComponent(new ScriptComponent(injector.getInstance(SpawnExplosionScript.class)));
 	}
 

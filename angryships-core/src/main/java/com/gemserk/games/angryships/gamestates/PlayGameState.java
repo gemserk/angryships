@@ -70,6 +70,7 @@ import com.gemserk.games.angryships.entities.Tags;
 import com.gemserk.games.angryships.input.CustomImageButton;
 import com.gemserk.games.angryships.render.Layers;
 import com.gemserk.games.angryships.resources.GameResources;
+import com.gemserk.games.angryships.scripts.ExplosionAnimationSpawnerScript;
 import com.gemserk.games.angryships.scripts.GameModeNormalScript;
 import com.gemserk.games.angryships.systems.ArtemisGroupSystem;
 import com.gemserk.games.angryships.systems.PixmapCollidableSystem;
@@ -422,6 +423,13 @@ public class PlayGameState extends GameStateImpl {
 				.put("layer", -361) //
 				);
 
+		entityFactory.instantiate(new EntityTemplateImpl() {
+			@Override
+			public void apply(Entity entity) {
+				entity.addComponent(new ScriptComponent(injector.getInstance(ExplosionAnimationSpawnerScript.class)));
+			}
+		});
+		
 		entityFactory.instantiate(explosionSpawnerTemplate);
 
 		if (Gdx.app.getType() == ApplicationType.Desktop || Gdx.app.getType() == ApplicationType.Applet) {

@@ -50,12 +50,8 @@ public class ClusterBombMunitionSpawnerScript extends ScriptJavaImpl {
 		for (int i = 0; i < clusterBombStore.size(); i++) {
 			Entity entity = clusterBombStore.get(i);
 			ExplosionComponent explosionComponent = Components.getExplosionComponent(entity);
-			if (!entity.isActive())
-				System.out.println("entity not active!!");
-			else {
-				if (explosionComponent.exploded)
-					clusterBombStore.free(entity);
-			}
+			if (explosionComponent.exploded)
+				clusterBombStore.free(entity);
 		}
 	}
 
