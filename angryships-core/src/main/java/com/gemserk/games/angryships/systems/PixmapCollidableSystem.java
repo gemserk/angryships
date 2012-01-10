@@ -6,11 +6,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
-import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.commons.gdx.graphics.ColorUtils;
-import com.gemserk.games.angryships.components.GameComponents;
+import com.gemserk.games.angryships.components.Components;
 import com.gemserk.games.angryships.components.PixmapCollidableComponent;
 import com.gemserk.games.angryships.components.PixmapCollision;
 import com.gemserk.games.angryships.components.PixmapWorld;
@@ -37,7 +36,7 @@ public class PixmapCollidableSystem extends EntityProcessingSystem implements Di
 		SpatialComponent spatialComponent = Components.getSpatialComponent(e);
 		Spatial spatial = spatialComponent.getSpatial();
 
-		PixmapCollidableComponent pixmapCollidableComponent = GameComponents.getPixmapCollidableComponent(e);
+		PixmapCollidableComponent pixmapCollidableComponent = Components.getPixmapCollidableComponent(e);
 		PixmapCollision pixmapCollision = pixmapCollidableComponent.pixmapCollision;
 		
 		pixmapCollision.clearContacts();

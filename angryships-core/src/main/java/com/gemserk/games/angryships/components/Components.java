@@ -3,9 +3,8 @@ package com.gemserk.games.angryships.components;
 import com.artemis.ComponentType;
 import com.artemis.ComponentTypeManager;
 import com.artemis.Entity;
-import com.gemserk.commons.artemis.components.Components;
 
-public class GameComponents extends Components {
+public class Components extends com.gemserk.commons.artemis.components.Components {
 
 	public static final Class<CameraDistanceComponent> cameraDistanceComponentClass = CameraDistanceComponent.class;
 	public static final ComponentType cameraDistanceComponentType = ComponentTypeManager.getTypeFor(cameraDistanceComponentClass);

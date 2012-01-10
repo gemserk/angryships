@@ -3,7 +3,6 @@ package com.gemserk.games.angryships.scripts;
 import com.artemis.Entity;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.PhysicsComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.events.Event;
@@ -17,7 +16,7 @@ import com.gemserk.commons.reflection.Injector;
 import com.gemserk.componentsengine.utils.Parameters;
 import com.gemserk.componentsengine.utils.ParametersWrapper;
 import com.gemserk.games.angryships.components.ClusterBombComponent;
-import com.gemserk.games.angryships.components.GameComponents;
+import com.gemserk.games.angryships.components.Components;
 import com.gemserk.games.angryships.entities.Events;
 import com.gemserk.games.angryships.templates.ClusterBombMunitionTemplate;
 
@@ -34,7 +33,7 @@ public class ClusterBombScript extends ScriptJavaImpl {
 
 		Entity e = (Entity) event.getSource();
 
-		ClusterBombComponent clusterBombComponent = GameComponents.getClusterBombComponent(e);
+		ClusterBombComponent clusterBombComponent = Components.getClusterBombComponent(e);
 
 		if (clusterBombComponent == null)
 			return;

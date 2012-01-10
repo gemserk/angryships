@@ -3,15 +3,14 @@ package com.gemserk.games.angryships.scripts;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.badlogic.gdx.math.Vector2;
-import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.MovementComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.scripts.ScriptJavaImpl;
 import com.gemserk.commons.gdx.GlobalTime;
 import com.gemserk.commons.gdx.games.Movement;
 import com.gemserk.commons.gdx.games.Spatial;
+import com.gemserk.games.angryships.components.Components;
 import com.gemserk.games.angryships.components.ControllerComponent;
-import com.gemserk.games.angryships.components.GameComponents;
 import com.gemserk.games.angryships.gamestates.Controller;
 
 public class MovementScript extends ScriptJavaImpl {
@@ -21,7 +20,7 @@ public class MovementScript extends ScriptJavaImpl {
 
 		MovementComponent movementComponent = Components.getMovementComponent(e);
 		SpatialComponent spatialComponent = Components.getSpatialComponent(e);
-		ControllerComponent controllerComponent = GameComponents.getControllerComponent(e);
+		ControllerComponent controllerComponent = Components.getControllerComponent(e);
 		
 		Controller controller = controllerComponent.controller;
 		Movement movement = movementComponent.getMovement();

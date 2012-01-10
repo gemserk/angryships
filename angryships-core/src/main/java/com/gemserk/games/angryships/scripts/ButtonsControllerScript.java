@@ -5,7 +5,7 @@ import com.artemis.World;
 import com.gemserk.commons.artemis.scripts.ScriptJavaImpl;
 import com.gemserk.games.angryships.components.ButtonMonitorsComponent;
 import com.gemserk.games.angryships.components.ControllerComponent;
-import com.gemserk.games.angryships.components.GameComponents;
+import com.gemserk.games.angryships.components.Components;
 import com.gemserk.games.angryships.gamestates.Controller;
 
 public class ButtonsControllerScript extends ScriptJavaImpl {
@@ -14,7 +14,7 @@ public class ButtonsControllerScript extends ScriptJavaImpl {
 	public void update(World world, Entity e) {
 		ButtonMonitorsComponent buttonMonitorsComponent = e.getComponent(ButtonMonitorsComponent.class);
 
-		ControllerComponent controllerComponent = GameComponents.getControllerComponent(e);
+		ControllerComponent controllerComponent = Components.getControllerComponent(e);
 		Controller controller = controllerComponent.controller;
 
 		controller.left = buttonMonitorsComponent.leftButtonMonitor.isHolded();

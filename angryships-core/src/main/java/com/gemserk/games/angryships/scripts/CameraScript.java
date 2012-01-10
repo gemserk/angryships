@@ -4,7 +4,6 @@ import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.utils.ImmutableBag;
 import com.gemserk.commons.artemis.components.CameraComponent;
-import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.PreviousStateCameraComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.scripts.ScriptJavaImpl;
@@ -12,7 +11,7 @@ import com.gemserk.commons.gdx.camera.Camera;
 import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
 import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.games.angryships.components.CameraDistanceComponent;
-import com.gemserk.games.angryships.components.GameComponents;
+import com.gemserk.games.angryships.components.Components;
 import com.gemserk.games.angryships.entities.Groups;
 
 public class CameraScript extends ScriptJavaImpl {
@@ -48,7 +47,7 @@ public class CameraScript extends ScriptJavaImpl {
 			previousCamera.setZoom(camera.getZoom());
 		}
 		
-		CameraDistanceComponent cameraDistanceComponent = GameComponents.getCameraDistanceComponent(e);
+		CameraDistanceComponent cameraDistanceComponent = Components.getCameraDistanceComponent(e);
 		
 		if (bombEntities.size() >= 1) {
 			midpointx /= bombEntities.size();

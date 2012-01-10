@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.gemserk.commons.artemis.components.AntiGravityComponent;
-import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.ContainerComponent;
 import com.gemserk.commons.artemis.components.MovementComponent;
 import com.gemserk.commons.artemis.components.PhysicsComponent;
@@ -27,9 +26,9 @@ import com.gemserk.commons.gdx.games.SpatialPhysicsImpl;
 import com.gemserk.commons.reflection.Injector;
 import com.gemserk.componentsengine.utils.Parameters;
 import com.gemserk.componentsengine.utils.ParametersWrapper;
+import com.gemserk.games.angryships.components.Components;
 import com.gemserk.games.angryships.components.ControllerComponent;
 import com.gemserk.games.angryships.components.ExplosionComponent;
-import com.gemserk.games.angryships.components.GameComponents;
 import com.gemserk.games.angryships.components.PixmapCollidableComponent;
 import com.gemserk.games.angryships.entities.Collisions;
 import com.gemserk.games.angryships.entities.Groups;
@@ -53,7 +52,7 @@ public class KamikazeControllableBombTemplate extends EntityTemplateImpl {
 		@Override
 		public void update(World world, Entity e) {
 
-			ControllerComponent controllerComponent = GameComponents.getControllerComponent(e);
+			ControllerComponent controllerComponent = Components.getControllerComponent(e);
 			Controller controller = controllerComponent.controller;
 
 			if (!controller.explode)

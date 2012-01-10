@@ -13,7 +13,7 @@ import com.gemserk.commons.gdx.gui.Text;
 import com.gemserk.commons.reflection.Injector;
 import com.gemserk.componentsengine.utils.ParametersWrapper;
 import com.gemserk.games.angryships.components.ControllerComponent;
-import com.gemserk.games.angryships.components.GameComponents;
+import com.gemserk.games.angryships.components.Components;
 import com.gemserk.games.angryships.components.PlayerComponent;
 import com.gemserk.games.angryships.components.PlayerData;
 import com.gemserk.games.angryships.entities.Groups;
@@ -66,7 +66,7 @@ public class PlayerScript extends ScriptJavaImpl {
 	}
 
 	public void updateFirstFire(World world, Entity e) {
-		ControllerComponent controllerComponent = GameComponents.getControllerComponent(e);
+		ControllerComponent controllerComponent = Components.getControllerComponent(e);
 		Controller controller = controllerComponent.controller;
 
 		if (!controller.fire)
@@ -102,7 +102,7 @@ public class PlayerScript extends ScriptJavaImpl {
 	}
 
 	public void updateSecondFire(World world, Entity e) {
-		ControllerComponent controllerComponent = GameComponents.getControllerComponent(e);
+		ControllerComponent controllerComponent = Components.getControllerComponent(e);
 		Controller controller = controllerComponent.controller;
 
 		if (!controller.secondFire)

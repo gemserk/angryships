@@ -4,7 +4,6 @@ import com.artemis.Entity;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.ScriptComponent;
 import com.gemserk.commons.artemis.components.SoundSpawnerComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
@@ -18,8 +17,8 @@ import com.gemserk.commons.gdx.games.SpatialImpl;
 import com.gemserk.commons.reflection.Injector;
 import com.gemserk.componentsengine.utils.Parameters;
 import com.gemserk.componentsengine.utils.ParametersWrapper;
+import com.gemserk.games.angryships.components.Components;
 import com.gemserk.games.angryships.components.ExplosionComponent;
-import com.gemserk.games.angryships.components.GameComponents;
 import com.gemserk.games.angryships.components.PixmapWorld;
 import com.gemserk.games.angryships.entities.Events;
 import com.gemserk.games.angryships.resources.GameResources;
@@ -45,7 +44,7 @@ public class ExplosionSpawnerTemplate extends EntityTemplateImpl {
 			SpatialComponent spatialComponent = Components.getSpatialComponent(e);
 			Spatial spatial = spatialComponent.getSpatial();
 			
-			ExplosionComponent explosionComponent = GameComponents.getExplosionComponent(e);
+			ExplosionComponent explosionComponent = Components.getExplosionComponent(e);
 			
 			Array<PixmapHelper> pixmaps = pixmapWorld.getPixmaps();
 
