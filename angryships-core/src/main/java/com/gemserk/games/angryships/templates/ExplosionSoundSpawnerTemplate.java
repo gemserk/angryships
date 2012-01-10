@@ -2,8 +2,6 @@ package com.gemserk.games.angryships.templates;
 
 import com.artemis.Entity;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.gemserk.commons.artemis.components.ScriptComponent;
 import com.gemserk.commons.artemis.components.SoundSpawnerComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
@@ -19,22 +17,22 @@ import com.gemserk.componentsengine.utils.Parameters;
 import com.gemserk.componentsengine.utils.ParametersWrapper;
 import com.gemserk.games.angryships.components.Components;
 import com.gemserk.games.angryships.components.ExplosionComponent;
-import com.gemserk.games.angryships.components.PixmapWorld;
 import com.gemserk.games.angryships.entities.Events;
 import com.gemserk.games.angryships.resources.GameResources;
-import com.gemserk.prototypes.pixmap.PixmapHelper;
 import com.gemserk.resources.ResourceManager;
 
-public class ExplosionSpawnerTemplate extends EntityTemplateImpl {
+public class ExplosionSoundSpawnerTemplate extends EntityTemplateImpl {
 
-	public static class SpawnExplosionScript extends ScriptJavaImpl {
+	public static class ExplosionSensorSpawnerScript extends ScriptJavaImpl {
 
-		private final Vector2 position = new Vector2();
+		// private final Vector2 position = new Vector2();
+
 		private final Parameters parameters = new ParametersWrapper();
 
 		EntityFactory entityFactory;
 		Injector injector;
-		PixmapWorld pixmapWorld;
+
+		// PixmapWorld pixmapWorld;
 
 		@Handles(ids = Events.explosion)
 		public void explosion(Event event) {
@@ -45,13 +43,13 @@ public class ExplosionSpawnerTemplate extends EntityTemplateImpl {
 
 			ExplosionComponent explosionComponent = Components.getExplosionComponent(e);
 
-			Array<PixmapHelper> pixmaps = pixmapWorld.getPixmaps();
-
-			for (int i = 0; i < pixmaps.size; i++) {
-				PixmapHelper pixmapHelper = pixmaps.get(i);
-				pixmapHelper.project(position, spatial.getX(), spatial.getY());
-				pixmapHelper.eraseCircle(position.x, position.y, explosionComponent.radius);
-			}
+			// Array<PixmapHelper> pixmaps = pixmapWorld.getPixmaps();
+			//
+			// for (int i = 0; i < pixmaps.size; i++) {
+			// PixmapHelper pixmapHelper = pixmaps.get(i);
+			// pixmapHelper.project(position, spatial.getX(), spatial.getY());
+			// pixmapHelper.eraseCircle(position.x, position.y, explosionComponent.radius);
+			// }
 
 			SpatialImpl explosionSensorSpatial = new SpatialImpl(spatial);
 			explosionSensorSpatial.setSize(explosionComponent.radius, explosionComponent.radius);
@@ -70,7 +68,7 @@ public class ExplosionSpawnerTemplate extends EntityTemplateImpl {
 	public void apply(Entity entity) {
 		Sound sound = resourceManager.getResourceValue(GameResources.Sounds.BombExplosion);
 		entity.addComponent(new SoundSpawnerComponent(Events.explosion, sound));
-		entity.addComponent(new ScriptComponent(injector.getInstance(SpawnExplosionScript.class)));
+		entity.addComponent(new ScriptComponent(injector.getInstance(ExplosionSensorSpawnerScript.class)));
 	}
 
 }

@@ -56,7 +56,7 @@ public class ExplosionSensorTemplate extends EntityTemplateImpl {
 				.build();
 
 		entity.addComponent(new PhysicsComponent(body));
-		entity.addComponent(new AliveComponent(0.2f));
+		entity.addComponent(new AliveComponent(0.001f));
 		entity.addComponent(new SpatialComponent(new SpatialPhysicsImpl(body, spatial)));
 		entity.addComponent(new ScriptComponent(injector.getInstance(AliveScript.class)));
 	}

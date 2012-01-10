@@ -70,6 +70,7 @@ import com.gemserk.games.angryships.entities.Tags;
 import com.gemserk.games.angryships.input.CustomImageButton;
 import com.gemserk.games.angryships.render.Layers;
 import com.gemserk.games.angryships.resources.GameResources;
+import com.gemserk.games.angryships.scripts.ErasePixmapWhenExplosionScript;
 import com.gemserk.games.angryships.scripts.ExplosionAnimationSpawnerScript;
 import com.gemserk.games.angryships.scripts.GameModeNormalScript;
 import com.gemserk.games.angryships.systems.ArtemisGroupSystem;
@@ -79,7 +80,7 @@ import com.gemserk.games.angryships.systems.TimerUpdateSystem;
 import com.gemserk.games.angryships.templates.AreaTriggerTemplate;
 import com.gemserk.games.angryships.templates.CameraFollowTemplate;
 import com.gemserk.games.angryships.templates.ClusterBombMunitionSpawnerTemplate;
-import com.gemserk.games.angryships.templates.ExplosionSpawnerTemplate;
+import com.gemserk.games.angryships.templates.ExplosionSoundSpawnerTemplate;
 import com.gemserk.games.angryships.templates.HudButtonsControllerTemplate;
 import com.gemserk.games.angryships.templates.HudTemplate;
 import com.gemserk.games.angryships.templates.KeyboardControllerTemplate;
@@ -317,7 +318,7 @@ public class PlayGameState extends GameStateImpl {
 		worldWrapper.init();
 
 		EntityTemplate terrainEntityTemplate = injector.getInstance(TerrainTemplate.class);
-		EntityTemplate explosionSpawnerTemplate = injector.getInstance(ExplosionSpawnerTemplate.class);
+		EntityTemplate explosionSpawnerTemplate = injector.getInstance(ExplosionSoundSpawnerTemplate.class);
 		EntityTemplate keyboardControllerTemplate = injector.getInstance(KeyboardControllerTemplate.class);
 		EntityTemplate targetTemplate = injector.getInstance(TargetTemplate.class);
 		EntityTemplate cameraFollowTemplate = injector.getInstance(CameraFollowTemplate.class);
@@ -427,6 +428,13 @@ public class PlayGameState extends GameStateImpl {
 			@Override
 			public void apply(Entity entity) {
 				entity.addComponent(new ScriptComponent(injector.getInstance(ExplosionAnimationSpawnerScript.class)));
+			}
+		});
+		
+		entityFactory.instantiate(new EntityTemplateImpl() {
+			@Override
+			public void apply(Entity entity) {
+				entity.addComponent(new ScriptComponent(injector.getInstance(ErasePixmapWhenExplosionScript.class)));
 			}
 		});
 		

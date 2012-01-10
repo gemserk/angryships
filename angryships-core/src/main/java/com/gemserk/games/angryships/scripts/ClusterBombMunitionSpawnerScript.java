@@ -85,6 +85,7 @@ public class ClusterBombMunitionSpawnerScript extends ScriptJavaImpl {
 
 			PhysicsComponent physicsComponent = Components.getPhysicsComponent(clusterBombMunition);
 			Body body = physicsComponent.getBody();
+			body.setLinearVelocity(0f, 0f);
 			body.applyLinearImpulse(MathUtils.random(-3f, 3f), 0f, body.getPosition().x, body.getPosition().y);
 
 			// Box2dUtils.setFilter(body, Collisions.Bomb, (short) (Collisions.Target | Collisions.AreaTrigger), (short) 0);
