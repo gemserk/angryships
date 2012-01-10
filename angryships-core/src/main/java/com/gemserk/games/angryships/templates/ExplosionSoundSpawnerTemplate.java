@@ -1,9 +1,7 @@
 package com.gemserk.games.angryships.templates;
 
 import com.artemis.Entity;
-import com.badlogic.gdx.audio.Sound;
 import com.gemserk.commons.artemis.components.ScriptComponent;
-import com.gemserk.commons.artemis.components.SoundSpawnerComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.events.Event;
 import com.gemserk.commons.artemis.events.reflection.Handles;
@@ -18,7 +16,6 @@ import com.gemserk.componentsengine.utils.ParametersWrapper;
 import com.gemserk.games.angryships.components.Components;
 import com.gemserk.games.angryships.components.ExplosionComponent;
 import com.gemserk.games.angryships.entities.Events;
-import com.gemserk.games.angryships.resources.GameResources;
 import com.gemserk.resources.ResourceManager;
 
 public class ExplosionSoundSpawnerTemplate extends EntityTemplateImpl {
@@ -31,6 +28,7 @@ public class ExplosionSoundSpawnerTemplate extends EntityTemplateImpl {
 
 		EntityFactory entityFactory;
 		Injector injector;
+//		SoundPlayer soundPlayer;
 
 		// PixmapWorld pixmapWorld;
 
@@ -66,8 +64,8 @@ public class ExplosionSoundSpawnerTemplate extends EntityTemplateImpl {
 
 	@Override
 	public void apply(Entity entity) {
-		Sound sound = resourceManager.getResourceValue(GameResources.Sounds.BombExplosion);
-		entity.addComponent(new SoundSpawnerComponent(Events.explosion, sound));
+//		Sound sound = resourceManager.getResourceValue(GameResources.Sounds.BombExplosion);
+//		entity.addComponent(new SoundSpawnerComponent(Events.explosion, sound));
 		entity.addComponent(new ScriptComponent(injector.getInstance(ExplosionSensorSpawnerScript.class)));
 	}
 

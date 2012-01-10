@@ -74,9 +74,6 @@ public class ClusterBombMunitionSpawnerScript extends ScriptJavaImpl {
 			ExplosionComponent explosionComponent = Components.getExplosionComponent(clusterBombMunition);
 			explosionComponent.exploded = false;
 
-			// Entity clusterBombMunition = entityFactory.instantiate(clusterBombMunitionTemplate, parameters //
-			// .put("spatial", new SpatialImpl(spatial.getX(), spatial.getY(), 0.4f, 0.4f, MathUtils.random(0f, 360f))) //
-			// );
 			Spatial clusterBombMunitionSpatial = Components.getSpatialComponent(clusterBombMunition).getSpatial();
 
 			clusterBombMunitionSpatial.setPosition(spatial.getX(), spatial.getY());
@@ -87,8 +84,6 @@ public class ClusterBombMunitionSpawnerScript extends ScriptJavaImpl {
 			Body body = physicsComponent.getBody();
 			body.setLinearVelocity(0f, 0f);
 			body.applyLinearImpulse(MathUtils.random(-3f, 3f), 0f, body.getPosition().x, body.getPosition().y);
-
-			// Box2dUtils.setFilter(body, Collisions.Bomb, (short) (Collisions.Target | Collisions.AreaTrigger), (short) 0);
 		}
 
 	}
