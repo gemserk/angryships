@@ -39,7 +39,7 @@ public class ExplodeWhenCollisionScript extends ScriptJavaImpl {
 		if (sensor)
 			return;
 
-		e.delete();
+//		e.delete();
 		eventManager.registerEvent(Events.explosion, e);
 
 	}

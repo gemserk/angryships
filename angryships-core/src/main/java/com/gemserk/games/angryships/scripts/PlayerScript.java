@@ -12,8 +12,8 @@ import com.gemserk.commons.gdx.gui.Container;
 import com.gemserk.commons.gdx.gui.Text;
 import com.gemserk.commons.reflection.Injector;
 import com.gemserk.componentsengine.utils.ParametersWrapper;
-import com.gemserk.games.angryships.components.ControllerComponent;
 import com.gemserk.games.angryships.components.Components;
+import com.gemserk.games.angryships.components.ControllerComponent;
 import com.gemserk.games.angryships.components.PlayerComponent;
 import com.gemserk.games.angryships.components.PlayerData;
 import com.gemserk.games.angryships.entities.Groups;
@@ -88,9 +88,9 @@ public class PlayerScript extends ScriptJavaImpl {
 					.put("spatial", new SpatialImpl(0f + i, 5f, 0.75f, 0.75f, 45)) //
 					.put("controller", controller) //
 					);
-			entityFactory.instantiate(thrustTemplate, new ParametersWrapper() //
-					.put("owner", missile) //
-					);
+//			entityFactory.instantiate(thrustTemplate, new ParametersWrapper() //
+//					.put("owner", missile) //
+//					);
 		}
 
 		playerData.bombsLeft--;

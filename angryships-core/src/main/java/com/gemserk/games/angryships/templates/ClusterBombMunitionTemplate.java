@@ -30,6 +30,28 @@ public class ClusterBombMunitionTemplate extends EntityTemplateImpl {
 	Injector injector;
 	BodyBuilder bodyBuilder;
 
+	// private EntityStore cachedBombsStore;
+	//
+	// class MoveToStoreScript extends ScriptJavaImpl {
+	//
+	// private Entity e;
+	//
+	// @Override
+	// public void init(World world, Entity e) {
+	// this.e = e;
+	// super.init(world, e);
+	// }
+	//
+	// @Handles(ids=Events.explosion)
+	// public void moveToStore(Event event) {
+	// Object source = event.getSource();
+	// if (source != e)
+	// return;
+	// cachedBombsStore.free(e);
+	// }
+	//
+	// }
+
 	@Override
 	public void apply(Entity entity) {
 

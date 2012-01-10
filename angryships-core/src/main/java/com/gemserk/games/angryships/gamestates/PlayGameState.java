@@ -420,7 +420,7 @@ public class PlayGameState extends GameStateImpl {
 				.put("layer", -361) //
 				);
 
-		entityFactory.instantiate(explosionSpawnerTemplate, new ParametersWrapper());
+		entityFactory.instantiate(explosionSpawnerTemplate);
 
 		if (Gdx.app.getType() == ApplicationType.Desktop || Gdx.app.getType() == ApplicationType.Applet) {
 			entityFactory.instantiate(keyboardControllerTemplate, new ParametersWrapper() //
