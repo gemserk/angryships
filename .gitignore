@@ -10,6 +10,9 @@ angryships-android/.settings
 angryships-android/libs
 angryships-android/.externalToolBuilders
 angryships-android/gen
+angryships-android/default.properties
+angryships-android/project.properties
+angryships-android/bin
 
 angryships-core/target
 angryships-core/.classpath
