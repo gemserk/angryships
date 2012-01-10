@@ -36,20 +36,6 @@ public class ExplosionSpawnerTemplate extends EntityTemplateImpl {
 		Injector injector;
 		PixmapWorld pixmapWorld;
 
-//		EntityStore explosionAnimationStore = new EntityStore(new StoreFactory<Entity>() {
-//			@Override
-//			public Entity createObject() {
-//				return entityFactory.instantiate(injector.getInstance(ExplosionAnimationTemplate.class), parameters //
-//						.put("spatial", new SpatialImpl(0f, 0f)) //
-//						.put("radius", 0f) //
-//						);
-//			}
-//		});
-
-//		public void init(com.artemis.World world, Entity e) {
-//			explosionAnimationStore.preCreate(10);
-//		}
-
 		@Handles(ids = Events.explosion)
 		public void explosion(Event event) {
 			Entity e = (Entity) event.getSource();
@@ -63,31 +49,9 @@ public class ExplosionSpawnerTemplate extends EntityTemplateImpl {
 
 			for (int i = 0; i < pixmaps.size; i++) {
 				PixmapHelper pixmapHelper = pixmaps.get(i);
-
 				pixmapHelper.project(position, spatial.getX(), spatial.getY());
-
-				// erase radius could be on PixmapCollidableComponent, maybe component should be named different
-				// like ExplosionComponent, or something like that, and contain more information like
-				// which animation should be played for example.
-
 				pixmapHelper.eraseCircle(position.x, position.y, explosionComponent.radius);
 			}
-
-			// {
-			// Entity explosionAnimation = explosionAnimationStore.get();
-			// Spatial explosionAnimationSpatial = Components.getSpatialComponent(explosionAnimation).getSpatial();
-			// explosionAnimationSpatial.set(spatial);
-			//
-			// int newRadius = Math.round(explosionComponent.radius * 4f);
-			//
-			// explosionAnimationSpatial.setSize(newRadius, newRadius);
-			// explosionAnimationSpatial.setAngle(MathUtils.random(0f, 360f));
-			// }
-
-			// entityFactory.instantiate(explosionComponent.explosionAnimationTemplate, parameters //
-			// .put("spatial", new SpatialImpl(spatial)) //
-			// .put("radius", explosionComponent.radius) //
-			// );
 
 			SpatialImpl explosionSensorSpatial = new SpatialImpl(spatial);
 			explosionSensorSpatial.setSize(explosionComponent.radius, explosionComponent.radius);
