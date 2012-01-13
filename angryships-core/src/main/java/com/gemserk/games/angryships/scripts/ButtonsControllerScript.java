@@ -4,8 +4,8 @@ import com.artemis.Entity;
 import com.artemis.World;
 import com.gemserk.commons.artemis.scripts.ScriptJavaImpl;
 import com.gemserk.games.angryships.components.ButtonMonitorsComponent;
-import com.gemserk.games.angryships.components.ControllerComponent;
 import com.gemserk.games.angryships.components.Components;
+import com.gemserk.games.angryships.components.ControllerComponent;
 import com.gemserk.games.angryships.gamestates.Controller;
 
 public class ButtonsControllerScript extends ScriptJavaImpl {
